@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>WEEK-07 DAY-2<br>Tuesday - *Big-O and Optimizations*</title>
+        <style>
+</style>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        
+        
+        
+    </head>
+    <body class="vscode-light">
+        <h1 id="week-07-day-2brtuesday---big-o-and-optimizations">WEEK-07 DAY-2<br>Tuesday - <em>Big-O and Optimizations</em></h1>
+<ul>
+<li><a href="#week-07-day-2brtuesday---big-o-and-optimizations">WEEK-07 DAY-2<br>Tuesday - <em>Big-O and Optimizations</em></a></li>
+<li><a href="#big-o-learning-objectives">Big O Learning Objectives</a></li>
+<li><a href="#memoization-and-tabulation-learning-objectives">Memoization And Tabulation Learning Objectives</a></li>
+<li><a href="#recursion-videos">Recursion Videos</a></li>
+<li><a href="#big-o-by-colt-steele">Big-O By Colt Steele</a></li>
+<li><a href="#curating-complexity-a-guide-to-big-o-notation">Curating Complexity: A Guide to Big-O Notation</a>
+<ul>
+<li><a href="#why-big-o">Why Big-O?</a></li>
+<li><a href="#big-o-notation">Big-O Notation</a>
+<ul>
+<li><a href="#simplifying-math-terms">Simplifying Math Terms</a></li>
+<li><a href="#simplifying-a-product">Simplifying a Product</a></li>
+<li><a href="#simplifying-a-sum">Simplifying a Sum</a></li>
+<li><a href="#putting-it-all-together">Putting it all together</a></li>
+</ul>
+</li>
+<li><a href="#what-youve-learned">What you've learned</a></li>
+</ul>
+</li>
+<li><a href="#common-complexity-classes">Common Complexity Classes</a>
+<ul>
+<li><a href="#the-seven-major-classes">The seven major classes</a>
+<ul>
+<li><a href="#o1---constant">O(1) - Constant</a>
+<ul>
+<li><a href="#constant-growth">Constant growth</a></li>
+<li><a href="#example-constant-code">Example Constant code</a></li>
+</ul>
+</li>
+<li><a href="#ologn---logarithmic">O(log(n)) - Logarithmic</a>
+<ul>
+<li><a href="#logarithmic-growth">Logarithmic growth</a></li>
+<li><a href="#example-logarithmic-code">Example logarithmic code</a></li>
+</ul>
+</li>
+<li><a href="#on---linear">O(n) - Linear</a>
+<ul>
+<li><a href="#linear-growth">Linear growth</a></li>
+<li><a href="#example-linear-code">Example linear code</a></li>
+</ul>
+</li>
+<li><a href="#on--logn---loglinear">O(n * log(n)) - Loglinear</a>
+<ul>
+<li><a href="#loglinear-growth">Loglinear growth</a></li>
+<li><a href="#example-loglinear-code">Example loglinear code</a></li>
+</ul>
+</li>
+<li><a href="#onsupcsup---polynomial">O(n<sup>c</sup>) - Polynomial</a>
+<ul>
+<li><a href="#polynomial-growth">Polynomial growth</a></li>
+<li><a href="#example-polynomial-code">Example polynomial code</a></li>
+</ul>
+</li>
+<li><a href="#ocsupnsup---exponential">O(c<sup>n</sup>) - Exponential</a>
+<ul>
+<li><a href="#exponential-growth">Exponential growth</a></li>
+<li><a href="#exponential-code-example">Exponential code example</a></li>
+</ul>
+</li>
+<li><a href="#on---factorial">O(n!) - Factorial</a>
+<ul>
+<li><a href="#factorial-growth">Factorial growth</a></li>
+<li><a href="#factorial-code-example">Factorial code example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#what-youve-learned-1">What you've learned</a></li>
+</ul>
+</li>
+<li><a href="#memoization">Memoization</a>
+<ul>
+<li><a href="#memoizing-factorial">Memoizing factorial</a></li>
+<li><a href="#memoizing-the-fibonacci-generator">Memoizing the Fibonacci generator</a></li>
+<li><a href="#the-memoization-formula">The memoization formula</a></li>
+<li><a href="#what-you-learned">What you learned</a></li>
+</ul>
+</li>
+<li><a href="#tabulation">Tabulation</a>
+<ul>
+<li><a href="#tabulating-the-fibonacci-number">Tabulating the Fibonacci number</a></li>
+<li><a href="#aside-refactoring-for-o1-space">Aside: Refactoring for O(1) Space</a>
+<ul>
+<li><a href="#the-tabulation-formula">The Tabulation Formula</a></li>
+</ul>
+</li>
+<li><a href="#what-you-learned-1">What you learned</a></li>
+</ul>
+</li>
+<li><a href="#analysis-of-linear-search">Analysis of Linear Search</a></li>
+<li><a href="#analysis-of-binary-search">Analysis of Binary Search</a></li>
+<li><a href="#analysis-of-the-merge-sort">Analysis of the Merge Sort</a></li>
+<li><a href="#analysis-of-bubble-sort">Analysis of Bubble Sort</a></li>
+<li><a href="#leetcodecom">LeetCode.com</a>
+<br></li>
+</ul>
+<hr>
+<h1 id="big-o-learning-objectives">Big O Learning Objectives</h1>
+<p><strong>The objective of this lesson</strong> is get you comfortable with identifying the
+time and space complexity of code you see. Being able to diagnose time
+complexity for algorithms is an essential for interviewing software engineers.</p>
+<p>At the end of this, you will be able to</p>
+<ol>
+<li>Order the common complexity classes according to their growth rate</li>
+<li>Identify the complexity classes of common sort methods</li>
+<li>Identify complexity classes of code</li>
+</ol>
+<br>
+<hr>
+<h1 id="memoization-and-tabulation-learning-objectives">Memoization And Tabulation Learning Objectives</h1>
+<p><strong>The objective of this lesson</strong> is to give you a couple of ways to optimize a
+computation (algorithm) from a higher complexity class to a lower complexity
+class. Being able to optimize algorithms is an essential for interviewing
+software engineers.</p>
+<p>At the end of this, you will be able to</p>
+<ol>
+<li>Apply memoization to recursive problems to make them less than polynomial
+time.</li>
+<li>Apply tabulation to iterative problems to make them less than polynomial
+time.</li>
+</ol>
+<br>
+<hr>
+<h1 id="recursion-videos">Recursion Videos</h1>
+<p>A lot of algorithms that we use in the upcoming days will use recursion. The
+next two videos are just helpful reminders about recursion so that you can get
+that thought process back into your brain.</p>
+<br>
+<hr>
+<h1 id="big-o-by-colt-steele">Big-O By Colt Steele</h1>
+<p>Colt Steele provides a very nice, non-mathy introduction to Big-O notation.
+Please watch this so you can get the easy introduction. Big-O is, by its very
+nature, math based. It's good to get an understanding before jumping in to
+math expressions.</p>
+<p><a href="https://www.youtube.com/embed/kS_gr2_-ws8">Complete Beginner's Guide to Big O Notation</a> by Colt Steele.</p>
+<br>
+<hr>
+<h1 id="curating-complexity-a-guide-to-big-o-notation">Curating Complexity: A Guide to Big-O Notation</h1>
+<p>As software engineers, our goal is not just to solve problems. Rather, our goal
+is to solve problems efficiently and elegantly. Not all solutions are made
+equal! In this section we'll explore how to analyze the efficiency of algorithms
+in terms of their speed (<em>time complexity</em>) and memory consumption (<em>space
+complexity</em>).</p>
+<blockquote>
+<p>In this article, we'll use the word <em>efficiency</em> to describe the amount of
+resources a program needs to execute. The two resources we are concerned with
+are <em>time</em> and <em>space</em>. Our goal is to <em>minimize</em> the amount of time and space
+that our programs use.</p>
+</blockquote>
+<p>When you finish this article you will be able to:</p>
+<ul>
+<li>explain why computer scientists use Big-O notation</li>
+<li>simplify a mathematical function into Big-O notation</li>
+</ul>
+<h2 id="why-big-o">Why Big-O?</h2>
+<p>Let's begin by understanding what method we should <em>not</em> use when describing the
+efficiency of our algorithms. Most importantly, we'll want to avoid using
+absolute units of time when describing speed. When the software engineer
+exclaims, &quot;My function runs in 0.2 seconds, it's so fast!!!&quot;, the computer
+scientist is not impressed. Skeptical, the computer scientist asks the following
+questions:</p>
+<ol>
+<li>What computer did you run it on? <em>Maybe the credit belongs to the hardware
+and not the software. Some hardware architectures will be better for certain
+operations than others.</em></li>
+<li>Were there other background processes running on the computer that could have
+effected the runtime? <em>It's hard to control the environment during
+performance experiments.</em></li>
+<li>Will your code still be performant if we increase the size of the input? <em>For
+example, sorting 3 numbers is trivial; but how about a million numbers?</em></li>
+</ol>
+<p>The job of the software engineer is to focus on the software detail and not
+necessarily the hardware it will run on. Because we can't answer points 1 and 2
+with total certainty, we'll want to avoid using concrete units like
+&quot;milliseconds&quot; or &quot;seconds&quot; when describing the efficiency of our algorithms.
+Instead, we'll opt for a more abstract approach that focuses on point 3. This
+means that we should focus on how the performance of our algorithm is affected
+by increasing the size of the input. <strong>In other words, how does our performance
+scale?</strong></p>
+<blockquote>
+<p>The argument above focuses on <em>time</em>, but a similar argument could also be
+made for <em>space</em>. For example, we should not analyze our code in terms of the
+amount of absolute kilobytes of memory it uses, because this is dependent on
+the programming language.</p>
+</blockquote>
+<h2 id="big-o-notation">Big-O Notation</h2>
+<p>In Computer Science, we use Big-O notation as a tool for describing the
+efficiency of algorithms with respect to the size of the input argument(s). We
+use mathematical functions in Big-O notation, so there are a few big picture
+ideas that we'll want to keep in mind:</p>
+<ol>
+<li>The function should be defined in terms of the size of the input(s).</li>
+<li>A <em>smaller</em> Big-O function is more desirable than a larger one. Intuitively,
+we want our algorithms to use a minimal amount of time and space.</li>
+<li>Big-O describes the worst-case scenario for our code, also known as the
+upper bound. We prepare our algorithm for the worst case, because the
+best case is a luxury that is not guaranteed.</li>
+<li>A Big-O function should be simplified to show only its most dominant
+mathematical term.</li>
+</ol>
+<p>The first 3 points are conceptual, so they are easy to swallow. However, point 4
+is typically the biggest source of confusion when learning the notation. Before
+we apply Big-O to our code, we'll need to first understand the underlying math
+and simplification process.</p>
+<h3 id="simplifying-math-terms">Simplifying Math Terms</h3>
+<p>We want our Big-O notation to describe the performance of our algorithm with
+respect to the input size and nothing else. Because of this, we should to
+simplify our Big-O functions using the following rules:</p>
+<ul>
+<li><strong>Simplify Products:</strong> if the function is a product of many terms, we drop the
+terms that <em>don't</em> depend on the size of the input.</li>
+<li><strong>Simplify Sums:</strong> if the function is a sum of many terms, we keep the term
+with the <em>largest</em> growth rate and drop the other terms.</li>
+</ul>
+<p>We'll look at these rules in action, but first we'll define a few things:</p>
+<ul>
+<li><strong>n</strong> is the size of the input</li>
+<li><strong>T(f)</strong> refers to an unsimplified mathematical <strong>f</strong>unction</li>
+<li><strong>O(f)</strong> refers to the Big-O simplified mathematical <strong>f</strong>unction</li>
+</ul>
+<h3 id="simplifying-a-product">Simplifying a Product</h3>
+<p>If a function consists of a product of many factors, we drop the factors that
+don't depend on the size of the input, n. The factors that we drop are called
+constant factors because their size remains consistent as we increase the size
+of the input. The reasoning behind this simplification is that we make the input
+large enough, the non-constant factors will overshadow the constant ones. Below
+are some examples:</p>
+<table>
+<thead>
+<tr>
+<th>Unsimplified</th>
+<th>Big-O Simplified</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T( 5 * n<sup>2</sup> )</td>
+<td>O( n<sup>2</sup> )</td>
+</tr>
+<tr>
+<td>T( 100000 * n )</td>
+<td>O( n )</td>
+</tr>
+<tr>
+<td>T( n / 12 )</td>
+<td>O( n )</td>
+</tr>
+<tr>
+<td>T( 42 * n * log(n) )</td>
+<td>O( n * log(n) )</td>
+</tr>
+<tr>
+<td>T( 12 )</td>
+<td>O( 1 )</td>
+</tr>
+</tbody>
+</table>
+<p>Note that in the third example, we can simplify <code>T( n / 12 )</code> to <code>O( n )</code>
+because we can rewrite a division into an equivalent multiplication. In other
+words, <code>T( n / 12 ) = T( 1/12 * n ) = O( n )</code>.</p>
+<h3 id="simplifying-a-sum">Simplifying a Sum</h3>
+<p>If the function consists of a sum of many terms, we only need to show the term
+that grows the fastest, relative to the size of the input. The reasoning behind
+this simplification is that if we make the input large enough, the fastest
+growing term will overshadow the other, smaller terms. To understand which term
+to keep, you'll need to recall the relative size of our common math terms from
+the previous section. Below are some examples:</p>
+<table>
+<thead>
+<tr>
+<th>Unsimplified</th>
+<th>Big-O Simplified</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T( n<sup>3</sup> + n<sup>2</sup> + n )</td>
+<td>O( n<sup>3</sup> )</td>
+</tr>
+<tr>
+<td>T( log(n) + 2<sup>n</sup> )</td>
+<td>O( 2<sup>n</sup> )</td>
+</tr>
+<tr>
+<td>T( n + log(n) )</td>
+<td>O( n )</td>
+</tr>
+<tr>
+<td>T( n! + 10<sup>n</sup> )</td>
+<td>O( n! )</td>
+</tr>
+</tbody>
+</table>
+<h3 id="putting-it-all-together">Putting it all together</h3>
+<p>The <em>product</em> and <em>sum</em> rules are all we'll need to Big-O simplify any math
+functions. We just apply the <em>product rule</em> to drop all constants, then apply the
+<em>sum rule</em> to select the single most dominant term.</p>
+<table>
+<thead>
+<tr>
+<th>Unsimplified</th>
+<th>Big-O Simplified</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T( 5n<sup>2</sup> + 99n )</td>
+<td>O( n<sup>2</sup> )</td>
+</tr>
+<tr>
+<td>T( 2n + nlog(n) )</td>
+<td>O( nlog(n) )</td>
+</tr>
+<tr>
+<td>T( 2<sup>n</sup> + 5n<sup>1000</sup>)</td>
+<td>O( 2<sup>n</sup> )</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Aside: We'll often omit the multiplication symbol in expressions as a form of
+shorthand. For example, we'll write <em>O( 5n<sup>2</sup> )</em> in place of <em>O( 5 *
+n<sup>2</sup> )</em>.</p>
+</blockquote>
+<h2 id="what-youve-learned">What you've learned</h2>
+<p>In this reading we:</p>
+<ul>
+<li>explained why Big-O is the preferred notation used to describe the efficiency
+of algorithms</li>
+<li>used the product and sum rules to simplify mathematical functions into Big-O
+notation</li>
+</ul>
+<br>
+<hr>
+<h1 id="common-complexity-classes">Common Complexity Classes</h1>
+<p>Analyzing the efficiency of our code seems like a daunting task because there
+are many different possibilities in how we may choose to implement something.
+Luckily, most code we write can be categorized into one of a handful of common
+complexity classes. In this reading, we'll identify the common classes and
+explore some of the code characteristics that will lead to these classes.</p>
+<p>When you finish this reading, you should be able to:</p>
+<ul>
+<li>name <em>and</em> order the seven common complexity classes</li>
+<li>identify the time complexity class of a given code snippet</li>
+</ul>
+<h2 id="the-seven-major-classes">The seven major classes</h2>
+<p>There are seven complexity classes that we will encounter most often. Below is a
+list of each complexity class as well as its Big-O notation. This list is
+ordered from <em>smallest to largest</em>. Bear in mind that a &quot;more efficient&quot;
+algorithm is one with a smaller complexity class, because it requires fewer
+resources.</p>
+<table>
+<thead>
+<tr>
+<th>Big-O</th>
+<th>Complexity Class Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>O(1)</td>
+<td>constant</td>
+</tr>
+<tr>
+<td>O(log(n))</td>
+<td>logarithmic</td>
+</tr>
+<tr>
+<td>O(n)</td>
+<td>linear</td>
+</tr>
+<tr>
+<td>O(n * log(n))</td>
+<td>loglinear, linearithmic, quasilinear</td>
+</tr>
+<tr>
+<td>O(n<sup>c</sup>) - O(n<sup>2</sup>), O(n<sup>3</sup>), etc.</td>
+<td>polynomial</td>
+</tr>
+<tr>
+<td>O(c<sup>n</sup>) - O(2<sup>n</sup>), O(3<sup>n</sup>), etc.</td>
+<td>exponential</td>
+</tr>
+<tr>
+<td>O(n!)</td>
+<td>factorial</td>
+</tr>
+</tbody>
+</table>
+<p>There are more complexity classes that exist, but these are most common. Let's
+take a closer look at each of these classes to gain some intuition on what
+behavior their functions define. We'll explore famous algorithms that correspond
+to these classes further in the course.</p>
+<p>For simplicity, we'll provide small, generic code examples that illustrate the
+complexity, although they may not solve a practical problem.</p>
+<h3 id="o1---constant">O(1) - Constant</h3>
+<p>Constant complexity means that the algorithm takes roughly the same number of
+steps for any size input. In a constant time algorithm, there is no relationship
+between the size of the input and the number of steps required. For example,
+this means performing the algorithm on a input of size 1 takes the same number
+of steps as performing it on an input of size 128.</p>
+<h4 id="constant-growth">Constant growth</h4>
+<p>The table below shows the growing behavior of a constant function. Notice that
+the behavior stays <em>constant</em> for all values of n.</p>
+<table>
+<thead>
+<tr>
+<th>n</th>
+<th>O(1)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>~1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>~1</td>
+</tr>
+<tr>
+<td>3</td>
+<td>~1</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>128</td>
+<td>~1</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example-constant-code">Example Constant code</h4>
+<p>Below is are two examples of functions that have constant runtimes.</p>
+<pre><code class="language-javascript"><div><span class="hljs-comment">// O(1)</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">constant1</span>(<span class="hljs-params">n</span>) </span>{
+  <span class="hljs-keyword">return</span> n * <span class="hljs-number">2</span> + <span class="hljs-number">1</span>;
+}
+
+<span class="hljs-comment">// O(1)</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">constant2</span>(<span class="hljs-params">n</span>) </span>{
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">1</span>; i &lt;= <span class="hljs-number">100</span>; i++) {
+    <span class="hljs-built_in">console</span>.log(i);
+  }
+}
+</div></code></pre>
+<p>The runtime of the <code>constant1</code> function does not depend on the size of the
+input, because only two arithmetic operations (multiplication and addition) are
+always performed. The runtime of the <code>constant2</code> function also does not depend
+on the size of the input because one-hundred iterations are always performed,
+irrespective of the input.</p>
+<h3 id="ologn---logarithmic">O(log(n)) - Logarithmic</h3>
+<p>Typically, the hidden base of O(log(n)) is 2, meaning O(log<sub>2</sub>(n)).
+Logarithmic complexity algorithms will usual display a sense of continually
+&quot;halving&quot; the size of the input. Another tell of a logarithmic algorithm is that
+we don't have to access every element of the input. O(log<sub>2</sub>(n)) means
+that every time we double the size of the input, we only require one additional
+step. Overall, this means that a large increase of input size will increase the
+number of steps required by a small amount.</p>
+<h4 id="logarithmic-growth">Logarithmic growth</h4>
+<p>The table below shows the growing behavior of a logarithmic runtime function.
+Notice that doubling the input size will only require only one additional
+&quot;step&quot;.</p>
+<table>
+<thead>
+<tr>
+<th>n</th>
+<th>O(log<sub>2</sub>(n))</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2</td>
+<td>~1</td>
+</tr>
+<tr>
+<td>4</td>
+<td>~2</td>
+</tr>
+<tr>
+<td>8</td>
+<td>~3</td>
+</tr>
+<tr>
+<td>16</td>
+<td>~4</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>128</td>
+<td>~7</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example-logarithmic-code">Example logarithmic code</h4>
+<p>Below is an example of two functions with logarithmic runtimes.</p>
+<pre><code class="language-javascript"><div><span class="hljs-comment">// O(log(n))</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">logarithmic1</span>(<span class="hljs-params">n</span>) </span>{
+  <span class="hljs-keyword">if</span> (n &lt;= <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span>;
+  logarithmic1(n / <span class="hljs-number">2</span>);
+}
+
+<span class="hljs-comment">// O(log(n))</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">logarithmic2</span>(<span class="hljs-params">n</span>) </span>{
+  <span class="hljs-keyword">let</span> i = n;
+  <span class="hljs-keyword">while</span> (i &gt; <span class="hljs-number">1</span>) {
+    i /= <span class="hljs-number">2</span>;
+  }
+}
+</div></code></pre>
+<p>The <code>logarithmic1</code> function has O(log(n)) runtime because the recursion will
+half the argument, n, each time. In other words, if we pass 8 as the original
+argument, then the recursive chain would be 8 -&gt; 4 -&gt; 2 -&gt; 1. In a similar way,
+the <code>logarithmic2</code> function has O(log(n)) runtime because of the number of
+iterations in the while loop. The while loop depends on the variable <code>i</code>, which
+will be divided in half each iteration.</p>
+<h3 id="on---linear">O(n) - Linear</h3>
+<p>Linear complexity algorithms will access each item of the input &quot;once&quot; (in the
+Big-O sense). Algorithms that iterate through the input without nested loops or
+recurse by reducing the size of the input by &quot;one&quot; each time are typically
+linear.</p>
+<h4 id="linear-growth">Linear growth</h4>
+<p>The table below shows the growing behavior of a linear runtime function. Notice
+that a change in input size leads to similar change in the number of steps.</p>
+<table>
+<thead>
+<tr>
+<th>n</th>
+<th>O(n)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>~1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>~2</td>
+</tr>
+<tr>
+<td>3</td>
+<td>~3</td>
+</tr>
+<tr>
+<td>4</td>
+<td>~4</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>128</td>
+<td>~128</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example-linear-code">Example linear code</h4>
+<p>Below are examples of three functions that each have linear runtime.</p>
+<pre><code class="language-javascript"><div><span class="hljs-comment">// O(n)</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">linear1</span>(<span class="hljs-params">n</span>) </span>{
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
+    <span class="hljs-built_in">console</span>.log(i);
+  }
+}
+
+<span class="hljs-comment">// O(n), where n is the length of the array</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">linear2</span>(<span class="hljs-params">array</span>) </span>{
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; array.length; i++) {
+    <span class="hljs-built_in">console</span>.log(i);
+  }
+}
+
+<span class="hljs-comment">// O(n)</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">linear3</span>(<span class="hljs-params">n</span>) </span>{
+  <span class="hljs-keyword">if</span> (n === <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span>;
+  linear3(n - <span class="hljs-number">1</span>);
+}
+</div></code></pre>
+<p>The <code>linear1</code> function has O(n) runtime because the for loop will iterate n
+times. The <code>linear2</code> function has O(n) runtime because the for loop iterates
+through the array argument. The <code>linear3</code> function has O(n) runtime because each
+subsequent call in the recursion will decrease the argument by one. In other
+words, if we pass 8 as the original argument to <code>linear3</code>, the recursive chain
+would be 8 -&gt; 7 -&gt; 6 -&gt; 5 -&gt; ... -&gt; 1.</p>
+<h3 id="on--logn---loglinear">O(n * log(n)) - Loglinear</h3>
+<p>This class is a combination of both linear and logarithmic behavior, so features
+from both classes are evident. Algorithms the exhibit this behavior use both
+recursion and iteration. Typically, this means that the recursive calls will
+halve the input each time (logarithmic), but iterations are also performed on
+the input (linear).</p>
+<h4 id="loglinear-growth">Loglinear growth</h4>
+<p>The table below shows the growing behavior of a loglinear runtime function.</p>
+<table>
+<thead>
+<tr>
+<th>n</th>
+<th>O(n * log<sub>2</sub>(n))</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2</td>
+<td>~2</td>
+</tr>
+<tr>
+<td>4</td>
+<td>~8</td>
+</tr>
+<tr>
+<td>8</td>
+<td>~24</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>128</td>
+<td>~896</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example-loglinear-code">Example loglinear code</h4>
+<p>Below is an example of a function with a loglinear runtime.</p>
+<pre><code class="language-javascript"><div><span class="hljs-comment">// O(n * log(n))</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">loglinear</span>(<span class="hljs-params">n</span>) </span>{
+  <span class="hljs-keyword">if</span> (n &lt;= <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span>;
+
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
+    <span class="hljs-built_in">console</span>.log(i);
+  }
+
+  loglinear(n / <span class="hljs-number">2</span>);
+  loglinear(n / <span class="hljs-number">2</span>);
+}
+</div></code></pre>
+<p>The <code>loglinear</code> function has O(n * log(n)) runtime because the for loop
+iterates linearly (n) through the input and the recursive chain behaves
+logarithmically (log(n)).</p>
+<h3 id="onsupcsup---polynomial">O(n<sup>c</sup>) - Polynomial</h3>
+<p>Polynomial complexity refers to complexity of the form O(n<sup>c</sup>) where
+<code>n</code> is the size of the input and <code>c</code> is some fixed constant. For example,
+O(n<sup>3</sup>) is a larger/worse function than O(n<sup>2</sup>), but they
+belong to the same complexity class. Nested loops are usually the indicator of
+this complexity class.</p>
+<h4 id="polynomial-growth">Polynomial growth</h4>
+<p>Below are tables showing the growth for O(n<sup>2</sup>) and O(n<sup>3</sup>).</p>
+<table>
+<thead>
+<tr>
+<th>n</th>
+<th>O(n<sup>2</sup>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>~1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>~4</td>
+</tr>
+<tr>
+<td>3</td>
+<td>~9</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>128</td>
+<td>~16,384</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>n</th>
+<th>O(n<sup>3</sup>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>~1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>~8</td>
+</tr>
+<tr>
+<td>3</td>
+<td>~27</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>128</td>
+<td>~2,097,152</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example-polynomial-code">Example polynomial code</h4>
+<p>Below are examples of two functions with polynomial runtimes.</p>
+<pre><code class="language-javascript"><div><span class="hljs-comment">// O(n^2)</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">quadratic</span>(<span class="hljs-params">n</span>) </span>{
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> j = <span class="hljs-number">1</span>; j &lt;= n; j++) {}
+  }
+}
+
+<span class="hljs-comment">// O(n^3)</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">cubic</span>(<span class="hljs-params">n</span>) </span>{
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> j = <span class="hljs-number">1</span>; j &lt;= n; j++) {
+      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> k = <span class="hljs-number">1</span>; k &lt;= n; k++) {}
+    }
+  }
+}
+</div></code></pre>
+<p>The <code>quadratic</code> function has O(n<sup>2</sup>) runtime because there are nested
+loops. The outer loop iterates n times and the inner loop iterates n times. This
+leads to n * n total number of iterations. In a similar way, the <code>cubic</code>
+function has O(n<sup>3</sup>) runtime because it has triply nested loops that
+lead to a total of n * n * n iterations.</p>
+<h3 id="ocsupnsup---exponential">O(c<sup>n</sup>) - Exponential</h3>
+<p>Exponential complexity refers to Big-O functions of the form O(c<sup>n</sup>)
+where <code>n</code> is the size of the input and <code>c</code> is some fixed constant. For example,
+O(3<sup>n</sup>) is a larger/worse function than O(2<sup>n</sup>), but they both
+belong to the exponential complexity class. A common indicator of this
+complexity class is recursive code where there is a constant number of recursive
+calls in each stack frame. The <code>c</code> will be the number of recursive calls made in
+each stack frame. Algorithms with this complexity are considered quite slow.</p>
+<h4 id="exponential-growth">Exponential growth</h4>
+<p>Below are tables showing the growth for O(2<sup>n</sup>) and O(3<sup>n</sup>).
+Notice how these grow large, quickly.</p>
+<table>
+<thead>
+<tr>
+<th>n</th>
+<th>O(2<sup>n</sup>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>~2</td>
+</tr>
+<tr>
+<td>2</td>
+<td>~4</td>
+</tr>
+<tr>
+<td>3</td>
+<td>~8</td>
+</tr>
+<tr>
+<td>4</td>
+<td>~16</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>128</td>
+<td>~3.4028 * 10<sup>38</sup></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>n</th>
+<th>O(3<sup>n</sup>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>~3</td>
+</tr>
+<tr>
+<td>2</td>
+<td>~9</td>
+</tr>
+<tr>
+<td>3</td>
+<td>~27</td>
+</tr>
+<tr>
+<td>3</td>
+<td>~81</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>128</td>
+<td>~1.1790 * 10<sup>61</sup></td>
+</tr>
+</tbody>
+</table>
+<h4 id="exponential-code-example">Exponential code example</h4>
+<p>Below are examples of two functions with exponential runtimes.</p>
+<pre><code class="language-javascript"><div><span class="hljs-comment">// O(2^n)</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">exponential2n</span>(<span class="hljs-params">n</span>) </span>{
+  <span class="hljs-keyword">if</span> (n === <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span>;
+  exponential_2n(n - <span class="hljs-number">1</span>);
+  exponential_2n(n - <span class="hljs-number">1</span>);
+}
+
+<span class="hljs-comment">// O(3^n)</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">exponential3n</span>(<span class="hljs-params">n</span>) </span>{
+  <span class="hljs-keyword">if</span> (n === <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span>;
+  exponential_3n(n - <span class="hljs-number">1</span>);
+  exponential_3n(n - <span class="hljs-number">1</span>);
+  exponential_3n(n - <span class="hljs-number">1</span>);
+}
+</div></code></pre>
+<p>The <code>exponential2n</code> function has O(2<sup>n</sup>) runtime because each call will
+make two more recursive calls. The <code>exponential3n</code> function has O(3<sup>n</sup>)
+runtime because each call will make three more recursive calls.</p>
+<h3 id="on---factorial">O(n!) - Factorial</h3>
+<p>Recall that <code>n! = (n) * (n - 1) * (n - 2) * ... * 1</code>. This complexity is
+typically the largest/worst that we will end up implementing. An indicator of
+this complexity class is recursive code that has a variable number of recursive
+calls in each stack frame. Note that <em>factorial</em> is worse than <em>exponential</em>
+because <em>factorial</em> algorithms have a <em>variable</em> amount of recursive calls in
+each stack frame, whereas <em>exponential</em> algorithms have a <em>constant</em> amount of
+recursive calls in each frame.</p>
+<h4 id="factorial-growth">Factorial growth</h4>
+<p>Below is a table showing the growth for O(n!). Notice how this has a more
+aggressive growth than exponential behavior.</p>
+<table>
+<thead>
+<tr>
+<th>n</th>
+<th>O(n!)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>~1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>~2</td>
+</tr>
+<tr>
+<td>3</td>
+<td>~6</td>
+</tr>
+<tr>
+<td>4</td>
+<td>~24</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>128</td>
+<td>~3.8562 * 10<sup>215</sup></td>
+</tr>
+</tbody>
+</table>
+<h4 id="factorial-code-example">Factorial code example</h4>
+<p>Below is an example of a function with factorial runtime.</p>
+<pre><code class="language-javascript"><div><span class="hljs-comment">// O(n!)</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">factorial</span>(<span class="hljs-params">n</span>) </span>{
+  <span class="hljs-keyword">if</span> (n === <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span>;
+
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
+    factorial(n - <span class="hljs-number">1</span>);
+  }
+}
+</div></code></pre>
+<p>The <code>factorial</code> function has O(n!) runtime because the code is <em>recursive</em> but
+the number of recursive calls made in a single stack frame depends on the input.
+This contrasts with an <em>exponential</em> function because exponential functions have
+a <em>fixed</em> number of calls in each stack frame.</p>
+<p>You may it difficult to identify the complexity class of a given code snippet,
+especially if the code falls into the loglinear, exponential, or factorial
+classes. In the upcoming videos, we'll explain the analysis of these functions
+in greater detail. For now, you should focus on the <em>relative order</em> of these
+seven complexity classes!</p>
+<h2 id="what-youve-learned-1">What you've learned</h2>
+<p>In this reading, we listed the seven common complexity classes and saw some
+example code for each. In order of ascending growth, the seven classes are:</p>
+<ol>
+<li>Constant</li>
+<li>Logarithmic</li>
+<li>Linear</li>
+<li>Loglinear</li>
+<li>Polynomial</li>
+<li>Exponential</li>
+<li>Factorial</li>
+</ol>
+<br>
+<hr>
+<h1 id="memoization">Memoization</h1>
+<p><strong>Memoization</strong> is a design pattern used to reduce the overall number of
+calculations that can occur in algorithms that use recursive strategies to
+solve.</p>
+<p>Recall that recursion solves a large problem by dividing it into smaller
+sub-problems that are more manageable. Memoization will store the results of
+the sub-problems in some other data structure, meaning that you avoid duplicate
+calculations and only &quot;solve&quot; each subproblem once. There are two features that
+comprise memoization:</p>
+<ul>
+<li>the function is recursive</li>
+<li>the additional data structure used is typically an object (we refer to this as
+the memo!)</li>
+</ul>
+<p>This is a trade-off between the time it takes to run an algorithm (without
+memoization) and the memory used to run the algorithm (with memoization).
+Usually memoization is a good trade-off when dealing with large data or
+calculations.</p>
+<p>You cannot always apply this technique to recursive problems. The problem must
+have an &quot;overlapping subproblem structure&quot; for memoization to be effective.</p>
+<p>Here's an example of a problem that has such a structure:</p>
+<blockquote>
+<p>Using pennies, nickels, dimes, and quarters, what is the smallest combination
+of coins that total 27 cents?</p>
+</blockquote>
+<p>You'll explore this exact problem in depth later on. For now, here is some food
+for thought. Along the way to calculating the smallest coin combination of 27
+cents, you should also calculate the smallest coin combination of say, 25 cents
+as a component of that problem. This is the essence of an overlapping subproblem
+structure.</p>
+<h2 id="memoizing-factorial">Memoizing factorial</h2>
+<p>Here's an example of a function that computes the factorial of the number passed
+into it.</p>
+<pre><code class="language-javascript"><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">factorial</span>(<span class="hljs-params">n</span>) </span>{
+  <span class="hljs-keyword">if</span> (n === <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+  <span class="hljs-keyword">return</span> n * factorial(n - <span class="hljs-number">1</span>);
+}
+
+factorial(<span class="hljs-number">6</span>);       <span class="hljs-comment">// =&gt; 720, requires 6 calls</span>
+factorial(<span class="hljs-number">6</span>);       <span class="hljs-comment">// =&gt; 720, requires 6 calls</span>
+factorial(<span class="hljs-number">5</span>);       <span class="hljs-comment">// =&gt; 120, requires 5 calls</span>
+factorial(<span class="hljs-number">7</span>);       <span class="hljs-comment">// =&gt; 5040, requires 7 calls</span>
+</div></code></pre>
+<p>From this plain <code>factorial</code> above, it is clear that every time you call
+<code>factorial(6)</code> you should get the same result of <code>720</code> each time. The code is
+somewhat inefficient because you must go down the full recursive stack for each
+top level call to <code>factorial(6)</code>. It would be great if you could store the result
+of <code>factorial(6)</code> the first time you calculate it, then on subsequent calls to
+<code>factorial(6)</code> you simply fetch the stored result in constant time. You can
+accomplish exactly this by memoizing with an object!</p>
+<pre><code class="language-javascript"><div><span class="hljs-keyword">let</span> memo = {}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">factorial</span>(<span class="hljs-params">n</span>) </span>{
+  <span class="hljs-comment">// if this function has calculated factorial(n) previously,</span>
+  <span class="hljs-comment">// fetch the stored result in memo</span>
+  <span class="hljs-keyword">if</span> (n <span class="hljs-keyword">in</span> memo) <span class="hljs-keyword">return</span> memo[n];
+  <span class="hljs-keyword">if</span> (n === <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+
+  <span class="hljs-comment">// otherwise, it havs not calculated factorial(n) previously,</span>
+  <span class="hljs-comment">// so calculate it now, but store the result in case it is</span>
+  <span class="hljs-comment">// needed again in the future</span>
+  memo[n] = n * factorial(n - <span class="hljs-number">1</span>);
+  <span class="hljs-keyword">return</span> memo[n]
+}
+
+factorial(<span class="hljs-number">6</span>);       <span class="hljs-comment">// =&gt; 720, requires 6 calls</span>
+factorial(<span class="hljs-number">6</span>);       <span class="hljs-comment">// =&gt; 720, requires 1 call</span>
+factorial(<span class="hljs-number">5</span>);       <span class="hljs-comment">// =&gt; 120, requires 1 call</span>
+factorial(<span class="hljs-number">7</span>);       <span class="hljs-comment">// =&gt; 5040, requires 2 calls</span>
+
+memo;   <span class="hljs-comment">// =&gt; { '2': 2, '3': 6, '4': 24, '5': 120, '6': 720, '7': 5040 }</span>
+</div></code></pre>
+<p>The <code>memo</code> object above will map an argument of <code>factorial</code> to its return
+value. That is, the keys will be arguments and their values will be the
+corresponding results returned. By using the memo, you are able to avoid
+duplicate recursive calls!</p>
+<p>Here's some food for thought: By the time your first call to <code>factorial(6)</code>
+returns, you will not have just the argument <code>6</code> stored in the memo. Rather, you will
+have <em>all</em> arguments 2 to 6 stored in the memo.</p>
+<p>Hopefully you sense the efficiency you can get by memoizing your functions, but
+maybe you are not convinced by the last example for two reasons:</p>
+<ul>
+<li>You didn't improve the speed of the algorithm by an order of Big-O (it is
+still O(n)).</li>
+<li>The code uses some global variable, so it's kind of ugly.</li>
+</ul>
+<p>Both of those points are true, so take a look at a more advanced example that
+benefits from memoization.</p>
+<h2 id="memoizing-the-fibonacci-generator">Memoizing the Fibonacci generator</h2>
+<p>Here's a <em>naive</em> implementation of a function that calculates the Fibonacci
+number for a given input.</p>
+<pre><code class="language-javascript"><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fib</span>(<span class="hljs-params">n</span>) </span>{
+  <span class="hljs-keyword">if</span> (n === <span class="hljs-number">1</span> || n === <span class="hljs-number">2</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+  <span class="hljs-keyword">return</span> fib(n - <span class="hljs-number">1</span>) + fib(n - <span class="hljs-number">2</span>);
+}
+
+fib(<span class="hljs-number">6</span>);     <span class="hljs-comment">// =&gt; 8</span>
+</div></code></pre>
+<p>Before you optimize this, ask yourself what complexity class it falls into in
+the first place.</p>
+<p>The time complexity of this function is not super intuitive to describe because
+the code branches twice recursively. Fret not! You'll find it useful to
+visualize the calls needed to do this with a tree. When reasoning about the time
+complexity for recursive functions, draw a tree that helps you see the calls.
+Every node of the tree represents a call of the recursion:</p>
+<p><img src="https://s3-us-west-1.amazonaws.com/appacademy-open-assets/data_structures_algorithms/memoization/images/fib_tree.png" alt="fib_tree"></p>
+<p>In general, the height of this tree will be <code>n</code>. You derive this by following
+the path going straight down the left side of the tree. You can also see that
+each internal node leads to two more nodes. Overall, this means that the tree
+will have roughly 2<sup>n</sup> nodes which is the same as saying that the <code>fib</code>
+function has an exponential time complexity of 2<sup>n</sup>. That is very slow!
+See for yourself, try running <code>fib(50)</code> -  you'll be waiting for quite a while
+(it took 3 minutes on the author's machine).</p>
+<p>Okay. So the <code>fib</code> function is slow. Is there anyway to speed it up? Take a look
+at the tree above. Can you find any repetitive regions of the tree?</p>
+<p><img src="https://s3-us-west-1.amazonaws.com/appacademy-open-assets/data_structures_algorithms/memoization/images/fib_tree_duplicates.png" alt="fib_tree_duplicates"></p>
+<p>As the <code>n</code> grows bigger, the number of duplicate sub-trees grows exponentially.
+Luckily you can fix this using memoization by using a similar object strategy as
+before. You can use some JavaScript default arguments to clean things up:</p>
+<pre><code class="language-javascript"><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fastFib</span>(<span class="hljs-params">n, memo = {}</span>) </span>{
+  <span class="hljs-keyword">if</span> (n <span class="hljs-keyword">in</span> memo) <span class="hljs-keyword">return</span> memo[n];
+  <span class="hljs-keyword">if</span> (n === <span class="hljs-number">1</span> || n === <span class="hljs-number">2</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+
+  memo[n] = fastFib(n - <span class="hljs-number">1</span>, memo) + fastFib(n - <span class="hljs-number">2</span>, memo);
+  <span class="hljs-keyword">return</span> memo[n];
+}
+
+fastFib(<span class="hljs-number">6</span>);     <span class="hljs-comment">// =&gt; 8</span>
+fastFib(<span class="hljs-number">50</span>);    <span class="hljs-comment">// =&gt; 12586269025</span>
+</div></code></pre>
+<p>The code above can calculate the 50th Fibonacci number almost instantly! Thanks
+to the <code>memo</code> object, you only need to explore a subtree fully once. Visually,
+the <code>fastFib</code> recursion has this structure:</p>
+<p><img src="https://s3-us-west-1.amazonaws.com/appacademy-open-assets/data_structures_algorithms/memoization/images/fib_memoized.png" alt="fib_memoized"></p>
+<p>You can see the marked nodes (function calls) that access the memo in green.
+It's easy to see that this version of the Fibonacci generator will do far less
+computations as <code>n</code> grows larger! In fact, this memoization has brought the time
+complexity down to linear <code>O(n)</code> time because the tree only branches on the left
+side. This is an enormous gain if you recall the complexity class hierarchy.</p>
+<h2 id="the-memoization-formula">The memoization formula</h2>
+<p>Now that you understand memoization, when should you apply it? Memoization is
+useful when attacking recursive problems that have many overlapping
+sub-problems. You'll find it most useful to draw out the visual tree first. If
+you notice duplicate sub-trees, time to memoize. Here are the hard and fast
+rules you can use to memoize a slow function:</p>
+<ol>
+<li>Write the unoptimized, brute force recursion and make sure it works.</li>
+<li>Add the memo object as an additional argument to the function. The keys will
+represent unique arguments to the function, and their values will represent
+the results for those arguments.</li>
+<li>Add a base case condition to the function that returns the stored value if
+the function's argument is in the memo.</li>
+<li>Before you return the result of the recursive case, store it in the memo as a
+value and make the function's argument it's key.</li>
+</ol>
+<h2 id="what-you-learned">What you learned</h2>
+<p>You learned a secret to possibly changing an algorithm of one complexity class
+to a lower complexity class by using memory to store intermediate results. This
+is a powerful technique to use to make sure your programs that must do recursive
+calculations can benefit from running much faster.</p>
+<br>
+<hr>
+<h1 id="tabulation">Tabulation</h1>
+<p>Now that you are familiar with <em>memoization</em>, you can explore a related method
+of algorithmic optimization: <strong>Tabulation</strong>. There are two main features that
+comprise the Tabulation strategy:</p>
+<ul>
+<li>the function is iterative and <em>not</em> recursive</li>
+<li>the additional data structure used is typically an array, commonly referred to
+as the table</li>
+</ul>
+<p>Many problems that can be solved with memoization can also be solved with
+tabulation as long as you convert the recursion to iteration. The first example
+is the canonical example of recursion, calculating the Fibonacci number for an
+input. However, in the example, you'll see the iteration version of it for a
+fresh start!</p>
+<h2 id="tabulating-the-fibonacci-number">Tabulating the Fibonacci number</h2>
+<p>Tabulation is all about creating a table (array) and filling it out with
+elements. In general, you will complete the table by filling entries from &quot;left
+to right&quot;. This means that the first entry of the table (first element of the
+array) will correspond to the smallest subproblem. Naturally, the final entry of
+the table (last element of the array) will correspond to the largest problem,
+which is also the final answer.</p>
+<p>Here's a way to use tabulation to store the intermediary calculations so that
+later calculations can refer back to the table.</p>
+<pre><code class="language-javascript"><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">tabulatedFib</span>(<span class="hljs-params">n</span>) </span>{
+  <span class="hljs-comment">// create a blank array with n reserved spots</span>
+  <span class="hljs-keyword">let</span> table = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>(n);
+
+  <span class="hljs-comment">// seed the first two values</span>
+  table[<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;
+  table[<span class="hljs-number">1</span>] = <span class="hljs-number">1</span>;
+
+  <span class="hljs-comment">// complete the table by moving from left to right,</span>
+  <span class="hljs-comment">// following the fibonacci pattern</span>
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">2</span>; i &lt;= n; i += <span class="hljs-number">1</span>) {
+    table[i] = table[i - <span class="hljs-number">1</span>] + table[i - <span class="hljs-number">2</span>];
+  }
+
+  <span class="hljs-keyword">return</span> table[n];
+}
+
+<span class="hljs-built_in">console</span>.log(tabulatedFib(<span class="hljs-number">7</span>));      <span class="hljs-comment">// =&gt; 13</span>
+</div></code></pre>
+<p>When you initialized the table and seeded the first two values, it looked like
+this:</p>
+<table>
+<thead>
+<tr>
+<th>i</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>table[i]</code></td>
+<td><code>0</code></td>
+<td><code>1</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>After the loop finishes, the final table will be:</p>
+<table>
+<thead>
+<tr>
+<th>i</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>table[i]</code></td>
+<td><code>0</code></td>
+<td><code>1</code></td>
+<td><code>1</code></td>
+<td><code>2</code></td>
+<td><code>3</code></td>
+<td><code>5</code></td>
+<td><code>8</code></td>
+<td><code>13</code></td>
+</tr>
+</tbody>
+</table>
+<p>Similar to the previous <code>memo</code>, by the time the function completes, the <code>table</code>
+will contain the final solution as well as all sub-solutions calculated along
+the way.</p>
+<p>To compute the complexity class of this <code>tabulatedFib</code> is very straightforward
+since the code is iterative. The dominant operation in the function is the loop
+used to fill out the entire table. The length of the table is roughly <code>n</code>
+elements long, so the algorithm will have an <em>O(n)</em> runtime. The space taken by
+our algorithm is also <em>O(n)</em> due to the size of the table. Overall, this should
+be a satisfying solution for the efficiency of the algorithm.</p>
+<h2 id="aside-refactoring-for-o1-space">Aside: Refactoring for O(1) Space</h2>
+<p>You may notice that you can cut down on the space used by the function. At any
+point of the loop, the calculation really only need the previous two
+subproblems' results. There is little utility to storing the full array. This
+refactor is easy to do by using two variables:</p>
+<pre><code class="language-javascript"><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fib</span>(<span class="hljs-params">n</span>) </span>{
+  <span class="hljs-keyword">let</span> mostRecentCalcs = [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>];
+
+  <span class="hljs-keyword">if</span> (n === <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> mostRecentCalcs[<span class="hljs-number">0</span>];
+
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">2</span>; i &lt;= n; i++) {
+    <span class="hljs-keyword">const</span> [ secondLast, last ] = mostRecentCalcs;
+    mostRecentCalcs = [ last, secondLast + last ];
+  }
+
+  <span class="hljs-keyword">return</span> mostRecentCalcs[<span class="hljs-number">1</span>];
+}
+</div></code></pre>
+<p>Bam! You now have O(n) runtime and O(1) space. This is the most optimal
+algorithm for calculating a Fibonacci number. Note that this strategy is a pared
+down form of tabulation, since it uses only the last two values.</p>
+<h3 id="the-tabulation-formula">The Tabulation Formula</h3>
+<p>Here are the general guidelines for implementing the tabulation strategy. This
+is just a general recipe, so adjust for taste depending on your problem:</p>
+<ol>
+<li>Create the table array based off of the size of the input, which isn't always
+straightforward if you have multiple input values</li>
+<li>Initialize some values in the table that &quot;answer&quot; the trivially small
+subproblem usually by initializing the first entry (or entries) of the table</li>
+<li>Iterate through the array and fill in remaining entries, using previous
+entries in the table to perform the current calculation</li>
+<li>Your final answer is (usually) the last entry in the table</li>
+</ol>
+<h2 id="what-you-learned-1">What you learned</h2>
+<p>You learned another way of possibly changing an algorithm of one complexity
+class to a lower complexity class by using memory to store intermediate results.
+This is a powerful technique to use to make sure your programs that must do
+iterative calculations can benefit from running much faster.</p>
+<br>
+<hr>
+<h1 id="analysis-of-linear-search">Analysis of Linear Search</h1>
+<p>Consider the following search algorithm known as <strong>linear search</strong>.</p>
+<pre><code class="language-javascript"><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">search</span>(<span class="hljs-params">array, term</span>) </span>{
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; array.length; i++) {
+    <span class="hljs-keyword">if</span> (array[i] == term) {
+      <span class="hljs-keyword">return</span> i;
+    }
+  }
+  <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
+}
+</div></code></pre>
+<p>Most Big-O analysis is done on the &quot;worst-case scenario&quot; and provides an upper
+bound. In the worst case analysis, you calculate the upper bound on running time
+of an algorithm. You must know the case that causes the maximum number of
+operations to be executed.</p>
+<p>For <em>linear search</em>, the worst case happens when the element to be searched
+(<code>term</code> in the above code) is not present in the array. When <code>term</code> is not
+present, the <code>search</code> function compares it with all the elements of <code>array</code> one
+by one. Therefore, the worst-case time complexity of linear search would be
+O(n).</p>
+<br>
+<hr>
+<h1 id="analysis-of-binary-search">Analysis of Binary Search</h1>
+<p>Consider the following search algorithm known as the <strong>binary search</strong>. This
+kind of search only works if the array is already sorted.</p>
+<pre><code class="language-javascript"><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">binarySearch</span>(<span class="hljs-params">arr, x, start, end</span>) </span>{
+  <span class="hljs-keyword">if</span> (start &gt; end) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+
+  <span class="hljs-keyword">let</span> mid = <span class="hljs-built_in">Math</span>.floor((start + end) / <span class="hljs-number">2</span>);
+  <span class="hljs-keyword">if</span> (arr[mid] === x) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+
+  <span class="hljs-keyword">if</span> (arr[mid] &gt; x) {
+    <span class="hljs-keyword">return</span> binarySearch(arr, x, start, mid - <span class="hljs-number">1</span>);
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-keyword">return</span> binarySearch(arr, x, mid + <span class="hljs-number">1</span>, end);
+  }
+}
+</div></code></pre>
+<p>For the <em>binary search</em>, you cut the search space in half every time. This means
+that it reduces the number of searches you must do by half, every time. That
+means the number of steps it takes to get to the desired item (if it exists in
+the array), in the worst case takes the same amount of steps for every number
+within a range defined by the powers of 2.</p>
+<ul>
+<li>7 -&gt; 4 -&gt; 2 -&gt; 1</li>
+<li>8 -&gt; 4 -&gt; 2 -&gt; 1</li>
+<li>9 -&gt; 5 -&gt; 3 -&gt; 2 -&gt; 1</li>
+<li>15 -&gt; 8 -&gt; 4 -&gt; 2 -&gt; 1</li>
+<li>16 -&gt; 8 -&gt; 4 -&gt; 2 -&gt; 1</li>
+<li>17 -&gt; 9 -&gt; 5 -&gt; 3 -&gt; 2 -&gt; 1</li>
+<li>31 -&gt; 16 -&gt; 8 -&gt; 4 -&gt; 2 -&gt; 1</li>
+<li>32 -&gt; 16 -&gt; 8 -&gt; 4 -&gt; 2 -&gt; 1</li>
+<li>33 -&gt; 17 -&gt; 9 -&gt; 5 -&gt; 3 -&gt; 2 -&gt; 1</li>
+</ul>
+<p>So, for any number of items in the sorted array between 2<sup>n-1</sup> and
+2<sup>n</sup>, it takes <em>n</em> number of steps. That means if you have <em>k</em> items in
+the array, then it will take <i>log</i><sub><i>2</i></sub><i>k</i>.</p>
+<p>Binary searches are <i>O</i>(<i>log</i><sub><i>2</i></sub><i>n</i>).</p>
+<br>
+<hr>
+<h1 id="analysis-of-the-merge-sort">Analysis of the Merge Sort</h1>
+<p>Consider the following divide-and-conquer sort method known as the <strong>merge
+sort</strong>.</p>
+<pre><code class="language-javascript"><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">merge</span>(<span class="hljs-params">leftArray, rightArray</span>) </span>{
+  <span class="hljs-keyword">const</span> sorted = [];
+  <span class="hljs-keyword">while</span> (leftArray.length &gt; <span class="hljs-number">0</span> &amp;&amp; rightArray.length &gt; <span class="hljs-number">0</span>) {
+    <span class="hljs-keyword">const</span> leftItem = leftArray[<span class="hljs-number">0</span>];
+    <span class="hljs-keyword">const</span> rightItem = rightArray[<span class="hljs-number">0</span>];
+
+    <span class="hljs-keyword">if</span> (leftItem &gt; rightItem) {
+      sorted.push(rightItem);
+      rightArray.shift();
+    } <span class="hljs-keyword">else</span> {
+      sorted.push(leftItem);
+      leftArray.shift();
+    }
+  }
+
+  <span class="hljs-keyword">while</span> (leftArray.length !== <span class="hljs-number">0</span>) {
+    <span class="hljs-keyword">const</span> value = leftArray.shift();
+    sorted.push(value);
+  }
+
+  <span class="hljs-keyword">while</span> (rightArray.length !== <span class="hljs-number">0</span>) {
+    <span class="hljs-keyword">const</span> value = rightArray.shift();
+    sorted.push(value);
+  }
+
+  <span class="hljs-keyword">return</span> sorted
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">mergeSort</span>(<span class="hljs-params">array</span>) </span>{
+  <span class="hljs-keyword">const</span> length = array.length;
+  <span class="hljs-keyword">if</span> (length == <span class="hljs-number">1</span>) {
+    <span class="hljs-keyword">return</span> array;
+  }
+
+  <span class="hljs-keyword">const</span> middleIndex = <span class="hljs-built_in">Math</span>.ceil(length / <span class="hljs-number">2</span>);
+  <span class="hljs-keyword">const</span> leftArray = array.slice(<span class="hljs-number">0</span>, middleIndex);
+  <span class="hljs-keyword">const</span> rightArray = array.slice(middleIndex, length);
+
+  leftArray = mergeSort(leftArray);
+  rightArray = mergeSort(rightArray);
+
+  <span class="hljs-keyword">return</span> merge(leftArray, rightArray);
+}
+</div></code></pre>
+<p>For the <em>merge sort</em>, you cut the sort space in half every time. In each of
+those halves, you have to loop through the number of items in the array. That
+means that, for the worst case, you get that same
+<i>log</i><sub><i>2</i></sub><i>n</i> but it must be multiplied by the number of
+elements in the array, <em>n</em>.</p>
+<p>Merge sorts are <i>O</i>(<i>n*log</i><sub><i>2</i></sub><i>n</i>).</p>
+<br>
+<hr>
+<h1 id="analysis-of-bubble-sort">Analysis of Bubble Sort</h1>
+<p>Consider the following sort algorithm known as the <strong>bubble sort</strong>.</p>
+<pre><code class="language-javascript"><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">bubbleSort</span>(<span class="hljs-params">items</span>) </span>{
+  <span class="hljs-keyword">var</span> length = items.length;
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; length; i++) {
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> j = <span class="hljs-number">0</span>; j &lt; (length - i - <span class="hljs-number">1</span>); j++) {
+      <span class="hljs-keyword">if</span> (items[j] &gt; items[j + <span class="hljs-number">1</span>]) {
+        <span class="hljs-keyword">var</span> tmp = items[j];
+        items[j] = items[j + <span class="hljs-number">1</span>];
+        items[j + <span class="hljs-number">1</span>] = tmp;
+      }
+    }
+  }
+}
+</div></code></pre>
+<p>For the <em>bubble sort</em>, the worst case is the same as the best case because it
+always makes nested loops. So, the outer loop loops the number of times of the
+items in the array. For each one of those loops, the inner loop loops again a
+number of times for the items in the array. So, if there are <em>n</em> values in the
+array, then a loop inside a loop is <em>n</em> * <em>n</em>. So, this is O(n<sup>2</sup>).
+That's polynomial, which ain't that good.</p>
+<br>
+<hr>
+<h1 id="leetcodecom"><a href="http://LeetCode.com">LeetCode.com</a></h1>
+<p>Some of the problems in the projects ask you to use the LeetCode platform to
+check your work rather than relying on local mocha tests. If you don't already
+have an account at <a href="http://LeetCode.com">LeetCode.com</a>, please click
+<a href="https://leetcode.com/accounts/signup/">https://leetcode.com/accounts/signup/</a> to sign up for a free account.</p>
+<p>After you sign up for the account, please verify the account with the email
+address that you used so that you can actually run your solution on
+<a href="http://LeetCode.com">LeetCode.com</a>.</p>
+<p>In the projects, you will see files that are named &quot;leet_code_«number».js&quot;.
+When you open those, you will see a link in the file that you can use to go
+directly to the corresponding problem on <a href="http://LeetCode.com">LeetCode.com</a>.</p>
+<p>Use the local JavaScript file in Visual Studio Code to collaborate on the
+solution. Then, you can run the proposed solution in the <a href="http://LeetCode.com">LeetCode.com</a> code
+runner to validate its correctness.</p>
+
+    </body>
+    </html>

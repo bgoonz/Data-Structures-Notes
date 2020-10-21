@@ -1,0 +1,28 @@
+
+
+<h3>Read CSV</h3>
+<div id="output"></div>
+
+<script>
+  function init() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        var lines = this.responseText.split("\n");
+        var stringOutput = "<ul>"
+
+          for (let i = 0; i < lines.length; i++) {
+            var field = lines[i].split(",");
+            stringOutput += `<li><a href=${field[1]} target='_blank'`
+            stringOutput += `${field[1]}</a></li>`
+            }
+        stringOutput += "</ul>"
+        document.getElementById("output").innerHTML = stringOutput;
+      }
+    }
+    xhttp.open("GET", "myCSV.text", true);
+    xhttp.send()
+  }
+
+  window.onload = init;
+</script>

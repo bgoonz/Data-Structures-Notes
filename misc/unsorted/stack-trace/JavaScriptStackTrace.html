@@ -1,0 +1,886 @@
+<!doctype html>
+<html lang="en-US" prefix="og: http://ogp.me/ns#">
+<head>
+		<link rel="preload" href="https://fonts.googleapis.com/css?family=Assistant:300,400|Montserrat:600,700" as="style">
+	<link rel="preload" href="https://scalyr.com/wp-content/themes/scalyr/dist/js/master.min.js?ver=1603146814" as="script">
+<link rel="preload" href="https://scalyr.com/wp-content/themes/scalyr/dist/css/master.min.css?ver=1603146814" as="style">
+	<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TMLJRFC');</script>
+<!-- End Google Tag Manager -->
+
+<!--Testing area-->	
+	
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="application-name" content="Scalyr" />
+
+	
+	<link rel="apple-touch-icon" sizes="180x180" href="https://scalyr.com/wp-content/themes/scalyr/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="https://scalyr.com/wp-content/themes/scalyr/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="https://scalyr.com/wp-content/themes/scalyr/favicon-16x16.png">
+	<link rel="manifest" href="https://scalyr.com/wp-content/themes/scalyr/site.webmanifest">
+	<link rel="mask-icon" href="https://scalyr.com/wp-content/themes/scalyr/safari-pinned-tab.svg" color="#42aba6">
+	<link rel="shortcut icon" href="https://scalyr.com/wp-content/themes/scalyr/favicon.ico">
+	<meta name="msapplication-TileColor" content="#3e425b">
+	<meta name="msapplication-config" content="https://prod-design.scalyr.com/wp-content/themes/scalyr/browserconfig.xml">
+	<meta name="theme-color" content="#3e425b">
+	<link rel="pingback" href="https://scalyr.com/xmlrpc.php">
+
+	<!--Fontawsome-->
+	<!-- <link rel="stylesheet" href="/dependency/fontawsome/css/all.min.css">
+	<link rel="stylesheet" href="/dependency/fontawsome/css/fontawesome.min.css"> -->
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+  <script src="https://kit.fontawesome.com/18ab148a9d.js" crossorigin="anonymous"></script>
+
+  
+		<link href="https://fonts.googleapis.com/css?family=Assistant:300,400|Montserrat:600,700" rel="stylesheet">
+	
+<!-- This site is optimized with the Yoast SEO plugin v10.1.3 - https://yoast.com/wordpress/plugins/seo/ -->
+<title>JavaScript Stack Trace: Understanding It and Using It to Debug | Scalyr</title>
+<meta name="description" content="What&#039;s the stack trace in JavaScript? Learn that and all about the anatomy of the JavaScript stack trace—plus how to ensure good error reports for debugging"/>
+<link rel="canonical" href="https://www.scalyr.com/blog/javascript-stack-trace-understanding-it-and-using-it-to-debug/" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="JavaScript Stack Trace: Understanding It and Using It to Debug | Scalyr" />
+<meta property="og:description" content="What&#039;s the stack trace in JavaScript? Learn that and all about the anatomy of the JavaScript stack trace—plus how to ensure good error reports for debugging" />
+<meta property="og:url" content="https://www.scalyr.com/blog/javascript-stack-trace-understanding-it-and-using-it-to-debug/" />
+<meta property="og:site_name" content="Scalyr" />
+<meta property="article:publisher" content="https://www.facebook.com/scalyr/" />
+<meta property="article:section" content="Blog" />
+<meta property="article:published_time" content="2019-08-27T13:31:55+00:00" />
+<meta property="article:modified_time" content="2019-08-27T13:31:57+00:00" />
+<meta property="og:updated_time" content="2019-08-27T13:31:57+00:00" />
+<meta property="fb:app_id" content="381466549150980" />
+<meta property="og:image" content="https://library.scalyr.com/2019/08/22174333/JavaScript-fly-swatter-signifying-javascript-stack-trace1.png" />
+<meta property="og:image:secure_url" content="https://library.scalyr.com/2019/08/22174333/JavaScript-fly-swatter-signifying-javascript-stack-trace1.png" />
+<meta property="og:image:width" content="600" />
+<meta property="og:image:height" content="600" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:description" content="What&#039;s the stack trace in JavaScript? Learn that and all about the anatomy of the JavaScript stack trace—plus how to ensure good error reports for debugging" />
+<meta name="twitter:title" content="JavaScript Stack Trace: Understanding It and Using It to Debug | Scalyr" />
+<meta name="twitter:site" content="@scalyr" />
+<meta name="twitter:image" content="https://library.scalyr.com/2019/08/22174333/JavaScript-fly-swatter-signifying-javascript-stack-trace1.png" />
+<meta name="twitter:creator" content="@scalyr" />
+<script type='application/ld+json'>{"@context":"https://schema.org","@type":"Organization","url":"https://www.scalyr.com/","sameAs":["https://www.facebook.com/scalyr/","https://www.instagram/wearescalyr","https://www.linkedin.com/company/scalyr","https://www.youtube.com/channel/UCZ-ROlpERGg6MV-UyH9d_dw","https://twitter.com/scalyr"],"@id":"https://www.scalyr.com/#organization","name":"Scalyr","logo":"https://library.scalyr.com/2018/07/12170447/scalyr-logo-color-reverse.png"}</script>
+<!-- / Yoast SEO plugin. -->
+
+<link rel='dns-prefetch' href='//prod-design.scalyr.com' />
+<style>.wp-block-audio figcaption{margin-top:.5em;margin-bottom:1em;color:#555d66;text-align:center;font-size:13px}.wp-block-audio audio{width:100%;min-width:300px}.editor-block-list__layout .reusable-block-edit-panel{align-items:center;background:#f8f9f9;color:#555d66;display:flex;flex-wrap:wrap;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:13px;top:-14px;margin:0 -14px;padding:8px 14px;position:relative;z-index:7}.editor-block-list__layout .editor-block-list__layout .reusable-block-edit-panel{margin:0 -14px;padding:8px 14px}.editor-block-list__layout .reusable-block-edit-panel .reusable-block-edit-panel__spinner{margin:0 5px}.editor-block-list__layout .reusable-block-edit-panel .reusable-block-edit-panel__info{margin-right:auto}.editor-block-list__layout .reusable-block-edit-panel .reusable-block-edit-panel__label{margin-right:8px;white-space:nowrap;font-weight:600}.editor-block-list__layout .reusable-block-edit-panel .reusable-block-edit-panel__title{flex:1 1 100%;font-size:14px;height:30px;margin:4px 0 8px}.editor-block-list__layout .reusable-block-edit-panel .components-button.reusable-block-edit-panel__button{flex-shrink:0}@media (min-width:960px){.editor-block-list__layout .reusable-block-edit-panel{flex-wrap:nowrap}.editor-block-list__layout .reusable-block-edit-panel .reusable-block-edit-panel__title{margin:0}.editor-block-list__layout .reusable-block-edit-panel .components-button.reusable-block-edit-panel__button{margin:0 0 0 5px}}.editor-block-list__layout .reusable-block-indicator{background:#fff;border-left:1px dashed #e2e4e7;color:#555d66;border-bottom:1px dashed #e2e4e7;top:-14px;height:30px;padding:4px;position:absolute;z-index:1;width:30px;right:-14px}.wp-block-button{color:#fff;margin-bottom:1.5em}.wp-block-button.aligncenter{text-align:center}.wp-block-button.alignright{text-align:right}.wp-block-button__link{background-color:#32373c;border:none;border-radius:28px;box-shadow:none;color:inherit;cursor:pointer;display:inline-block;font-size:18px;margin:0;padding:12px 24px;text-align:center;text-decoration:none;white-space:normal;overflow-wrap:break-word}.wp-block-button__link:active,.wp-block-button__link:focus,.wp-block-button__link:hover{color:inherit}.is-style-squared .wp-block-button__link{border-radius:0}.is-style-outline{color:#32373c}.is-style-outline .wp-block-button__link{background:transparent;border:2px solid}.wp-block-categories.alignleft{margin-right:2em}.wp-block-categories.alignright{margin-left:2em}.wp-block-columns{display:flex;flex-wrap:wrap}@media (min-width:782px){.wp-block-columns{flex-wrap:nowrap}}.wp-block-column{flex:1;margin-bottom:1em;flex-basis:100%;min-width:0;word-break:break-word;overflow-wrap:break-word}@media (min-width:600px){.wp-block-column{flex-basis:50%;flex-grow:0}}@media (min-width:600px){.wp-block-column:nth-child(odd){margin-right:32px}.wp-block-column:not(:first-child),.wp-block-column:nth-child(2n){margin-left:32px}.wp-block-column:not(:last-child){margin-right:32px}}.wp-block-cover,.wp-block-cover-image{position:relative;background-color:#000;background-size:cover;background-position:50%;min-height:430px;width:100%;margin:0 0 1.5em;display:flex;justify-content:center;align-items:center;overflow:hidden}.wp-block-cover-image.has-left-content,.wp-block-cover.has-left-content{justify-content:flex-start}.wp-block-cover-image.has-left-content .wp-block-cover-image-text,.wp-block-cover-image.has-left-content .wp-block-cover-text,.wp-block-cover-image.has-left-content h2,.wp-block-cover.has-left-content .wp-block-cover-image-text,.wp-block-cover.has-left-content .wp-block-cover-text,.wp-block-cover.has-left-content h2{margin-left:0;text-align:left}.wp-block-cover-image.has-right-content,.wp-block-cover.has-right-content{justify-content:flex-end}.wp-block-cover-image.has-right-content .wp-block-cover-image-text,.wp-block-cover-image.has-right-content .wp-block-cover-text,.wp-block-cover-image.has-right-content h2,.wp-block-cover.has-right-content .wp-block-cover-image-text,.wp-block-cover.has-right-content .wp-block-cover-text,.wp-block-cover.has-right-content h2{margin-right:0;text-align:right}.wp-block-cover-image .wp-block-cover-image-text,.wp-block-cover-image .wp-block-cover-text,.wp-block-cover-image h2,.wp-block-cover .wp-block-cover-image-text,.wp-block-cover .wp-block-cover-text,.wp-block-cover h2{color:#fff;font-size:2em;line-height:1.25;z-index:1;margin-bottom:0;max-width:610px;padding:14px;text-align:center}.wp-block-cover-image .wp-block-cover-image-text a,.wp-block-cover-image .wp-block-cover-image-text a:active,.wp-block-cover-image .wp-block-cover-image-text a:focus,.wp-block-cover-image .wp-block-cover-image-text a:hover,.wp-block-cover-image .wp-block-cover-text a,.wp-block-cover-image .wp-block-cover-text a:active,.wp-block-cover-image .wp-block-cover-text a:focus,.wp-block-cover-image .wp-block-cover-text a:hover,.wp-block-cover-image h2 a,.wp-block-cover-image h2 a:active,.wp-block-cover-image h2 a:focus,.wp-block-cover-image h2 a:hover,.wp-block-cover .wp-block-cover-image-text a,.wp-block-cover .wp-block-cover-image-text a:active,.wp-block-cover .wp-block-cover-image-text a:focus,.wp-block-cover .wp-block-cover-image-text a:hover,.wp-block-cover .wp-block-cover-text a,.wp-block-cover .wp-block-cover-text a:active,.wp-block-cover .wp-block-cover-text a:focus,.wp-block-cover .wp-block-cover-text a:hover,.wp-block-cover h2 a,.wp-block-cover h2 a:active,.wp-block-cover h2 a:focus,.wp-block-cover h2 a:hover{color:#fff}.wp-block-cover-image.has-parallax,.wp-block-cover.has-parallax{background-attachment:fixed}@supports (-webkit-overflow-scrolling:touch){.wp-block-cover-image.has-parallax,.wp-block-cover.has-parallax{background-attachment:scroll}}.wp-block-cover-image.has-background-dim:before,.wp-block-cover.has-background-dim:before{content:"";position:absolute;top:0;left:0;bottom:0;right:0;background-color:inherit;opacity:.5;z-index:1}.wp-block-cover-image.has-background-dim.has-background-dim-10:before,.wp-block-cover.has-background-dim.has-background-dim-10:before{opacity:.1}.wp-block-cover-image.has-background-dim.has-background-dim-20:before,.wp-block-cover.has-background-dim.has-background-dim-20:before{opacity:.2}.wp-block-cover-image.has-background-dim.has-background-dim-30:before,.wp-block-cover.has-background-dim.has-background-dim-30:before{opacity:.3}.wp-block-cover-image.has-background-dim.has-background-dim-40:before,.wp-block-cover.has-background-dim.has-background-dim-40:before{opacity:.4}.wp-block-cover-image.has-background-dim.has-background-dim-50:before,.wp-block-cover.has-background-dim.has-background-dim-50:before{opacity:.5}.wp-block-cover-image.has-background-dim.has-background-dim-60:before,.wp-block-cover.has-background-dim.has-background-dim-60:before{opacity:.6}.wp-block-cover-image.has-background-dim.has-background-dim-70:before,.wp-block-cover.has-background-dim.has-background-dim-70:before{opacity:.7}.wp-block-cover-image.has-background-dim.has-background-dim-80:before,.wp-block-cover.has-background-dim.has-background-dim-80:before{opacity:.8}.wp-block-cover-image.has-background-dim.has-background-dim-90:before,.wp-block-cover.has-background-dim.has-background-dim-90:before{opacity:.9}.wp-block-cover-image.has-background-dim.has-background-dim-100:before,.wp-block-cover.has-background-dim.has-background-dim-100:before{opacity:1}.wp-block-cover-image.alignleft,.wp-block-cover-image.alignright,.wp-block-cover.alignleft,.wp-block-cover.alignright{max-width:305px;width:100%}.wp-block-cover-image:after,.wp-block-cover:after{display:block;content:"";font-size:0;min-height:inherit}@supports ((position:-webkit-sticky) or (position:sticky)){.wp-block-cover-image:after,.wp-block-cover:after{content:none}}.wp-block-cover-image.aligncenter,.wp-block-cover-image.alignleft,.wp-block-cover-image.alignright,.wp-block-cover.aligncenter,.wp-block-cover.alignleft,.wp-block-cover.alignright{display:flex}.wp-block-cover__video-background{position:absolute;top:50%;left:50%;transform:translateX(-50%) translateY(-50%);width:100%;height:100%;z-index:0;-o-object-fit:cover;object-fit:cover}.editor-block-list__block[data-type="core/embed"][data-align=left] .editor-block-list__block-edit,.editor-block-list__block[data-type="core/embed"][data-align=right] .editor-block-list__block-edit,.wp-block-embed.alignleft,.wp-block-embed.alignright{max-width:360px;width:100%}.wp-block-embed{margin-bottom:1em}.wp-block-embed figcaption{margin-top:.5em;margin-bottom:1em;color:#555d66;text-align:center;font-size:13px}.wp-embed-responsive .wp-block-embed.wp-embed-aspect-1-1 .wp-block-embed__wrapper,.wp-embed-responsive .wp-block-embed.wp-embed-aspect-1-2 .wp-block-embed__wrapper,.wp-embed-responsive .wp-block-embed.wp-embed-aspect-4-3 .wp-block-embed__wrapper,.wp-embed-responsive .wp-block-embed.wp-embed-aspect-9-16 .wp-block-embed__wrapper,.wp-embed-responsive .wp-block-embed.wp-embed-aspect-16-9 .wp-block-embed__wrapper,.wp-embed-responsive .wp-block-embed.wp-embed-aspect-18-9 .wp-block-embed__wrapper,.wp-embed-responsive .wp-block-embed.wp-embed-aspect-21-9 .wp-block-embed__wrapper{position:relative}.wp-embed-responsive .wp-block-embed.wp-embed-aspect-1-1 .wp-block-embed__wrapper:before,.wp-embed-responsive .wp-block-embed.wp-embed-aspect-1-2 .wp-block-embed__wrapper:before,.wp-embed-responsive .wp-block-embed.wp-embed-aspect-4-3 .wp-block-embed__wrapper:before,.wp-embed-responsive .wp-block-embed.wp-embed-aspect-9-16 .wp-block-embed__wrapper:before,.wp-embed-responsive .wp-block-embed.wp-embed-aspect-16-9 .wp-block-embed__wrapper:before,.wp-embed-responsive .wp-block-embed.wp-embed-aspect-18-9 .wp-block-embed__wrapper:before,.wp-embed-responsive .wp-block-embed.wp-embed-aspect-21-9 .wp-block-embed__wrapper:before{content:"";display:block;padding-top:50%}.wp-embed-responsive .wp-block-embed.wp-embed-aspect-1-1 .wp-block-embed__wrapper iframe,.wp-embed-responsive .wp-block-embed.wp-embed-aspect-1-2 .wp-block-embed__wrapper iframe,.wp-embed-responsive .wp-block-embed.wp-embed-aspect-4-3 .wp-block-embed__wrapper iframe,.wp-embed-responsive .wp-block-embed.wp-embed-aspect-9-16 .wp-block-embed__wrapper iframe,.wp-embed-responsive .wp-block-embed.wp-embed-aspect-16-9 .wp-block-embed__wrapper iframe,.wp-embed-responsive .wp-block-embed.wp-embed-aspect-18-9 .wp-block-embed__wrapper iframe,.wp-embed-responsive .wp-block-embed.wp-embed-aspect-21-9 .wp-block-embed__wrapper iframe{position:absolute;top:0;right:0;bottom:0;left:0;width:100%;height:100%}.wp-embed-responsive .wp-block-embed.wp-embed-aspect-21-9 .wp-block-embed__wrapper:before{padding-top:42.85%}.wp-embed-responsive .wp-block-embed.wp-embed-aspect-18-9 .wp-block-embed__wrapper:before{padding-top:50%}.wp-embed-responsive .wp-block-embed.wp-embed-aspect-16-9 .wp-block-embed__wrapper:before{padding-top:56.25%}.wp-embed-responsive .wp-block-embed.wp-embed-aspect-4-3 .wp-block-embed__wrapper:before{padding-top:75%}.wp-embed-responsive .wp-block-embed.wp-embed-aspect-1-1 .wp-block-embed__wrapper:before{padding-top:100%}.wp-embed-responsive .wp-block-embed.wp-embed-aspect-9-6 .wp-block-embed__wrapper:before{padding-top:66.66%}.wp-embed-responsive .wp-block-embed.wp-embed-aspect-1-2 .wp-block-embed__wrapper:before{padding-top:200%}.wp-block-file{margin-bottom:1.5em}.wp-block-file.aligncenter{text-align:center}.wp-block-file.alignright{text-align:right}.wp-block-file .wp-block-file__button{background:#32373c;border-radius:2em;color:#fff;font-size:13px;padding:.5em 1em}.wp-block-file a.wp-block-file__button{text-decoration:none}.wp-block-file a.wp-block-file__button:active,.wp-block-file a.wp-block-file__button:focus,.wp-block-file a.wp-block-file__button:hover,.wp-block-file a.wp-block-file__button:visited{box-shadow:none;color:#fff;opacity:.85;text-decoration:none}.wp-block-file *+.wp-block-file__button{margin-left:.75em}.wp-block-gallery{display:flex;flex-wrap:wrap;list-style-type:none;padding:0}.wp-block-gallery .blocks-gallery-image,.wp-block-gallery .blocks-gallery-item{margin:0 16px 16px 0;display:flex;flex-grow:1;flex-direction:column;justify-content:center;position:relative}.wp-block-gallery .blocks-gallery-image figure,.wp-block-gallery .blocks-gallery-item figure{margin:0;height:100%}@supports ((position:-webkit-sticky) or (position:sticky)){.wp-block-gallery .blocks-gallery-image figure,.wp-block-gallery .blocks-gallery-item figure{display:flex;align-items:flex-end;justify-content:flex-start}}.wp-block-gallery .blocks-gallery-image img,.wp-block-gallery .blocks-gallery-item img{display:block;max-width:100%;height:auto;width:100%}@supports ((position:-webkit-sticky) or (position:sticky)){.wp-block-gallery .blocks-gallery-image img,.wp-block-gallery .blocks-gallery-item img{width:auto}}.wp-block-gallery .blocks-gallery-image figcaption,.wp-block-gallery .blocks-gallery-item figcaption{position:absolute;bottom:0;width:100%;max-height:100%;overflow:auto;padding:40px 10px 5px;color:#fff;text-align:center;font-size:13px;background:linear-gradient(0deg,rgba(0,0,0,.7),rgba(0,0,0,.3) 60%,transparent)}.wp-block-gallery .blocks-gallery-image figcaption img,.wp-block-gallery .blocks-gallery-item figcaption img{display:inline}.wp-block-gallery.is-cropped .blocks-gallery-image a,.wp-block-gallery.is-cropped .blocks-gallery-image img,.wp-block-gallery.is-cropped .blocks-gallery-item a,.wp-block-gallery.is-cropped .blocks-gallery-item img{width:100%}@supports ((position:-webkit-sticky) or (position:sticky)){.wp-block-gallery.is-cropped .blocks-gallery-image a,.wp-block-gallery.is-cropped .blocks-gallery-image img,.wp-block-gallery.is-cropped .blocks-gallery-item a,.wp-block-gallery.is-cropped .blocks-gallery-item img{height:100%;flex:1;-o-object-fit:cover;object-fit:cover}}.wp-block-gallery .blocks-gallery-image,.wp-block-gallery .blocks-gallery-item{width:calc((100% - 16px)/2)}.wp-block-gallery .blocks-gallery-image:nth-of-type(2n),.wp-block-gallery .blocks-gallery-item:nth-of-type(2n){margin-right:0}.wp-block-gallery.columns-1 .blocks-gallery-image,.wp-block-gallery.columns-1 .blocks-gallery-item{width:100%;margin-right:0}@media (min-width:600px){.wp-block-gallery.columns-3 .blocks-gallery-image,.wp-block-gallery.columns-3 .blocks-gallery-item{width:calc((100% - 32px)/3);margin-right:16px}.wp-block-gallery.columns-4 .blocks-gallery-image,.wp-block-gallery.columns-4 .blocks-gallery-item{width:calc((100% - 48px)/4);margin-right:16px}.wp-block-gallery.columns-5 .blocks-gallery-image,.wp-block-gallery.columns-5 .blocks-gallery-item{width:calc((100% - 64px)/5);margin-right:16px}.wp-block-gallery.columns-6 .blocks-gallery-image,.wp-block-gallery.columns-6 .blocks-gallery-item{width:calc((100% - 80px)/6);margin-right:16px}.wp-block-gallery.columns-7 .blocks-gallery-image,.wp-block-gallery.columns-7 .blocks-gallery-item{width:calc((100% - 96px)/7);margin-right:16px}.wp-block-gallery.columns-8 .blocks-gallery-image,.wp-block-gallery.columns-8 .blocks-gallery-item{width:calc((100% - 112px)/8);margin-right:16px}.wp-block-gallery.columns-1 .blocks-gallery-image:nth-of-type(1n),.wp-block-gallery.columns-1 .blocks-gallery-item:nth-of-type(1n),.wp-block-gallery.columns-2 .blocks-gallery-image:nth-of-type(2n),.wp-block-gallery.columns-2 .blocks-gallery-item:nth-of-type(2n),.wp-block-gallery.columns-3 .blocks-gallery-image:nth-of-type(3n),.wp-block-gallery.columns-3 .blocks-gallery-item:nth-of-type(3n),.wp-block-gallery.columns-4 .blocks-gallery-image:nth-of-type(4n),.wp-block-gallery.columns-4 .blocks-gallery-item:nth-of-type(4n),.wp-block-gallery.columns-5 .blocks-gallery-image:nth-of-type(5n),.wp-block-gallery.columns-5 .blocks-gallery-item:nth-of-type(5n),.wp-block-gallery.columns-6 .blocks-gallery-image:nth-of-type(6n),.wp-block-gallery.columns-6 .blocks-gallery-item:nth-of-type(6n),.wp-block-gallery.columns-7 .blocks-gallery-image:nth-of-type(7n),.wp-block-gallery.columns-7 .blocks-gallery-item:nth-of-type(7n),.wp-block-gallery.columns-8 .blocks-gallery-image:nth-of-type(8n),.wp-block-gallery.columns-8 .blocks-gallery-item:nth-of-type(8n){margin-right:0}}.wp-block-gallery .blocks-gallery-image:last-child,.wp-block-gallery .blocks-gallery-item:last-child{margin-right:0}.wp-block-gallery .blocks-gallery-item.has-add-item-button{width:100%}.wp-block-gallery.alignleft,.wp-block-gallery.alignright{max-width:305px;width:100%}.wp-block-gallery.aligncenter,.wp-block-gallery.alignleft,.wp-block-gallery.alignright{display:flex}.wp-block-gallery.aligncenter .blocks-gallery-item figure{justify-content:center}.wp-block-image{max-width:100%;margin-bottom:1em;margin-left:0;margin-right:0}.wp-block-image img{max-width:100%}.wp-block-image.aligncenter{text-align:center}.wp-block-image.alignfull img,.wp-block-image.alignwide img{width:100%}.wp-block-image .aligncenter,.wp-block-image .alignleft,.wp-block-image .alignright,.wp-block-image.is-resized{display:table;margin-left:0;margin-right:0}.wp-block-image .aligncenter>figcaption,.wp-block-image .alignleft>figcaption,.wp-block-image .alignright>figcaption,.wp-block-image.is-resized>figcaption{display:table-caption;caption-side:bottom}.wp-block-image .alignleft{float:left;margin-right:1em}.wp-block-image .alignright{float:right;margin-left:1em}.wp-block-image .aligncenter{margin-left:auto;margin-right:auto}.wp-block-image figcaption{margin-top:.5em;margin-bottom:1em;color:#555d66;text-align:center;font-size:13px}.wp-block-latest-comments__comment{font-size:15px;line-height:1.1;list-style:none;margin-bottom:1em}.has-avatars .wp-block-latest-comments__comment{min-height:36px;list-style:none}.has-avatars .wp-block-latest-comments__comment .wp-block-latest-comments__comment-excerpt,.has-avatars .wp-block-latest-comments__comment .wp-block-latest-comments__comment-meta{margin-left:52px}.has-dates .wp-block-latest-comments__comment,.has-excerpts .wp-block-latest-comments__comment{line-height:1.5}.wp-block-latest-comments__comment-excerpt p{font-size:14px;line-height:1.8;margin:5px 0 20px}.wp-block-latest-comments__comment-date{color:#8f98a1;display:block;font-size:12px}.wp-block-latest-comments .avatar,.wp-block-latest-comments__comment-avatar{border-radius:24px;display:block;float:left;height:40px;margin-right:12px;width:40px}.wp-block-latest-posts.alignleft{margin-right:2em}.wp-block-latest-posts.alignright{margin-left:2em}.wp-block-latest-posts.is-grid{display:flex;flex-wrap:wrap;padding:0;list-style:none}.wp-block-latest-posts.is-grid li{margin:0 16px 16px 0;width:100%}@media (min-width:600px){.wp-block-latest-posts.columns-2 li{width:calc(50% - 16px)}.wp-block-latest-posts.columns-3 li{width:calc(33.33333% - 16px)}.wp-block-latest-posts.columns-4 li{width:calc(25% - 16px)}.wp-block-latest-posts.columns-5 li{width:calc(20% - 16px)}.wp-block-latest-posts.columns-6 li{width:calc(16.66667% - 16px)}}.wp-block-latest-posts__post-date{display:block;color:#6c7781;font-size:13px}.wp-block-media-text{display:grid;grid-template-rows:auto;align-items:center;grid-template-areas:"media-text-media media-text-content";grid-template-columns:50% auto}.wp-block-media-text.has-media-on-the-right{grid-template-areas:"media-text-content media-text-media";grid-template-columns:auto 50%}.wp-block-media-text .wp-block-media-text__media{grid-area:media-text-media;margin:0}.wp-block-media-text .wp-block-media-text__content{word-break:break-word;grid-area:media-text-content;padding:0 8%}.wp-block-media-text>figure>img,.wp-block-media-text>figure>video{max-width:unset;width:100%;vertical-align:middle}@media (max-width:600px){.wp-block-media-text.is-stacked-on-mobile{grid-template-columns:100%!important;grid-template-areas:"media-text-media" "media-text-content"}.wp-block-media-text.is-stacked-on-mobile.has-media-on-the-right{grid-template-areas:"media-text-content" "media-text-media"}}p.is-small-text{font-size:14px}p.is-regular-text{font-size:16px}p.is-large-text{font-size:36px}p.is-larger-text{font-size:48px}p.has-drop-cap:not(:focus):first-letter{float:left;font-size:8.4em;line-height:.68;font-weight:100;margin:.05em .1em 0 0;text-transform:uppercase;font-style:normal}p.has-drop-cap:not(:focus):after{content:"";display:table;clear:both;padding-top:14px}p.has-background{padding:20px 30px}p.has-text-color a{color:inherit}.wp-block-pullquote{padding:3em 0;margin-left:0;margin-right:0;text-align:center}.wp-block-pullquote.alignleft,.wp-block-pullquote.alignright{max-width:305px}.wp-block-pullquote.alignleft p,.wp-block-pullquote.alignright p{font-size:20px}.wp-block-pullquote p{font-size:28px;line-height:1.6}.wp-block-pullquote cite,.wp-block-pullquote footer{position:relative}.wp-block-pullquote .has-text-color a{color:inherit}.wp-block-pullquote:not(.is-style-solid-color){background:none}.wp-block-pullquote.is-style-solid-color{border:none}.wp-block-pullquote.is-style-solid-color blockquote{margin-left:auto;margin-right:auto;text-align:left;max-width:60%}.wp-block-pullquote.is-style-solid-color blockquote p{margin-top:0;margin-bottom:0;font-size:32px}.wp-block-pullquote.is-style-solid-color blockquote cite{text-transform:none;font-style:normal}.wp-block-pullquote cite{color:inherit}.wp-block-quote.is-large,.wp-block-quote.is-style-large{margin:0 0 16px;padding:0 1em}.wp-block-quote.is-large p,.wp-block-quote.is-style-large p{font-size:24px;font-style:italic;line-height:1.6}.wp-block-quote.is-large cite,.wp-block-quote.is-large footer,.wp-block-quote.is-style-large cite,.wp-block-quote.is-style-large footer{font-size:18px;text-align:right}.wp-block-separator.is-style-wide{border-bottom-width:1px}.wp-block-separator.is-style-dots{background:none;border:none;text-align:center;max-width:none;line-height:1;height:auto}.wp-block-separator.is-style-dots:before{content:"\00b7 \00b7 \00b7";color:#191e23;font-size:20px;letter-spacing:2em;padding-left:2em;font-family:serif}p.wp-block-subhead{font-size:1.1em;font-style:italic;opacity:.75}.wp-block-table.has-fixed-layout{table-layout:fixed;width:100%}.wp-block-table.aligncenter,.wp-block-table.alignleft,.wp-block-table.alignright{display:table;width:auto}.wp-block-table.is-style-stripes{border-spacing:0;border-collapse:inherit;border-bottom:1px solid #f3f4f5}.wp-block-table.is-style-stripes tr:nth-child(odd){background-color:#f3f4f5}.wp-block-table.is-style-stripes td{border-color:transparent}.wp-block-text-columns,.wp-block-text-columns.aligncenter{display:flex}.wp-block-text-columns .wp-block-column{margin:0 16px;padding:0}.wp-block-text-columns .wp-block-column:first-child{margin-left:0}.wp-block-text-columns .wp-block-column:last-child{margin-right:0}.wp-block-text-columns.columns-2 .wp-block-column{width:50%}.wp-block-text-columns.columns-3 .wp-block-column{width:33.33333%}.wp-block-text-columns.columns-4 .wp-block-column{width:25%}pre.wp-block-verse{white-space:nowrap;overflow:auto}.wp-block-video{margin-left:0;margin-right:0}.wp-block-video video{max-width:100%}@supports ((position:-webkit-sticky) or (position:sticky)){.wp-block-video [poster]{-o-object-fit:cover;object-fit:cover}}.wp-block-video.aligncenter{text-align:center}.wp-block-video figcaption{margin-top:.5em;margin-bottom:1em;color:#555d66;text-align:center;font-size:13px}.has-pale-pink-background-color.has-pale-pink-background-color{background-color:#f78da7}.has-vivid-red-background-color.has-vivid-red-background-color{background-color:#cf2e2e}.has-luminous-vivid-orange-background-color.has-luminous-vivid-orange-background-color{background-color:#ff6900}.has-luminous-vivid-amber-background-color.has-luminous-vivid-amber-background-color{background-color:#fcb900}.has-light-green-cyan-background-color.has-light-green-cyan-background-color{background-color:#7bdcb5}.has-vivid-green-cyan-background-color.has-vivid-green-cyan-background-color{background-color:#00d084}.has-pale-cyan-blue-background-color.has-pale-cyan-blue-background-color{background-color:#8ed1fc}.has-vivid-cyan-blue-background-color.has-vivid-cyan-blue-background-color{background-color:#0693e3}.has-very-light-gray-background-color.has-very-light-gray-background-color{background-color:#eee}.has-cyan-bluish-gray-background-color.has-cyan-bluish-gray-background-color{background-color:#abb8c3}.has-very-dark-gray-background-color.has-very-dark-gray-background-color{background-color:#313131}.has-pale-pink-color.has-pale-pink-color{color:#f78da7}.has-vivid-red-color.has-vivid-red-color{color:#cf2e2e}.has-luminous-vivid-orange-color.has-luminous-vivid-orange-color{color:#ff6900}.has-luminous-vivid-amber-color.has-luminous-vivid-amber-color{color:#fcb900}.has-light-green-cyan-color.has-light-green-cyan-color{color:#7bdcb5}.has-vivid-green-cyan-color.has-vivid-green-cyan-color{color:#00d084}.has-pale-cyan-blue-color.has-pale-cyan-blue-color{color:#8ed1fc}.has-vivid-cyan-blue-color.has-vivid-cyan-blue-color{color:#0693e3}.has-very-light-gray-color.has-very-light-gray-color{color:#eee}.has-cyan-bluish-gray-color.has-cyan-bluish-gray-color{color:#abb8c3}.has-very-dark-gray-color.has-very-dark-gray-color{color:#313131}.has-small-font-size{font-size:13px}.has-normal-font-size,.has-regular-font-size{font-size:16px}.has-medium-font-size{font-size:20px}.has-large-font-size{font-size:36px}.has-huge-font-size,.has-larger-font-size{font-size:42px}</style>
+<link rel='stylesheet' id='master_css-css'  href='https://prod-design.scalyr.com/wp-content/themes/scalyr/dist/css/master.min.css?ver=1603146814' type='text/css' media='all' />
+<link rel='stylesheet' id='blog_top_list_css-css'  href='https://prod-design.scalyr.com/wp-content/themes/scalyr/css/templates/blog_top_list.css?ver=5.1.1' type='text/css' media='all' />
+<link rel='stylesheet' id='nav_drop_down_css-css'  href='https://prod-design.scalyr.com/wp-content/themes/scalyr/css/components/nav_drop_down.css?ver=5.1.1' type='text/css' media='all' />
+<script type='text/javascript' defer src='https://prod-design.scalyr.com/wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var objectL10n = {"yopPollParams":{"urlParams":{"ajax":"https:\/\/prod-design.scalyr.com\/wp-admin\/admin-ajax.php","wpLogin":"https:\/\/prod-design.scalyr.com\/wp-login.php?redirect_to=https%3A%2F%2Fprod-design.scalyr.com%2Fwp-admin%2Fadmin-ajax.php%3Faction%3Dyop_poll_record_wordpress_vote"},"apiParams":{"reCaptcha":{"siteKey":""}},"captchaParams":{"imgPath":"https:\/\/prod-design.scalyr.com\/wp-content\/plugins\/yop-poll\/public\/assets\/img\/","url":"https:\/\/prod-design.scalyr.com\/wp-content\/plugins\/yop-poll\/app.php","accessibilityAlt":"Sound icon","accessibilityTitle":"Accessibility option: listen to a question and answer it!","accessibilityDescription":"Type below the <strong>answer<\/strong> to what you hear. Numbers or words:","explanation":"Click or touch the <strong>ANSWER<\/strong>","refreshAlt":"Refresh\/reload icon","refreshTitle":"Refresh\/reload: get new images and accessibility option!"},"voteParams":{"invalidPoll":"Invalid Poll","noAnswersSelected":"No answer selected","minAnswersRequired":"At least {min_answers_allowed} answer(s) required","maxAnswersRequired":"A max of {max_answers_allowed} answer(s) accepted","noAnswerForOther":"No other answer entered","noValueForCustomField":"{custom_field_name} is required","consentNotChecked":"You must agree to our terms and conditions","noCaptchaSelected":"Captcha is required","thankYou":"Thank you for your vote"},"resultsParams":{"singleVote":"vote","multipleVotes":"votes"}}};
+/* ]]> */
+</script>
+<script type='text/javascript' defer src='https://prod-design.scalyr.com/wp-content/plugins/yop-poll/public/assets/js/yop-poll-public.min.js?ver=5.1.1'></script>
+<link rel='https://api.w.org/' href='https://prod-design.scalyr.com/wp-json/' />
+<link rel='shortlink' href='https://www.scalyr.com/?p=5207' />
+<link rel="alternate" type="application/json+oembed" href="https://scalyr.com/wp-json/oembed/1.0/embed?url=%2Fblog%2Fjavascript-stack-trace-understanding-it-and-using-it-to-debug%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://scalyr.com/wp-json/oembed/1.0/embed?url=%2Fblog%2Fjavascript-stack-trace-understanding-it-and-using-it-to-debug%2F&#038;format=xml" />
+<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="https://www.scalyr.com/blog/feed/" /><style>
+
+		/* Gravitate Block Option Classes */
+		.block-options-padding-remove-top .block-inner {
+			padding-top: 0;
+		}
+		.block-options-padding-remove-bottom .block-inner {
+			padding-bottom: 0;
+		}
+		.block-bg-image {
+			background-size: cover;
+			background-position: center;
+		}
+		.block-bg-video {
+			overflow: hidden;
+		}
+		.block-bg-video .block-video-container {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			-webkit-transform: translateX(-50%) translateY(-50%);
+			transform: translateX(-50%) translateY(-50%);
+			min-width: 100%;
+			min-height: 100%;
+			width: auto;
+			height: auto;
+			overflow: hidden;
+			z-index: -1;
+		}
+		.block-bg-video,
+		.block-bg-overlay,
+		.block-bg-video .block-inner,
+		.block-bg-overlay .block-inner {
+			position: relative;
+		}
+		.block-bg-overlay::before {
+			content: '';
+			display: block;
+			position: absolute;
+			background-color: rgba(0, 0, 0, 0.5);
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+		}
+
+		</style>
+		</head>
+<body id="body" class="post-template-default single single-post postid-5207 single-format-standard">
+	<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TMLJRFC"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->	
+	<div class="global-wrapper">
+		<header class="site-header">
+	<div class="site-header__container">
+		<div class="site-header__logo-container">
+			<a href="/" class="site-header__logo" title="Scalyr" aria-label="Home">
+				<svg viewBox="0 0 120 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <polygon id="logo-path-1" points="0.320059027 0.239170909 15.3792301 0.239170909 15.3792301 3.55274417 0.320059027 3.55274417"></polygon>
+        <polygon id="logo-path-3" points="6.52590931e-16 3.51632341 6.52590931e-16 0.202682014 14.9205692 0.202682014 14.9205692 3.51632341 0 3.51632341"></polygon>
+    </defs>
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(-20.000000, -23.000000)">
+            <g transform="translate(20.000000, 20.000000)">
+                <g transform="translate(0.000000, 3.266667)">
+                    <g transform="translate(1.846154, 0.000000)">
+                        <mask id="logo-mask-2" fill="white">
+                            <use xlink:href="#logo-path-1"></use>
+                        </mask>
+                        <path d="M13.8218487,3.55274417 L1.8774405,3.55274417 C1.01724584,3.55274417 0.320059027,2.81104179 0.320059027,1.89592347 C0.320059027,0.981145846 1.01724584,0.239102769 1.8774405,0.239102769 L13.8218487,0.239102769 C14.6820433,0.239102769 15.3792301,0.981145846 15.3792301,1.89592347 C15.3792301,2.81104179 14.6820433,3.55274417 13.8218487,3.55274417" fill="#44666E" mask="url(#logo-mask-2)"></path>
+                    </g>
+                    <g transform="translate(0.000000, 4.684615)">
+                        <mask id="logo-mask-4" fill="white">
+                            <use xlink:href="#logo-path-3"></use>
+                        </mask>
+                        <path d="M13.3778192,3.51632341 L1.54287692,3.51632341 C0.690905769,3.51632341 -0.000190384615,2.77462103 -0.000190384615,1.85950271 C-0.000190384615,0.944725091 0.690905769,0.202682014 1.54287692,0.202682014 L13.3778192,0.202682014 C14.2301077,0.202682014 14.9205692,0.944725091 14.9205692,1.85950271 C14.9205692,2.77462103 14.2301077,3.51632341 13.3778192,3.51632341" fill="#52927E" mask="url(#logo-mask-4)"></path>
+                    </g>
+                    <path d="M15.9633338,12.6484615 L3.88282003,12.6484615 C3.01282351,12.6484615 2.30769231,11.9143859 2.30769231,11.0090148 C2.30769231,10.1033064 3.01282351,9.36923077 3.88282003,9.36923077 L15.9633338,9.36923077 C16.8333303,9.36923077 17.5384615,10.1033064 17.5384615,11.0090148 C17.5384615,11.9143859 16.8333303,12.6484615 15.9633338,12.6484615" fill="#42ABA6"></path>
+                    <path d="M18.27135,16.8646154 L6.19051234,16.8646154 C5.32083972,16.8646154 4.61538462,16.1306152 4.61538462,15.2253372 C4.61538462,14.3197219 5.32083972,13.5853846 6.19051234,13.5853846 L18.27135,13.5853846 C19.1413465,13.5853846 19.8461538,14.3197219 19.8461538,15.2253372 C19.8461538,16.1306152 19.1413465,16.8646154 18.27135,16.8646154" fill="#4BB6A0"></path>
+                    <path d="M15.9633338,21.5492308 L3.88282003,21.5492308 C3.01282351,21.5492308 2.30769231,20.8151552 2.30769231,19.909784 C2.30769231,19.0040756 3.01282351,18.27 3.88282003,18.27 L15.9633338,18.27 C16.8333303,18.27 17.5384615,19.0040756 17.5384615,19.909784 C17.5384615,20.8151552 16.8333303,21.5492308 15.9633338,21.5492308" fill="#8FCC97"></path>
+                    <g class="logo__scalyr-text">
+                        <path d="M30.3878938,3.75126257 C26.8835278,3.84351165 24.6130615,5.62525544 24.6836997,8.33209782 C24.8188195,13.5361848 32.4963459,11.7801925 32.5640678,14.382399 C32.5861017,15.2214419 31.867407,15.6813835 30.699285,15.7123505 C29.176676,15.7524446 26.9007013,14.9303521 25.3644831,13.647992 L24,16.5605205 C25.7685464,17.941975 28.2956431,18.7995981 30.7362242,18.7350563 C33.9904404,18.6493266 36.5363307,17.0282853 36.45986,14.0906572 C36.3214999,8.78160837 28.6413813,10.4329648 28.5752795,7.89367019 C28.5568099,7.18045113 29.1941736,6.80656527 30.1536213,6.78113972 C31.3428052,6.74984675 33.298964,7.32844082 34.8659648,8.18997555 L36.1876762,5.23637503 C34.6602069,4.28976252 32.4947258,3.69584792 30.3878938,3.75126257" fill="#FFFFFF"></path>
+                        <path d="M47.7729125,3.74769231 C43.433803,3.74769231 40.1538462,6.93892416 40.1538462,11.1799891 C40.1538462,15.4843049 43.3521837,18.7384615 47.6507999,18.7384615 C49.749175,18.7384615 52.0104724,17.6677622 53.5384615,16.05128 L51.4195234,13.7416471 C50.421427,14.7914803 49.0361134,15.4631126 47.8339688,15.4631126 C45.5726714,15.4631126 43.8615134,13.5946053 43.8615134,11.1379306 C43.8615134,8.72364046 45.5726714,6.87599938 47.8339688,6.87599938 C49.0971697,6.87599938 50.4824833,7.61088256 51.4195234,8.78656524 L53.5178985,6.22523326 C52.0917753,4.71340836 49.8915343,3.74769231 47.7729125,3.74769231" fill="#FFFFFF"></path>
+                        <path d="M62.2306727,12.7929657 L64.3429677,7.41966673 L66.4144189,12.7929657 L62.2306727,12.7929657 Z M66.3520277,3.74769231 L62.5619248,3.74769231 L56.3076923,18.27 L60.0974736,18.27 L61.153621,15.5934986 L67.491149,15.5934986 L68.5267138,18.27 L72.4615385,18.27 L66.3520277,3.74769231 Z" fill="#FFFFFF"></path>
+                        <polygon fill="#FFFFFF" points="80.709162 15.1785571 80.709162 3.74769231 77.0769231 3.74769231 77.0769231 18.27 86.7692308 18.27 86.7692308 15.1785571"></polygon>
+                        <polygon fill="#FFFFFF" points="98.1178854 13.5812901 103.384615 3.74769231 99.6941047 3.74769231 96.272469 10.0752278 92.7680778 3.74769231 89.0769231 3.74769231 94.447661 13.6847033 94.447661 18.27 98.1178854 18.27"></polygon>
+                        <path d="M113.272822,11.2784937 L110.477174,11.2784937 L110.477174,6.65228271 L113.272822,6.65228271 C114.867624,6.65228271 115.799292,7.41966673 115.799292,8.93413872 C115.799292,10.4695511 114.867624,11.2784937 113.272822,11.2784937 Z M116.955757,13.4775547 C118.653793,12.6270535 119.585782,11.0297865 119.585782,8.80978514 C119.585782,5.57337041 117.390557,3.74769231 113.559365,3.74769231 L107.076923,3.74769231 L107.076923,18.27 L110.763396,18.27 L110.763396,14.1830841 L113.559365,14.1830841 L113.66292,14.1830841 L115.816659,18.27 L120,18.27 L116.955757,13.4775547 Z" fill="#FFFFFF"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
+			</a>
+		</div>
+		<div class="site-header__menu-container">
+			<nav class="site-header__menu site-header__menu--primary">
+				<ul id="menu-main-menu" class="menu"><li id="menu-item-2039" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2039"><a href="/product">Product</a></li>
+<li id="menu-item-2230" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2230"><a href="/resources">Resources</a></li>
+<li id="menu-item-22" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-22"><a href="/customers">Customers</a></li>
+<li id="menu-item-2040" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2040"><a href="/pricing">Pricing</a></li>
+<li id="menu-item-2041" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2041"><a href="/blog">Blog</a></li>
+<li id="menu-item-2042" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2042"><a href="/company">Company</a></li>
+<li id="menu-item-283" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-283 button"><a href="https://www.scalyr.com/apps">Try Scalyr</a></li>
+</ul>			</nav>
+			<nav class="site-header__menu site-header__menu--secondary">
+				<ul id="menu-main-utility-links" class="menu"><li id="menu-item-26" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-26"><a href="https://app.scalyr.com/login">Login</a></li>
+<li id="menu-item-2043" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2043"><a href="/contact">Contact</a></li>
+<li id="menu-item-2044" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2044"><a href="https://support.scalyr.com/hc/en-us">Support</a></li>
+<li id="menu-item-1812" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1812"><a target="_blank" href="https://app.scalyr.com/help">Docs</a></li>
+<li id="menu-item-2045" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2045"><a href="/careers">Careers</a></li>
+</ul>				<a class="js-search" href="#" data-menu-dropdown-id="search">
+					<svg class="site-header__search-icon" viewBox="0 0 60 60"><use xlink:href="#icon-search"></use></svg>				</a>
+			</nav>
+		</div>
+		<button class="site-header__mobile-menu-button hide-for-large" type="button" aria-label="Menu">
+			<span class="site-header__mobile-menu-button-box">
+				<span class="site-header__mobile-menu-button-inner"></span>
+			</span>
+		</button>
+		<div class="site-header__mobile-container bg-dark-green">
+			<nav class="site-header__mobile-menu site-header__mobile-menu--primary">
+	<ul id="menu-mobile-menu" class="menu"><li id="menu-item-2057" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2057"><a href="/product">Product</a></li>
+<li id="menu-item-7362" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7362"><a href="/event-data-cloud/">Event data cloud</a></li>
+<li id="menu-item-7609" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7609"><a href="/architecture/">Architecture</a></li>
+<li id="menu-item-2232" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2232"><a href="https://www.scalyr.com/resources">Resources</a></li>
+<li id="menu-item-512" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-512"><a href="/customers">Customers</a></li>
+<li id="menu-item-2058" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2058"><a href="/pricing">Pricing</a></li>
+<li id="menu-item-2059" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2059"><a href="/blog">Blog</a></li>
+<li id="menu-item-2060" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2060"><a href="/company">Company</a></li>
+</ul></nav>
+<nav class="site-header__mobile-menu site-header__mobile-menu--secondary">
+	<ul id="menu-mobile-utility-links" class="menu"><li id="menu-item-516" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-516"><a href="https://app.scalyr.com/login">Log In</a></li>
+<li id="menu-item-2061" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2061"><a href="/contact">Contact</a></li>
+<li id="menu-item-2062" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2062"><a href="https://support.scalyr.com/hc/en-us">Support</a></li>
+<li id="menu-item-1823" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1823"><a href="https://app.scalyr.com/help">Docs</a></li>
+<li id="menu-item-2063" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2063"><a href="/careers">Careers</a></li>
+</ul></nav>
+<div class="site-header__mobile-buttons-container">
+	<ul id="menu-mobile-button-links" class="menu"><li id="menu-item-1824" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1824"><a href="https://app.scalyr.com/tryScalyr" class="button">Live Demo</a></li>
+<li id="menu-item-1825" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1825"><a href="https://app.scalyr.com/signup" class="button">Free Trial</a></li>
+</ul></div>
+<form class="ui__search-input" action="/" method="GET">
+	<input type="text"
+		name="s"
+		class="ui__search ui__search-input-text"
+		placeholder="Search"
+					>
+	<svg class="ui__search-input-icon" viewBox="0 0 60 60"><use xlink:href="#icon-search"></use></svg></form>
+		</div>
+	</div>
+</header>
+	
+		<main class="global-content">
+<div class="banner bg-green">
+			<div class="banner__bg-image">
+			<img class="banner__bg-image-img" alt="green" title="green" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAAABCAQAAACC0sM2AAAADElEQVR42mNkGCYAAAGSAAIVQ4IOAAAAAElFTkSuQmCC" data-ib-sources="https://library.scalyr.com/2019/10/28094919/green-150x76.png 150 76, https://library.scalyr.com/2019/10/28094919/green-300x153.png 300 153, https://library.scalyr.com/2019/10/28094919/green-768x392.png 768 392, https://library.scalyr.com/2019/10/28094919/green-1024x522.png 1024 522, https://library.scalyr.com/2019/10/28094919/green-1440x734.png 1440 734, https://library.scalyr.com/2019/10/28094919/green.png 1920 979" data-ib-match-dpr="0" />		</div>
+			<div class="banner__content-container">
+		<div class="row align-center">
+			<div class="columns small-12 large-10">
+				<h1 class="banner__title banner__title--small">JavaScript Stack Trace: Understanding It and Using It to Debug</h1>
+									<div class="banner__meta-container">
+											<div class="banner__meta-item-container">
+														<img class="banner__meta-item-avatar" src="https://secure.gravatar.com/avatar/2edcf404a46a088bccf2c1643e051382?s=96&#038;d=mm&#038;r=g" alt="Erin Baez">
+							<span class="banner__meta-item-text">Erin Baez</span>
+						</div>
+												<div class="banner__meta-item-container">
+							<svg class="banner__meta-icon" viewBox="0 0 60 60"><use xlink:href="#icon-calendar"></use></svg>							<span class="banner__meta-item-text">August 27, 2019</span>
+						</div>
+											</div>
+								</div>
+		</div>
+	</div>
+</div>
+		<div class="single-post__post-content-container">
+							<section class="section-container block-bg-none">
+					<div class="section-inner">
+						<div class="row">
+							<div class="columns small-12 large-7 large-offset-1 wysiwyg" id="content_container">
+                <!-- count blog view -->
+                <p class="blog_view_number" style="display:none;">
+                  <i class="fas fa-eye"></i>
+                  Views
+                                  </p>
+                <hr style="border:none; border-bottom:1px solid gray;"/>
+								
+<p>We&#8217;ve all been there. You&#8217;ve set up a new project, everything is going smoothly, and boom, it hits. You&#8217;re staring at a big red error in your console. After trying everything you can think of, you just can&#8217;t seem to resolve it. In desperation, you resort to posting the error up on the internet. Help!</p>
+
+
+
+<p>Sure enough, an anonymous hero, &#8220;Linux412,&#8221; rides in and informs you, &#8220;Looks like you&#8217;ve got a naming error on your function.&#8221; Aha—that fixed it, but how did they know?! The secret to the anonymous developer&#8217;s magic lies in their ability to read and make sense of application error reports.</p>
+
+
+
+<p>If we learn how to read these errors, we&#8217;ll be able to solve nearly all of our coding problems. In JavaScript, the error report is called a stack trace. We already covered the stack trace in <a href="https://www.scalyr.com/blog/php-stack-trace-understanding-debug/">PHP</a> and <a href="https://www.scalyr.com/blog/java-stack-trace-understanding/">Java</a> in earlier articles. But today, it&#8217;s the JavaScript stack trace that&#8217;s under discussion.</p>
+
+
+
+<p>By the end of this article, you should understand what the JavaScript stack trace is and why naming functions and error messages are important for debugging with stack traces.</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><img src="https://library.scalyr.com/2019/08/22174333/JavaScript-fly-swatter-signifying-javascript-stack-trace1.png" alt="JavaScript fly swatter signifying javascript stack trace" class="wp-image-5210" srcset="https://library.scalyr.com/2019/08/22174333/JavaScript-fly-swatter-signifying-javascript-stack-trace1.png 600w, https://library.scalyr.com/2019/08/22174333/JavaScript-fly-swatter-signifying-javascript-stack-trace1-150x150.png 150w, https://library.scalyr.com/2019/08/22174333/JavaScript-fly-swatter-signifying-javascript-stack-trace1-300x300.png 300w" sizes="(max-width: 600px) 100vw, 600px" /></figure></div>
+
+
+
+<span id="more-5207"></span>
+
+
+
+<h2>What Is a Stack Trace?</h2>
+
+
+
+<p>As always, let&#8217;s start by defining a stack trace.</p>
+
+
+
+<blockquote class="wp-block-quote"><p>A stack trace is a list of the functions, in order, that lead to a given point in a software program.</p></blockquote>
+
+
+
+<p>A stack trace is essentially a breadcrumb trail for your software. You can easily see the stack trace in <a href="https://www.scalyr.com/blog/get-started-quickly-javascript-logging/">JavaScript</a> by adding the following into your code:</p>
+
+
+
+<pre class="wp-block-preformatted">console.trace();</pre>
+
+
+
+<p>And you&#8217;ll get an outputted stack trace.</p>
+
+
+
+<p>But what does a stack trace actually look like? Let&#8217;s cover that now.</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><img src="https://library.scalyr.com/2019/08/22174241/Javascript-Stack-Trace-Pull-Quote-11.png" alt="" class="wp-image-5208" srcset="https://library.scalyr.com/2019/08/22174241/Javascript-Stack-Trace-Pull-Quote-11.png 1000w, https://library.scalyr.com/2019/08/22174241/Javascript-Stack-Trace-Pull-Quote-11-150x30.png 150w, https://library.scalyr.com/2019/08/22174241/Javascript-Stack-Trace-Pull-Quote-11-300x60.png 300w, https://library.scalyr.com/2019/08/22174241/Javascript-Stack-Trace-Pull-Quote-11-768x154.png 768w" sizes="(max-width: 1000px) 100vw, 1000px" /></figure></div>
+
+
+
+<h2>The Anatomy of a Stack Trace</h2>
+
+
+
+<p>To understand the stack trace better, let&#8217;s take an example.</p>
+
+
+
+<pre class="wp-block-preformatted">function controller(){
+    database();
+}
+
+function database(){
+    query();
+}
+
+function query () {
+    throw new Error();
+}</pre>
+
+
+
+<p>Here we see a series of functions that call each other. The last function will error, causing the program to halt and emit a stack trace.</p>
+
+
+
+<p>When the last function errors, the following stack trace is emitted:</p>
+
+
+
+<pre class="wp-block-preformatted">Uncaught Error
+    at query (:10:11)
+    at database (:6:5)
+    at controller (:2:5)</pre>
+
+
+
+<p>And you can see from the above error, query was called by database, which in turn was called by controller. You can see then that the stack trace shows which functions called each other. Importantly, we can also see the line number and file that the function exists on, and the topmost line is the error itself.</p>
+
+
+
+<p>The stack trace helps us to know the steps that lead up to our error. And the stack trace isn&#8217;t only useful for humans. If you&#8217;re using error tooling that tracks and stores errors, it can use these stack traces to count how often an error occurs.</p>
+
+
+
+<p>But wait—before you take your newfound knowledge of stack traces and start using the console.trace method as a debugging tool, there are a few other things we should consider. In JavaScript, the stack trace may not always appear as you think. What do I mean? Let me explain&#8230;</p>
+
+
+
+<h2>Function Naming, and Why It&#8217;s Important</h2>
+
+
+
+<p>One of the key components in the above stack trace is that it emits not only an error message and a set of line numbers, but the function names. However, in JavaScript, not every function has a name. Some functions can be anonymous.</p>
+
+
+
+<p>These anonymous functions pose a threat to our debugging. If our stack traces include anonymous functions, we&#8217;ll greatly reduce the value of the stack trace because it&#8217;s much harder to see the steps that lead to an error. This will make our whole debugging process so much more painful.</p>
+
+
+
+<p>Take, for instance, the following example:</p>
+
+
+
+<pre class="wp-block-preformatted">const database = Promise.resolve();
+database
+    .then(function () {
+        throw new Error();
+    });</pre>
+
+
+
+<p>When we run the above code, we see the following stack trace:</p>
+
+
+
+<pre class="wp-block-preformatted">Uncaught (in promise) Error
+at &lt;anonymous&gt;</pre>
+
+
+
+<p>As you can see, the error is thrown, but the parent function that led to the error is anonymous. Not only that, but the error itself is quite cryptic. It tells us that an error happened, but no indication is made as to why the error occurred.</p>
+
+
+
+<p>The stack trace contains a reference to an unnamed function because in the previous example the error that was thrown was in fact anonymous. Go ahead and take a look. We didn&#8217;t tell JavaScript the name of the function, so it can&#8217;t report it, which isn&#8217;t very useful.</p>
+
+
+
+<p>So how can we resolve the problem and go back to understanding the history of each of our called functions?&nbsp;By ensuring that we apply a name property to all of our functions.</p>
+
+
+
+<p>Let&#8217;s modify the above example with a name on our function.</p>
+
+
+
+<pre class="wp-block-preformatted">const database = Promise.resolve(); 
+database
+    .then(function resolver () { 
+        throw new Error(); 
+    });</pre>
+
+
+
+<p>Which now results in the following stack trace:</p>
+
+
+
+<pre class="wp-block-preformatted">Uncaught (in promise) Error
+    at resolver (&lt;anonymous&gt;:1:81)</pre>
+
+
+
+<p>Aha! Much better.</p>
+
+
+
+<h2>Always Name Your Functions</h2>
+
+
+
+<p>Generally speaking, it&#8217;s wise to always name your functions, no matter the situation. You can name a function by adding the name between the function keyword and your argument brackets. But don&#8217;t be fooled—an anonymous function assigned to a variable is still anonymous.</p>
+
+
+
+<p>For instance, take the following:</p>
+
+
+
+<pre class="wp-block-preformatted">const named = function(){}</pre>
+
+
+
+<p>Here, it appears that the function is named, but it isn&#8217;t. Because there&#8217;s no name between the function keyword and the round brackets, the function has no name and will appear as anonymous in our stack trace. Some JavaScript engines can infer our name in some scenarios, but it&#8217;s not an officially supported feature, so don&#8217;t be fooled. Always name your functions.</p>
+
+
+
+<h2>Give Names to Your JavaScript Errors</h2>
+
+
+
+<p>The keen-eyed among you will have noticed that in all the examples shown so far, the error messages themselves have been pretty useless. For instance, &#8220;Uncaught (in promise) Error&#8221; gives us very little context or understanding to fix the error.</p>
+
+
+
+<p>But there is hope! We can actually fix these error messages. Let me show you how.</p>
+
+
+
+<p>In order for stack traces to be their most effective, we should anticipate as many error states as possible and throw descriptive errors. Say, for instance, that JavaScript encountered a missing piece of data—let&#8217;s say a username not in a database. We wouldn&#8217;t want our code to continue running, because it would try to perform actions on the missing data and would eventually throw some unhelpful message like:</p>
+
+
+
+<pre class="wp-block-preformatted">Uncaught ReferenceError: user is not defined</pre>
+
+
+
+<p>Seem familiar? It will be to most developers. Because JavaScript is quite flexible, running into these cryptic error messages is all too common.</p>
+
+
+
+<p>So, how do we fix it? By throwing errors with descriptive error messages.</p>
+
+
+
+<p>Let&#8217;s go back to our first example to look at throwing named errors in action. If we take our original example, rather than throwing a generic error, let&#8217;s go ahead and add an error message to our error object constructor, as follows:</p>
+
+
+
+<pre class="wp-block-preformatted">function controller(){ database(); }
+
+function database(){ query(); }
+
+function query () { throw new Error('Error occurred in query, please try X'); }</pre>
+
+
+
+<p>Which will result in the following stack trace:</p>
+
+
+
+<pre class="wp-block-preformatted">Uncaught Error: Error occurred in query, please try X
+at query (&lt;anonymous&gt;:5:27)
+at database (&lt;anonymous&gt;:3:22)
+at controller (&lt;anonymous&gt;:1:24)</pre>
+
+
+
+<p>Now that&#8217;s a lot more readable!</p>
+
+
+
+<p>Notice that we even modified our error message to include a suggestion for a fix.</p>
+
+
+
+<p>When you&#8217;re writing the code at that point in time, you&#8217;ll have a good understanding of all the different ways that your function can fail. So, if you can, explicitly throw errors with meaningful messages to help out your future self when you&#8217;re debugging your code.</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><img src="https://library.scalyr.com/2019/08/22174302/Javascript-Stack-Trace-Pull-Quote-21.png" alt="" class="wp-image-5209" srcset="https://library.scalyr.com/2019/08/22174302/Javascript-Stack-Trace-Pull-Quote-21.png 1000w, https://library.scalyr.com/2019/08/22174302/Javascript-Stack-Trace-Pull-Quote-21-150x30.png 150w, https://library.scalyr.com/2019/08/22174302/Javascript-Stack-Trace-Pull-Quote-21-300x60.png 300w, https://library.scalyr.com/2019/08/22174302/Javascript-Stack-Trace-Pull-Quote-21-768x154.png 768w" sizes="(max-width: 1000px) 100vw, 1000px" /></figure></div>
+
+
+
+<h2>And That&#8217;s All on the Stack Trace</h2>
+
+
+
+<p>That concludes our look at JavaScript stack traces. I hope it helps you feel more confident when you see stack traces and that you understand how they&#8217;re created, how to read them, and ultimately how to use them confidently to debug your application.</p>
+
+
+
+<p>Remember, always name functions, and don&#8217;t be fooled by assigning them to variables, which are still unnamed. And also, try to predict failure points in your application and throw reasonable error messages that will make your life easier later on.</p>
+
+
+
+<p>No more will you need to mindlessly paste errors onto the internet. Instead, you can sift through them yourself like an investigator solving a mystery. Debugging applications in a much more logical and straightforward manner should save you plenty of headaches in the long run, and make writing code a little bit more fun.</p>
+
+
+
+<p>Good luck!</p>
+
+
+
+<p><em>This post was written by Lou Bichard. </em><a href="http://www.thedevcoach.co.uk/"><em>Lou</em></a><em> is a JavaScript full stack engineer with a passion for culture, approach, and delivery. He believes the best products emerge from high performing teams and practices. Lou is a fan and advocate of old-school lean and systems thinking, XP, continuous delivery, and DevOps.</em><br></p>
+							</div>
+						</div>
+					</div>
+				</section>
+	
+				
+			<section class="section-container block-bg-none ">
+				<div class="section-inner">
+					<div class="row">
+						<div class="columns small-12 large-5 large-offset-1 wysiwyg">  <!--large-offset-2-->
+							
+<!-- You can start editing here. -->
+
+
+			<!-- If comments are closed. -->
+		<p class="nocomments">Comments are closed.</p>
+
+	
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<div class="single-post__share-container fix-to-top hidden" data-twitter-username="scalyr">
+				<h6 class="single-post__share-text">Share:</h6>
+				<div class="single-post__share-links-container">
+										<a class="single-post__share-link" href="#" data-share-method="facebook">
+						<svg class="single-post__share-svg" viewBox="0 0 60 60"><use xlink:href="#icon-facebook"></use></svg>					</a>
+										<a class="single-post__share-link" href="#" data-share-method="twitter">
+						<svg class="single-post__share-svg" viewBox="0 0 60 60"><use xlink:href="#icon-twitter"></use></svg>					</a>
+										<a class="single-post__share-link" href="#" data-share-method="linkedin">
+						<svg class="single-post__share-svg" viewBox="0 0 60 60"><use xlink:href="#icon-linkedin"></use></svg>					</a>
+									</div>
+			</div>
+			<!-- Top 5 blog list -->
+			<div class="list_container" id="list_container">
+				<section class="title_container">
+					<p class="top_list_title">Top Blog Posts</p>
+				</section>
+				<div class="list_box">
+					 
+							<li class="list_item">
+								<a href="https://www.scalyr.com/blog/1000-little-breakthroughs/
+" class="list_link">1000 Little Breakthroughs</a>
+							</li>
+							<hr class="top_list_hr">
+					 
+							<li class="list_item">
+								<a href="https://www.scalyr.com/blog/getting-started-quickly-c-logging/
+" class="list_link">Getting Started Quickly with C++ Logging</a>
+							</li>
+							<hr class="top_list_hr">
+					 
+							<li class="list_item">
+								<a href="https://www.scalyr.com/blog/api-vs-microservices/
+" class="list_link">API versus Microservices</a>
+							</li>
+							<hr class="top_list_hr">
+					 
+							<li class="list_item">
+								<a href="https://www.scalyr.com/blog/microservices-logging-best-practices/
+" class="list_link">Microservices Logging Best Practices</a>
+							</li>
+							<hr class="top_list_hr">
+					 
+							<li class="list_item">
+								<a href="https://www.scalyr.com/blog/create-docker-image/
+" class="list_link">How to create a Docker image from a container</a>
+							</li>
+							<hr class="top_list_hr">
+					 
+							<li class="list_item">
+								<a href="https://www.scalyr.com/blog/searching-1tb-sec-systems-engineering-before-algorithms/
+" class="list_link">Searching 1.5TB/Second: Systems Engineering before Algorithms</a>
+							</li>
+							<hr class="top_list_hr">
+									</div>
+				<p class="top_list_title">SUBSCRIBE TO OUR BLOG</p>
+				<div id="hub_form_container" class="hub_form_container">
+					<!--[if lte IE 8]>
+					<script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/v2-legacy.js"></script>
+					<![endif]-->
+					<script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/v2.js"></script>
+					<script>
+					hbspt.forms.create({
+						portalId: "2803304",
+						formId: "c9bd17c1-2d68-43be-8bf6-5583050fa971"
+					});
+					</script>
+				</div>
+			</div>
+			<!-- Think about use for each and array in php to push code in the loop below -->
+			<!-- Top 5 blog list end -->
+		</div>
+		
+	<section data-block-index="1" class="bg-purple block-container block-calltoaction-slim block-index-1" aria-label="Calltoaction Slim">
+
+		<div class="block-inner">
+	<div class="row align-middle align-center">
+		<div class="columns small-12 large-10 block-calltoaction-slim__content-container">
+			<h3 class="block-calltoaction-slim__title">Jump in with your own data. Free for 30 days.</h3>
+							<a class="block-calltoaction-slim__button button" href="https://app.scalyr.com/signup">Free Trial</a>
+						</div>
+	</div>
+</div>
+
+	</section>
+
+			<section class="section-container bg-light-gray">
+				<div class="section-inner">
+					<div class="row">
+						<div class="columns small-12 single-post__tags-container">
+													</div>
+					</div>
+				</div>
+			</section>
+						<section class="section-container bg-light-gray single-post__related-posts-container">
+				<div class="section-inner">
+					<div class="row">
+						<div class="columns small-12">
+							<h5 class="single-post__related-posts-title">Related Posts</h5>
+						</div>
+					</div>
+					<div class="row">
+													<div class="columns small-12 medium-4">
+								<a href="/blog/1000-little-breakthroughs/" class="card-blog card-blog--no-bg card-blog--vertical">
+			<div class="card-blog__image-container">
+			<img class="card-blog__image" alt="Steve_blog_twitter_size" title="Steve_blog_twitter_size" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAAABCAQAAACC0sM2AAAADElEQVR42mNkGCYAAAGSAAIVQ4IOAAAAAElFTkSuQmCC" data-ib-sources="https://library.scalyr.com/2020/04/22155450/Steve_blog_twitter_size-150x75.jpg 150 75, https://library.scalyr.com/2020/04/22155450/Steve_blog_twitter_size-300x150.jpg 300 150, https://library.scalyr.com/2020/04/22155450/Steve_blog_twitter_size-768x384.jpg 768 384, https://library.scalyr.com/2020/04/22155450/Steve_blog_twitter_size-1024x512.jpg 1024 512, https://library.scalyr.com/2020/04/22155450/Steve_blog_twitter_size.jpg 1024 512" data-ib-match-dpr="0" />		</div>
+			<div class="card-blog__content-container">
+		<div class="card-blog__content">
+			<h6 class="card-blog__author-date">Steve Newman / April 14</h6>
+			<h4 class="card-blog__title">1000 Little Breakthroughs</h4>
+					</div>
+	</div>
+</a>
+							</div>
+													<div class="columns small-12 medium-4">
+								<a href="/blog/cloud-data-warehouse/" class="card-blog card-blog--no-bg card-blog--vertical">
+			<div class="card-blog__image-container">
+			<img class="card-blog__image" alt="Warehouse_with_cloud_image_signifying_cloud_data_warehouse" title="Warehouse_with_cloud_image_signifying_cloud_data_warehouse" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAAABCAQAAACC0sM2AAAADElEQVR42mNkGCYAAAGSAAIVQ4IOAAAAAElFTkSuQmCC" data-ib-sources="https://library.scalyr.com/2020/10/15191424/Warehouse_with_cloud_image_signifying_cloud_data_warehouse-300x300.png 300 300, https://library.scalyr.com/2020/10/15191424/Warehouse_with_cloud_image_signifying_cloud_data_warehouse-768x768.png 768 768, https://library.scalyr.com/2020/10/15191424/Warehouse_with_cloud_image_signifying_cloud_data_warehouse.png 818 818" data-ib-match-dpr="0" />		</div>
+			<div class="card-blog__content-container">
+		<div class="card-blog__content">
+			<h6 class="card-blog__author-date">Erin Baez / October 20</h6>
+			<h4 class="card-blog__title">Cloud Data Warehouse: What Is It and What Are Some Examples?</h4>
+					</div>
+	</div>
+</a>
+							</div>
+													<div class="columns small-12 medium-4">
+								<a href="/blog/scalyr-helps-life360-deliver-for-families-worldwide/" class="card-blog card-blog--no-bg card-blog--vertical">
+			<div class="card-blog__image-container">
+			<img class="card-blog__image" alt="Life360_Square2" title="Life360_Square2" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAAABCAQAAACC0sM2AAAADElEQVR42mNkGCYAAAGSAAIVQ4IOAAAAAElFTkSuQmCC" data-ib-sources="https://library.scalyr.com/2020/10/14163958/Life360_Square2-300x300.png 300 300, https://library.scalyr.com/2020/10/14163958/Life360_Square2-768x768.png 768 768, https://library.scalyr.com/2020/10/14163958/Life360_Square2-1024x1024.png 1024 1024, https://library.scalyr.com/2020/10/14163958/Life360_Square2-1440x1440.png 1440 1440, https://library.scalyr.com/2020/10/14163958/Life360_Square2.png 1504 1504" data-ib-match-dpr="0" />		</div>
+			<div class="card-blog__content-container">
+		<div class="card-blog__content">
+			<h6 class="card-blog__author-date">Scalyr / October 14</h6>
+			<h4 class="card-blog__title">Scalyr helps Life360 deliver for families worldwide</h4>
+					</div>
+	</div>
+</a>
+							</div>
+													<div class="columns small-12 medium-4">
+								<a href="/blog/logging-as-a-service-cloud/" class="card-blog card-blog--no-bg card-blog--vertical">
+			<div class="card-blog__image-container">
+			<img class="card-blog__image" alt="Picture_of_sparkling_cloud_showing_appeal_of_logging_as_a_service" title="Picture_of_sparkling_cloud_showing_appeal_of_logging_as_a_service" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAAABCAQAAACC0sM2AAAADElEQVR42mNkGCYAAAGSAAIVQ4IOAAAAAElFTkSuQmCC" data-ib-sources="https://library.scalyr.com/2019/08/14214408/Picture_of_sparkling_cloud_showing_appeal_of_logging_as_a_service-300x300.png 300 300, https://library.scalyr.com/2019/08/14214408/Picture_of_sparkling_cloud_showing_appeal_of_logging_as_a_service.png 600 600" data-ib-match-dpr="0" />		</div>
+			<div class="card-blog__content-container">
+		<div class="card-blog__content">
+			<h6 class="card-blog__author-date">Erin Baez / October 14</h6>
+			<h4 class="card-blog__title">Logging as a Service: Why the Cloud Is So Attractive</h4>
+					</div>
+	</div>
+</a>
+							</div>
+											</div>
+				</div>
+			</section>
+					</main> 
+		<footer class="site-footer">
+	<nav class="site-footer__menu site-footer__menu--primary">
+		<ul id="menu-footer-menu" class="menu"><li id="menu-item-2046" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2046"><a href="/product">Product</a></li>
+<li id="menu-item-2231" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2231"><a href="https://www.scalyr.com/resources">Resources</a></li>
+<li id="menu-item-32" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-32"><a href="/customers">Customers</a></li>
+<li id="menu-item-2047" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2047"><a href="/pricing">Pricing</a></li>
+<li id="menu-item-2048" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2048"><a href="/blog">Blog</a></li>
+<li id="menu-item-2049" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2049"><a href="/company">Company</a></li>
+<li id="menu-item-7429" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-7429"><a href="https://www.scalyr.com/company/#newspress">Press</a></li>
+<li id="menu-item-2050" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2050"><a href="/contact">Contact</a></li>
+<li id="menu-item-2051" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2051"><a href="https://support.scalyr.com/hc/en-us">Support</a></li>
+<li id="menu-item-2052" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2052"><a href="/careers">Careers</a></li>
+</ul>	</nav>
+	<div class="site-footer__social-links">
+					<a href="https://www.facebook.com/scalyr/"
+				class="site-footer__social-link"
+				rel="external noopener nofollow"
+				target="_blank"
+				title="Facebook">
+				<span class="site-footer__social-icon">
+					<svg class="icon-facebook" viewBox="0 0 60 60"><use xlink:href="#icon-facebook"></use></svg>				</span>
+			</a>
+						<a href="https://www.instagram.com/wearescalyr/"
+				class="site-footer__social-link"
+				rel="external noopener nofollow"
+				target="_blank"
+				title="Instagram">
+				<span class="site-footer__social-icon">
+					<svg class="icon-instagram" viewBox="0 0 60 60"><use xlink:href="#icon-instagram"></use></svg>				</span>
+			</a>
+						<a href="https://twitter.com/scalyr"
+				class="site-footer__social-link"
+				rel="external noopener nofollow"
+				target="_blank"
+				title="Twitter">
+				<span class="site-footer__social-icon">
+					<svg class="icon-twitter" viewBox="0 0 60 60"><use xlink:href="#icon-twitter"></use></svg>				</span>
+			</a>
+						<a href="https://www.linkedin.com/company/scalyr"
+				class="site-footer__social-link"
+				rel="external noopener nofollow"
+				target="_blank"
+				title="LinkedIn">
+				<span class="site-footer__social-icon">
+					<svg class="icon-linkedin" viewBox="0 0 60 60"><use xlink:href="#icon-linkedin"></use></svg>				</span>
+			</a>
+						<a href="https://www.youtube.com/channel/UCZ-ROlpERGg6MV-UyH9d_dw"
+				class="site-footer__social-link"
+				rel="external noopener nofollow"
+				target="_blank"
+				title="YouTube">
+				<span class="site-footer__social-icon">
+					<svg class="icon-youtube" viewBox="0 0 60 60"><use xlink:href="#icon-youtube"></use></svg>				</span>
+			</a>
+				</div>
+	<div class="site-footer__legal">
+		<nav class="site-footer__menu site-footer__menu--secondary">
+			<ul id="menu-footer-utility-links" class="menu"><li id="menu-item-2053" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2053"><a href="/privacy">Privacy</a></li>
+<li id="menu-item-2054" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2054"><a href="/security">Security</a></li>
+<li id="menu-item-2055" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2055"><a href="/gdpr">GDPR</a></li>
+<li id="menu-item-2056" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2056"><a href="/terms">Terms</a></li>
+<li id="menu-item-1621" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1621"><a href="https://status.scalyr.com/">Status</a></li>
+<li class="site-footer__copyright">&copy; 2020 Scalyr, Inc.</li></ul>		</nav>
+		<nav class="site-footer__menu site-footer__menu--tertiary">
+			<ul class="menu">
+				<li class="site-footer__gravitate">
+					<!-- <a href="https://www.gravitatedesign.com/?utm_source=GravitateBuiltSite&utm_medium=referral&utm_content=scalyr.com&utm_campaign=general">Web Design by Gravitate</a> -->
+				</li>
+			</ul>
+		</nav>
+	</div>
+</footer>
+
+	</div> 
+				<div class="menu-dropdown menu-dropdown-platform"
+				data-menu-dropdown-id="282"
+				data-has-arrow="1">
+				<div class="menu-dropdown__container">
+					<div class="menu-dropdown__arrow"></div>
+					<div class="menu-dropdown__content-container">
+						<div class="menu-dropdown__content-container-inner">						
+							<div class="row">
+																	<div class="columns small-12 large-12 wysiwyg menu_dropdown_layout_text">
+										<p>Product</p>
+									</div>
+																</div>
+						</div>
+					</div>
+				</div>
+			</div>
+						<div class="menu-dropdown menu-dropdown-try-scalyr menu-dropdown--column-dividers"
+				data-menu-dropdown-id="281"
+				data-has-arrow="1">
+				<div class="menu-dropdown__container">
+					<div class="menu-dropdown__arrow"></div>
+					<div class="menu-dropdown__content-container">
+						<div class="menu-dropdown__content-container-inner">						
+							<div class="row">
+																	<div class="columns small-12 large-6 wysiwyg menu_dropdown_layout_text">
+										<h2 style="text-align: center;">Live Demo</h2>
+<p style="text-align: center;">Explore Scalyr with sample data and zero setup in our Live Demo.</p>
+<p style="text-align: center;"><a class="button button--secondary" href="https://scalyr.com/signup#demo-form">Live Demo</a></p>
+									</div>
+																		<div class="columns small-12 large-6 wysiwyg menu_dropdown_layout_text">
+										<h2 style="text-align: center;">Free Trial</h2>
+<p style="text-align: center;">Jump right in with your data in our 30-day Free Trial. No credit card required.</p>
+<p style="text-align: center;"><a class="button button--secondary" href="https://scalyr.com/signup">Free Trial</a></p>
+									</div>
+																</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="menu-dropdown menu-dropdown-search" data-menu-dropdown-id="search">
+	<div class="menu-dropdown__container">
+		<div class="menu-dropdown__content-container">
+			<span class="menu-dropdown-search__text">Search</span>
+			<form class="ui__search-input" action="/" method="GET">
+	<input type="text"
+		name="s"
+		class="ui__search ui__search-input-text"
+		placeholder="Enter Your Keywords"
+				data-focus-on-show	>
+	<svg class="ui__search-input-icon" viewBox="0 0 60 60"><use xlink:href="#icon-search"></use></svg></form>
+		</div>
+	</div>
+</div>
+<svg style="display:none" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 60 60" xml:space="preserve"><symbol id="icon-search"><path fill="currentColor" d="m55.715855 48.754557-12.6535588-12.6535589c1.9085812-3.1307429 3.0068525-6.8139699 3.0068525-10.7483259 0-11.4414424-9.9145773-21.35267129-21.3560196-21.35267129-11.4414423-.00334839-20.7131291 9.27168679-20.7131291 20.71312909 0 11.4380939 9.9145773 21.3526713 21.3526712 21.3526713 3.8071174 0 7.366454-1.034652 10.4302291-2.8260396l12.7205266 12.7272233c1.2456004 1.242252 3.2646785 1.242252 4.5069305 0l3.15753-3.15753c1.242252-1.242252.7902196-2.812646-.4520324-4.054898zm-45.340524-24.041427c0-7.9222864 6.4188601-14.3411464 14.3377981-14.3411464 7.9222864 0 14.9806886 7.0550538 14.9806886 14.9806886 0 7.9189379-6.4222085 14.3411464-14.3411465 14.3411464-7.9222863-.0033484-14.9773402-7.0617506-14.9773402-14.9806886z"></path></symbol></svg><svg style="display:none" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 60 60" xml:space="preserve"><symbol id="icon-calendar"><path fill="currentColor" d="m50.2222222 9.65217391h-2.8888889v5.79347829h-8.6666666v-5.79347829h-17.3333334v5.79347829h-8.6666666v-5.79347829h-2.88888892c-3.18066667 0-5.77777778 2.60706519-5.77777778 5.79347829v34.7608695c0 3.1864131 2.59711111 5.7934783 5.77777778 5.7934783h40.44444442c3.1777778 0 5.7777778-2.6070652 5.7777778-5.7934783v-34.7608695c0-3.1864131-2.6-5.79347829-5.7777778-5.79347829zm.1256039 39.56521739h-40.69565219v-22.6086956h40.69565219zm-30.5217391-45.2173913h-5.652174v10.173913h5.652174zm26 0h-5.652174v10.173913h5.652174z"></path></symbol></svg><svg style="display:none" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 60 60" xml:space="preserve"><symbol id="icon-facebook"><path fill="currentColor" d="m30 1c-16.0164583 0-29 12.9835417-29 29s12.9835417 29 29 29 29-12.9835417 29-29-12.9835417-29-29-29zm6.869375 20.0402083h-4.3590625c-.5165625 0-1.0905208.6796875-1.0905208 1.5829167v3.1477083h5.4526041l-.8246875 4.4889584h-4.6279166v13.4759375h-5.1444792v-13.4759375h-4.6671875v-4.4889584h4.6671875v-2.6402083c0-3.788125 2.628125-6.8663542 6.235-6.8663542h4.3590625z"></path></symbol></svg><svg style="display:none" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 60 60" xml:space="preserve"><symbol id="icon-twitter"><path fill="currentColor" d="m30 1c-16.0164583 0-29 12.9835417-29 29s12.9835417 29 29 29 29-12.9835417 29-29-12.9835417-29-29-29zm11.7963542 23.7558333c.0120833.2477084.0151041.4954167.0151041.7370834 0 7.5520833-5.7426041 16.2551041-16.2490625 16.2551041-3.22625 0-6.2289583-.9425-8.754375-2.5677083.4440625.054375.9002084.0755208 1.3623959.0755208 2.6764583 0 5.1384375-.9092708 7.0929166-2.4438541-2.4982291-.0483334-4.6067708-1.6977084-5.3347916-3.9633334.3473958.0634375.7038541.0996875 1.0723958.0996875.5195833 0 1.0270833-.0694791 1.504375-.199375-2.6130208-.525625-4.5826042-2.8335416-4.5826042-5.600625v-.0694791c.7703125.4259375 1.6523959.6857291 2.5888542.7159375-1.5345833-1.0270834-2.5405208-2.773125-2.5405208-4.7578125 0-1.0452084.2809375-2.03.7733333-2.8728125 2.8184375 3.4558333 7.0234375 5.7275 11.7721875 5.9721875-.0996875-.4198959-.1480208-.8548959-.1480208-1.305 0-3.1507292 2.555625-5.7123959 5.7123958-5.7123959 1.6403125 0 3.1265625.6947917 4.16875 1.8064584 1.3019792-.2597917 2.5223958-.7310417 3.625-1.3865625-.4259375 1.3321875-1.3291667 2.4529166-2.5103125 3.1628125 1.1569792-.1419792 2.2565625-.4470834 3.280625-.9032292-.7642708 1.1448958-1.7339583 2.1538542-2.8486458 2.9573958z"></path></symbol></svg><svg style="display:none" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 60 60" xml:space="preserve"><symbol id="icon-linkedin"><path fill="currentColor" d="m30 1c-16.0164583 0-29 12.9835417-29 29s12.9835417 29 29 29 29-12.9835417 29-29-12.9835417-29-29-29zm-7.0989583 41.0198958h-5.8725v-18.8983333h5.8725zm-2.9725-21.2183333c-1.8547917 0-3.0540625-1.3140625-3.0540625-2.9392708 0-1.6584375 1.2355208-2.9332292 3.1295833-2.9332292s3.0540625 1.2747917 3.0903125 2.9332292c0 1.6252083-1.19625 2.9392708-3.1658333 2.9392708zm24.4204166 21.2183333h-5.8725v-10.4732291c0-2.4378125-.851875-4.0932292-2.9755208-4.0932292-1.6221875 0-2.5858333 1.1207292-3.0117708 2.1991667-.1570834.3836458-.1963542.9273958-.1963542 1.468125v10.8961458h-5.8755208v-12.86875c0-2.3592708-.0755209-4.331875-.1540625-6.0295833h5.1021875l.2688541 2.6251041h.1178125c.7733334-1.2325 2.6673959-3.0510416 5.83625-3.0510416 3.8636459 0 6.760625 2.5888541 6.760625 8.1532291z"></path></symbol></svg><svg style="display:none" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 60 60" xml:space="preserve"><symbol id="icon-instagram"><path fill="currentColor" d="m42.5334375 25.6254857h-6.3455625c-1.3720625-1.9393952-3.6316458-3.2021167-6.187875-3.2021167-2.5568333 0-4.8164167 1.2627215-6.1890833 3.2021167h-6.3443542v-4.2412942c0-2.1629392 1.7520833-3.9150408 3.9168125-3.9150408h17.23325c2.1623125 0 3.9168125 1.7521016 3.9168125 3.9150408zm-17.197 4.3742122c0-2.5737768 2.0873958-4.6636111 4.6635625-4.6636111 2.5755625 0 4.6635625 2.0898343 4.6635625 4.6636111s-2.088 4.6648194-4.6635625 4.6648194c-2.5761667 0-4.6635625-2.0910426-4.6635625-4.6648194zm17.197 8.6161106c0 2.162335-1.7545 3.9204783-3.9168125 3.9204783h-17.23325c-2.1647292 0-3.9168125-1.7581433-3.9168125-3.9204783v-10.0721674h5.0961458c-.0918333.4712549-.141375.960635-.141375 1.4560568 0 4.1869186 3.3923959 7.5763289 7.5786667 7.5763289 4.1850625 0 7.5780625-3.3894103 7.5780625-7.5763289 0-.4954218-.0495417-.9848019-.141375-1.4560568h5.09675zm-12.5334375-37.6158085c-16.0164583 0-29 12.9830727-29 28.9996979s12.9835417 29.0003021 29 29.0003021 29-12.9836769 29-29.0003021-12.9835417-28.9996979-29-28.9996979z"></path></symbol></svg><svg style="display:none" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 60 60" xml:space="preserve"><symbol id="icon-youtube"><path fill="currentColor" d="m34.8423958 29.4955208-6.7847916-3.1658333c-.5920834-.2748958-1.0784375.0332292-1.0784375.68875v5.963125c0 .6555208.4863541.9636458 1.0784375.68875l6.7817708-3.1658333c.5951042-.2779167.5951042-.7310417.0030208-1.0089584zm-4.8423958-28.4955208c-16.0164583 0-29 12.9835417-29 29s12.9835417 29 29 29 29-12.9835417 29-29-12.9835417-29-29-29zm0 40.78125c-14.844375 0-15.1041667-1.3382292-15.1041667-11.78125s.2597917-11.78125 15.1041667-11.78125 15.1041667 1.3382292 15.1041667 11.78125-.2597917 11.78125-15.1041667 11.78125z"></path></symbol></svg><script type='text/javascript'>
+/* <![CDATA[ */
+var apiSettings = {"base":"https:\/\/prod-design.scalyr.com\/wp-json\/","nonce":""};
+/* ]]> */
+</script>
+<script type='text/javascript' defer src='https://prod-design.scalyr.com/wp-content/themes/scalyr/dist/js/master.min.js?ver=1603146814'></script>
+<script type='text/javascript' src='https://prod-design.scalyr.com/wp-content/themes/scalyr/js/templates/blog_top_list.js?ver=1.0'></script>
+<script type='text/javascript' src='https://prod-design.scalyr.com/wp-content/themes/scalyr/js/components/universal.js?ver=1.0'></script>
+<script type='text/javascript' src='https://prod-design.scalyr.com/wp-content/themes/scalyr/js/components/nav_color.js?ver=1.0'></script>
+<script type='text/javascript' src='https://prod-design.scalyr.com/wp-content/themes/scalyr/js/components/nav_drop_down.js?ver=1.0'></script>
+						<script type="text/javascript">
+						document.addEventListener('DOMContentLoaded', function() {
+							var yoppublic = document.createElement('link');
+							yoppublic.rel = 'stylesheet';
+							yoppublic.href = 'https://prod-design.scalyr.com//wp-content/plugins/yop-poll/public/assets/css/yop-poll-public.css';
+							yoppublic.type = 'text/css';
+														var yoppublicDefer = document.getElementsByTagName('link')[0];
+							yoppublicDefer.parentNode.insertBefore(yoppublic, yoppublicDefer);
+						});
+						</script>
+						
+	<!-- Start of HubSpot Embed Code -->
+	<script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/2803304.js"></script>
+	<!-- End of HubSpot Embed Code -->
+</body>
+</html>

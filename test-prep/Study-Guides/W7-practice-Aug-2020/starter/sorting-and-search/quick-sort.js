@@ -1,0 +1,1 @@
+function quickSort(array) {}
