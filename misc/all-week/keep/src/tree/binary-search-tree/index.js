@@ -1,3 +1,2 @@
-const BST = require('./BST')
-
-module.exports = BST
+import BST from './BST';
+export default BST;

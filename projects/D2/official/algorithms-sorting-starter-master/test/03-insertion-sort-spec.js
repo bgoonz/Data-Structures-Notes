@@ -1,5 +1,5 @@
-const { expect } = require('chai');
-const { insertionSort } = require('../problems/03-insertion-sort');
+import {expect} from 'chai';
+import {insertionSort} from '../problems/03-insertion-sort';
 
 describe('insertionSort()', () => {
   // it should accept an array of numbers as an arg

@@ -769,15 +769,15 @@ console.log(tabulatedFib(7));      // => 13
 When you initialized the table and seeded the first two values, it looked like
 this:
 
-| i          | 0   | 1   | 2 | 3 | 4 | 5 | 6 | 7 |
-|------------|-----|-----|---|---|---|---|---|---|
-| `table[i]` | `0` | `1` |   |   |   |   |   |   |
+| i          | 0   | 1   | 2   | 3   | 4   | 5   | 6   | 7   |
+| ---------- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `table[i]` | `0` | `1` |     |     |     |     |     |     |
 
 
 After the loop finishes, the final table will be:
 
 | i          | 0   | 1   | 2   | 3   | 4   | 5   | 6   | 7    |
-|------------|-----|-----|-----|-----|-----|-----|-----|------|
+| ---------- | --- | --- | --- | --- | --- | --- | --- | ---- |
 | `table[i]` | `0` | `1` | `1` | `2` | `3` | `5` | `8` | `13` |
 
 Similar to the previous `memo`, by the time the function completes, the `table`
@@ -1021,8 +1021,6 @@ ________________________________________________________________________________
 
 This project contains two test-driven problems and one problem on LeetCode.com.
 
-* Clone the project from
-  https://github.com/appacademy-starters/algorithms-memoization-project.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npx test` to run the specs
@@ -1038,8 +1036,6 @@ ________________________________________________________________________________
 
 This project contains two test-driven problems and one problem on LeetCode.com.
 
-* Clone the project from
-  https://github.com/appacademy-starters/algorithms-tabulation-project.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npx test` to run the specs
@@ -2668,8 +2664,6 @@ Bubble Sort: (array)
 
 ## Instructions
 
-* Clone the project from
-  https://github.com/appacademy-starters/algorithms-bubble-sort-starter.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npm test` to run the specs
@@ -2722,8 +2716,6 @@ end procedure
 
 ## Instructions
 
-* Clone the project from
-  https://github.com/appacademy-starters/algorithms-selection-sort-starter.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npm test` to run the specs
@@ -2777,8 +2769,6 @@ end procedure
 
 ## Instructions
 
-* Clone the project from
-  https://github.com/appacademy-starters/algorithms-insertion-sort-starter.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npm test` to run the specs
@@ -2844,8 +2834,6 @@ end procedure
 
 ## Instructions
 
-* Clone the project from
-  https://github.com/appacademy-starters/algorithms-merge-sort-starter.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npm test` to run the specs
@@ -2878,8 +2866,6 @@ end procedure quick sort
 
 ## Instructions
 
-* Clone the project from
-  https://github.com/appacademy-starters/algorithms-quick-sort-starter.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npm test` to run the specs
@@ -2977,8 +2963,6 @@ end procedure binary search index
 
 ## Instructions
 
-* Clone the project from
-  https://github.com/appacademy-starters/algorithms-binary-search-starter.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npm test` to run the specs
@@ -3043,11 +3027,11 @@ A Linked List data structure represents a linear sequence of "vertices" (or
   <b>Linked List Properties:</b>
 </p>
 
-| Property    | Description                                         |
-| :---------: | :-------------------------------------------------: |
-| `head`      | The first node in the list.                         |
-| `tail`      | The last node in the list.                          |
-| `length`    | The number of nodes in the list; the list's length. |
+| Property |                     Description                     |
+| :------: | :-------------------------------------------------: |
+|  `head`  |             The first node in the list.             |
+|  `tail`  |             The last node in the list.              |
+| `length` | The number of nodes in the list; the list's length. |
 
 The data being tracked by a particular Linked List does not live inside the
 Linked List instance itself. Instead, each vertex is actually an instance of an
@@ -3060,11 +3044,11 @@ very important properties as well.
   <b>Linked List Node Properties:</b>
 </p>
 
-| Property    | Description                                            |
-| :---------: | :----------------------------------------------------: |
-| `value`     | The actual value this node represents.                 |
-| `next`      | The next node in the list (relative to this node).     |
-| `previous`  | The previous node in the list (relative to this node). |
+|  Property  |                      Description                       |
+| :--------: | :----------------------------------------------------: |
+|  `value`   |         The actual value this node represents.         |
+|   `next`   |   The next node in the list (relative to this node).   |
+| `previous` | The previous node in the list (relative to this node). |
 
 <p align="center">
   <b>NOTE:</b> The <code>previous</code> property is for Doubly Linked Lists only!
@@ -3132,12 +3116,12 @@ into your job interviews.
   <b>Linked List Types:</b>
 </p>
 
-| List Type             | Description                                                                       | Directionality                |
-| :-------------------: | :-------------------------------------------------------------------------------: | :--------------------------:  |
-| Singly Linked         | Nodes have a single pointer connecting them in a single direction.                | Head→Tail                     |
-| Doubly Linked         | Nodes have two pointers connecting them bi-directionally.                         | Head⇄Tail                     |
-| Multiply Linked       | Nodes have two or more pointers, providing a variety of potential node orderings. | Head⇄Tail, A→Z, Jan→Dec, etc. |
-| Circularly Linked     | Final node's `next` pointer points to the first node, creating a non-linear, circular version of a Linked List.   | Head→Tail→Head→Tail|
+|     List Type     |                                                   Description                                                   |        Directionality         |
+| :---------------: | :-------------------------------------------------------------------------------------------------------------: | :---------------------------: |
+|   Singly Linked   |                       Nodes have a single pointer connecting them in a single direction.                        |           Head→Tail           |
+|   Doubly Linked   |                            Nodes have two pointers connecting them bi-directionally.                            |           Head⇄Tail           |
+|  Multiply Linked  |                Nodes have two or more pointers, providing a variety of potential node orderings.                | Head⇄Tail, A→Z, Jan→Dec, etc. |
+| Circularly Linked | Final node's `next` pointer points to the first node, creating a non-linear, circular version of a Linked List. |      Head→Tail→Head→Tail      |
 
 <p align="center">
   <b>NOTE:</b> These Linked List types are not always mutually exclusive.
@@ -3169,18 +3153,18 @@ structures later on, like Trees and Graphs.
 In the project that follows, we will implement the following Linked List
 methods:
 
-| Type      | Name         | Description                                                                     | Returns             |
-| :-------: | :----------: | :-----------------------------------------------------------------------------: | :-----------------: |
-| Insertion | `addToTail`  | Adds a new node to the tail of the Linked List.                                 | Updated Linked List |
-| Insertion | `addToHead`  | Adds a new node to the head of the Linked List.                                 | Updated Linked List |
-| Insertion | `insertAt`   | Inserts a new node at the "index", or position, specified.                      | Boolean             |
-| Deletion  | `removeTail` | Removes the node at the tail of the Linked List.                                | Removed node        |
-| Deletion  | `removeHead` | Removes the node at the head of the Linked List.                                | Removed node        |
-| Deletion  | `removeFrom` | Removes the node at the "index", or position, specified.                        | Removed node        |
-| Search    | `contains`   | Searches the Linked List for a node with the value specified.                   | Boolean             |
-| Access    | `get`        | Gets the node at the "index", or position, specified.                           | Node at index       |
-| Access    | `set`        | Updates the value of a node at the "index", or position, specified.             | Boolean             |
-| Meta      | `size`       | Returns the current size of the Linked List.                                    | Integer             |
+|   Type    |     Name     |                             Description                             |       Returns       |
+| :-------: | :----------: | :-----------------------------------------------------------------: | :-----------------: |
+| Insertion | `addToTail`  |           Adds a new node to the tail of the Linked List.           | Updated Linked List |
+| Insertion | `addToHead`  |           Adds a new node to the head of the Linked List.           | Updated Linked List |
+| Insertion |  `insertAt`  |     Inserts a new node at the "index", or position, specified.      |       Boolean       |
+| Deletion  | `removeTail` |          Removes the node at the tail of the Linked List.           |    Removed node     |
+| Deletion  | `removeHead` |          Removes the node at the head of the Linked List.           |    Removed node     |
+| Deletion  | `removeFrom` |      Removes the node at the "index", or position, specified.       |    Removed node     |
+|  Search   |  `contains`  |    Searches the Linked List for a node with the value specified.    |       Boolean       |
+|  Access   |    `get`     |        Gets the node at the "index", or position, specified.        |    Node at index    |
+|  Access   |    `set`     | Updates the value of a node at the "index", or position, specified. |       Boolean       |
+|   Meta    |    `size`    |            Returns the current size of the Linked List.             |       Integer       |
 
 
 ## Time and Space Complexity Analysis
@@ -3191,10 +3175,10 @@ Singly and Doubly Linked Lists:
 
 | Data Structure Operation | Time Complexity (Avg) | Time Complexity (Worst) | Space Complexity (Worst) |
 | :----------------------: | :-------------------: | :---------------------: | :----------------------: |
-| Access                   | `Θ(n)`                | `O(n)`                  | `O(n)`                   |
-| Search                   | `Θ(n)`                | `O(n)`                  | `O(n)`                   |
-| Insertion                | `Θ(1)`                | `O(1)`                  | `O(n)`                   |
-| Deletion                 | `Θ(1)`                | `O(1)`                  | `O(n)`                   |
+|          Access          |        `Θ(n)`         |         `O(n)`          |          `O(n)`          |
+|          Search          |        `Θ(n)`         |         `O(n)`          |          `O(n)`          |
+|        Insertion         |        `Θ(1)`         |         `O(1)`          |          `O(n)`          |
+|         Deletion         |        `Θ(1)`         |         `O(1)`          |          `O(n)`          |
 
 Before moving forward, see if you can reason to yourself why each operation has
 the time and space complexity listed above!
@@ -3392,11 +3376,11 @@ properties together. They track the following three properties:
   <b>Stack Properties | Queue Properties:</b>
 </p>
 
-  | Stack Property | Description                                           | Queue Property | Description                                           |
+  | Stack Property |                      Description                      | Queue Property |                      Description                      |
   | :------------: | :---------------------------------------------------: | :------------: | :---------------------------------------------------: |
-  | `top`          | The first node in the Stack                           | `front`        | The first node in the Queue.                          |
-  | ----           | Stacks do not have an equivalent                      | `back`         | The last node in the Queue.                           |
-  | `length`       | The number of nodes in the Stack; the Stack's length. | `length`       | The number of nodes in the Queue; the Queue's length. |
+  |     `top`      |              The first node in the Stack              |    `front`     |             The first node in the Queue.              |
+  |      ----      |           Stacks do not have an equivalent            |     `back`     |              The last node in the Queue.              |
+  |    `length`    | The number of nodes in the Stack; the Stack's length. |    `length`    | The number of nodes in the Queue; the Queue's length. |
 
   Notice that rather than having a `head` and a `tail` like Linked Lists, Stacks
   have a `top`, and Queues have a `front` and a `back` instead. Stacks don't
@@ -3417,10 +3401,10 @@ properties together. They track the following three properties:
   <b>Stack & Queue Node Properties:</b>
 </p>
 
-  | Property    | Description                                            |
-  | :---------: | :----------------------------------------------------: |
-  | `value`     | The actual value this node represents.                 |
-  | `next`      | The next node in the Stack (relative to this node).    |
+  | Property |                     Description                     |
+  | :------: | :-------------------------------------------------: |
+  | `value`  |       The actual value this node represents.        |
+  |  `next`  | The next node in the Stack (relative to this node). |
 
 
 ## Stack Methods
@@ -3428,22 +3412,22 @@ properties together. They track the following three properties:
 In the exercise that follows, we will implement a Stack data structure along
 with the following Stack methods:
 
-  | Type      | Name         | Description                                | Returns                        |
-  | :-------: | :----------: | :----------------------------------------: | :----------------------------: |
-  | Insertion | `push`       | Adds a Node to the top of the Stack.       | Integer - New size of stack    |
-  | Deletion  | `pop`        | Removes a Node from the top of the Stack.  | Node removed from top of Stack |
-  | Meta      | `size`       | Returns the current size of the Stack.     | Integer                        |
+  |   Type    |  Name  |                Description                |            Returns             |
+  | :-------: | :----: | :---------------------------------------: | :----------------------------: |
+  | Insertion | `push` |   Adds a Node to the top of the Stack.    |  Integer - New size of stack   |
+  | Deletion  | `pop`  | Removes a Node from the top of the Stack. | Node removed from top of Stack |
+  |   Meta    | `size` |  Returns the current size of the Stack.   |            Integer             |
 
 ## Queue Methods
 
 In the exercise that follows, we will implement a Queue data structure along
 with the following Queue methods:
 
-  | Type      | Name         | Description                                  | Returns                          |
-  | :-------: | :----------: | :------------------------------------------: | :------------------------------: |
-  | Insertion | `enqueue`    | Adds a Node to the front of the Queue.       | Integer - New size of Queue      |
-  | Deletion  | `dequeue`    | Removes a Node from the front of the Queue.  | Node removed from front of Queue |
-  | Meta      | `size`       | Returns the current size of the Queue.       | Integer                          |
+  |   Type    |   Name    |                 Description                 |             Returns              |
+  | :-------: | :-------: | :-----------------------------------------: | :------------------------------: |
+  | Insertion | `enqueue` |   Adds a Node to the front of the Queue.    |   Integer - New size of Queue    |
+  | Deletion  | `dequeue` | Removes a Node from the front of the Queue. | Node removed from front of Queue |
+  |   Meta    |  `size`   |   Returns the current size of the Queue.    |             Integer              |
 
 ## Time and Space Complexity Analysis
 
@@ -3452,10 +3436,10 @@ constraints of each Stack Operation.
 
   | Data Structure Operation | Time Complexity (Avg) | Time Complexity (Worst) | Space Complexity (Worst) |
   | :----------------------: | :-------------------: | :---------------------: | :----------------------: |
-  | Access                   | `Θ(n)`                | `O(n)`                  | `O(n)`                   |
-  | Search                   | `Θ(n)`                | `O(n)`                  | `O(n)`                   |
-  | Insertion                | `Θ(1)`                | `O(1)`                  | `O(n)`                   |
-  | Deletion                 | `Θ(1)`                | `O(1)`                  | `O(n)`                   |
+  |          Access          |        `Θ(n)`         |         `O(n)`          |          `O(n)`          |
+  |          Search          |        `Θ(n)`         |         `O(n)`          |          `O(n)`          |
+  |        Insertion         |        `Θ(1)`         |         `O(1)`          |          `O(n)`          |
+  |         Deletion         |        `Θ(1)`         |         `O(1)`          |          `O(n)`          |
 
 Before moving forward, see if you can reason to yourself why each operation has
 the time and space complexity listed above!
@@ -3569,8 +3553,6 @@ Keep making the top-most test pass until all tests pass.
 
 ## Instructions
 
-* Clone the project from
-  https://github.com/appacademy-starters/data-structures-linked-list-starter.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npm test` to run the specs
@@ -3590,8 +3572,6 @@ Keep making the top-most test pass until all tests pass.
 
 ## Instructions
 
-* Clone the project from
-  https://github.com/appacademy-starters/data-structures-stack-starter.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npm test` to run the specs
@@ -3611,8 +3591,6 @@ Keep making the top-most test pass until all tests pass.
 
 ## Instructions
 
-* Clone the project from
-  https://github.com/appacademy-starters/data-structures-queue-starter.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npm test` to run the specs
@@ -4346,8 +4324,6 @@ Keep making the top-most test pass until all tests pass.
 
 ## Instructions
 
-* Clone the project from
-  https://github.com/appacademy-starters/data-structures-max-heap-starter.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npm test` to run the specs
@@ -5094,15 +5070,15 @@ console.log(tabulatedFib(7));      // => 13
 When you initialized the table and seeded the first two values, it looked like
 this:
 
-| i          | 0   | 1   | 2 | 3 | 4 | 5 | 6 | 7 |
-|------------|-----|-----|---|---|---|---|---|---|
-| `table[i]` | `0` | `1` |   |   |   |   |   |   |
+| i          | 0   | 1   | 2   | 3   | 4   | 5   | 6   | 7   |
+| ---------- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `table[i]` | `0` | `1` |     |     |     |     |     |     |
 
 
 After the loop finishes, the final table will be:
 
 | i          | 0   | 1   | 2   | 3   | 4   | 5   | 6   | 7    |
-|------------|-----|-----|-----|-----|-----|-----|-----|------|
+| ---------- | --- | --- | --- | --- | --- | --- | --- | ---- |
 | `table[i]` | `0` | `1` | `1` | `2` | `3` | `5` | `8` | `13` |
 
 Similar to the previous `memo`, by the time the function completes, the `table`
@@ -5346,8 +5322,6 @@ ________________________________________________________________________________
 
 This project contains two test-driven problems and one problem on LeetCode.com.
 
-* Clone the project from
-  https://github.com/appacademy-starters/algorithms-memoization-project.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npx test` to run the specs
@@ -5363,8 +5337,6 @@ ________________________________________________________________________________
 
 This project contains two test-driven problems and one problem on LeetCode.com.
 
-* Clone the project from
-  https://github.com/appacademy-starters/algorithms-tabulation-project.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npx test` to run the specs
@@ -6952,8 +6924,6 @@ Bubble Sort: (array)
 
 ## Instructions
 
-* Clone the project from
-  https://github.com/appacademy-starters/algorithms-bubble-sort-starter.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npm test` to run the specs
@@ -7006,8 +6976,6 @@ end procedure
 
 ## Instructions
 
-* Clone the project from
-  https://github.com/appacademy-starters/algorithms-selection-sort-starter.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npm test` to run the specs
@@ -7061,8 +7029,6 @@ end procedure
 
 ## Instructions
 
-* Clone the project from
-  https://github.com/appacademy-starters/algorithms-insertion-sort-starter.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npm test` to run the specs
@@ -7154,11 +7120,11 @@ A Linked List data structure represents a linear sequence of "vertices" (or
   <b>Linked List Properties:</b>
 </p>
 
-| Property    | Description                                         |
-| :---------: | :-------------------------------------------------: |
-| `head`      | The first node in the list.                         |
-| `tail`      | The last node in the list.                          |
-| `length`    | The number of nodes in the list; the list's length. |
+| Property |                     Description                     |
+| :------: | :-------------------------------------------------: |
+|  `head`  |             The first node in the list.             |
+|  `tail`  |             The last node in the list.              |
+| `length` | The number of nodes in the list; the list's length. |
 
 The data being tracked by a particular Linked List does not live inside the
 Linked List instance itself. Instead, each vertex is actually an instance of an
@@ -7171,11 +7137,11 @@ very important properties as well.
   <b>Linked List Node Properties:</b>
 </p>
 
-| Property    | Description                                            |
-| :---------: | :----------------------------------------------------: |
-| `value`     | The actual value this node represents.                 |
-| `next`      | The next node in the list (relative to this node).     |
-| `previous`  | The previous node in the list (relative to this node). |
+|  Property  |                      Description                       |
+| :--------: | :----------------------------------------------------: |
+|  `value`   |         The actual value this node represents.         |
+|   `next`   |   The next node in the list (relative to this node).   |
+| `previous` | The previous node in the list (relative to this node). |
 
 <p align="center">
   <b>NOTE:</b> The <code>previous</code> property is for Doubly Linked Lists only!
@@ -7243,12 +7209,12 @@ into your job interviews.
   <b>Linked List Types:</b>
 </p>
 
-| List Type             | Description                                                                       | Directionality                |
-| :-------------------: | :-------------------------------------------------------------------------------: | :--------------------------:  |
-| Singly Linked         | Nodes have a single pointer connecting them in a single direction.                | Head→Tail                     |
-| Doubly Linked         | Nodes have two pointers connecting them bi-directionally.                         | Head⇄Tail                     |
-| Multiply Linked       | Nodes have two or more pointers, providing a variety of potential node orderings. | Head⇄Tail, A→Z, Jan→Dec, etc. |
-| Circularly Linked     | Final node's `next` pointer points to the first node, creating a non-linear, circular version of a Linked List.   | Head→Tail→Head→Tail|
+|     List Type     |                                                   Description                                                   |        Directionality         |
+| :---------------: | :-------------------------------------------------------------------------------------------------------------: | :---------------------------: |
+|   Singly Linked   |                       Nodes have a single pointer connecting them in a single direction.                        |           Head→Tail           |
+|   Doubly Linked   |                            Nodes have two pointers connecting them bi-directionally.                            |           Head⇄Tail           |
+|  Multiply Linked  |                Nodes have two or more pointers, providing a variety of potential node orderings.                | Head⇄Tail, A→Z, Jan→Dec, etc. |
+| Circularly Linked | Final node's `next` pointer points to the first node, creating a non-linear, circular version of a Linked List. |      Head→Tail→Head→Tail      |
 
 <p align="center">
   <b>NOTE:</b> These Linked List types are not always mutually exclusive.
@@ -7280,18 +7246,18 @@ structures later on, like Trees and Graphs.
 In the project that follows, we will implement the following Linked List
 methods:
 
-| Type      | Name         | Description                                                                     | Returns             |
-| :-------: | :----------: | :-----------------------------------------------------------------------------: | :-----------------: |
-| Insertion | `addToTail`  | Adds a new node to the tail of the Linked List.                                 | Updated Linked List |
-| Insertion | `addToHead`  | Adds a new node to the head of the Linked List.                                 | Updated Linked List |
-| Insertion | `insertAt`   | Inserts a new node at the "index", or position, specified.                      | Boolean             |
-| Deletion  | `removeTail` | Removes the node at the tail of the Linked List.                                | Removed node        |
-| Deletion  | `removeHead` | Removes the node at the head of the Linked List.                                | Removed node        |
-| Deletion  | `removeFrom` | Removes the node at the "index", or position, specified.                        | Removed node        |
-| Search    | `contains`   | Searches the Linked List for a node with the value specified.                   | Boolean             |
-| Access    | `get`        | Gets the node at the "index", or position, specified.                           | Node at index       |
-| Access    | `set`        | Updates the value of a node at the "index", or position, specified.             | Boolean             |
-| Meta      | `size`       | Returns the current size of the Linked List.                                    | Integer             |
+|   Type    |     Name     |                             Description                             |       Returns       |
+| :-------: | :----------: | :-----------------------------------------------------------------: | :-----------------: |
+| Insertion | `addToTail`  |           Adds a new node to the tail of the Linked List.           | Updated Linked List |
+| Insertion | `addToHead`  |           Adds a new node to the head of the Linked List.           | Updated Linked List |
+| Insertion |  `insertAt`  |     Inserts a new node at the "index", or position, specified.      |       Boolean       |
+| Deletion  | `removeTail` |          Removes the node at the tail of the Linked List.           |    Removed node     |
+| Deletion  | `removeHead` |          Removes the node at the head of the Linked List.           |    Removed node     |
+| Deletion  | `removeFrom` |      Removes the node at the "index", or position, specified.       |    Removed node     |
+|  Search   |  `contains`  |    Searches the Linked List for a node with the value specified.    |       Boolean       |
+|  Access   |    `get`     |        Gets the node at the "index", or position, specified.        |    Node at index    |
+|  Access   |    `set`     | Updates the value of a node at the "index", or position, specified. |       Boolean       |
+|   Meta    |    `size`    |            Returns the current size of the Linked List.             |       Integer       |
 
 
 ## Time and Space Complexity Analysis
@@ -7302,10 +7268,10 @@ Singly and Doubly Linked Lists:
 
 | Data Structure Operation | Time Complexity (Avg) | Time Complexity (Worst) | Space Complexity (Worst) |
 | :----------------------: | :-------------------: | :---------------------: | :----------------------: |
-| Access                   | `Θ(n)`                | `O(n)`                  | `O(n)`                   |
-| Search                   | `Θ(n)`                | `O(n)`                  | `O(n)`                   |
-| Insertion                | `Θ(1)`                | `O(1)`                  | `O(n)`                   |
-| Deletion                 | `Θ(1)`                | `O(1)`                  | `O(n)`                   |
+|          Access          |        `Θ(n)`         |         `O(n)`          |          `O(n)`          |
+|          Search          |        `Θ(n)`         |         `O(n)`          |          `O(n)`          |
+|        Insertion         |        `Θ(1)`         |         `O(1)`          |          `O(n)`          |
+|         Deletion         |        `Θ(1)`         |         `O(1)`          |          `O(n)`          |
 
 Before moving forward, see if you can reason to yourself why each operation has
 the time and space complexity listed above!
@@ -7503,11 +7469,11 @@ properties together. They track the following three properties:
   <b>Stack Properties | Queue Properties:</b>
 </p>
 
-  | Stack Property | Description                                           | Queue Property | Description                                           |
+  | Stack Property |                      Description                      | Queue Property |                      Description                      |
   | :------------: | :---------------------------------------------------: | :------------: | :---------------------------------------------------: |
-  | `top`          | The first node in the Stack                           | `front`        | The first node in the Queue.                          |
-  | ----           | Stacks do not have an equivalent                      | `back`         | The last node in the Queue.                           |
-  | `length`       | The number of nodes in the Stack; the Stack's length. | `length`       | The number of nodes in the Queue; the Queue's length. |
+  |     `top`      |              The first node in the Stack              |    `front`     |             The first node in the Queue.              |
+  |      ----      |           Stacks do not have an equivalent            |     `back`     |              The last node in the Queue.              |
+  |    `length`    | The number of nodes in the Stack; the Stack's length. |    `length`    | The number of nodes in the Queue; the Queue's length. |
 
   Notice that rather than having a `head` and a `tail` like Linked Lists, Stacks
   have a `top`, and Queues have a `front` and a `back` instead. Stacks don't
@@ -7528,10 +7494,10 @@ properties together. They track the following three properties:
   <b>Stack & Queue Node Properties:</b>
 </p>
 
-  | Property    | Description                                            |
-  | :---------: | :----------------------------------------------------: |
-  | `value`     | The actual value this node represents.                 |
-  | `next`      | The next node in the Stack (relative to this node).    |
+  | Property |                     Description                     |
+  | :------: | :-------------------------------------------------: |
+  | `value`  |       The actual value this node represents.        |
+  |  `next`  | The next node in the Stack (relative to this node). |
 
 
 ## Stack Methods
@@ -7539,22 +7505,22 @@ properties together. They track the following three properties:
 In the exercise that follows, we will implement a Stack data structure along
 with the following Stack methods:
 
-  | Type      | Name         | Description                                | Returns                        |
-  | :-------: | :----------: | :----------------------------------------: | :----------------------------: |
-  | Insertion | `push`       | Adds a Node to the top of the Stack.       | Integer - New size of stack    |
-  | Deletion  | `pop`        | Removes a Node from the top of the Stack.  | Node removed from top of Stack |
-  | Meta      | `size`       | Returns the current size of the Stack.     | Integer                        |
+  |   Type    |  Name  |                Description                |            Returns             |
+  | :-------: | :----: | :---------------------------------------: | :----------------------------: |
+  | Insertion | `push` |   Adds a Node to the top of the Stack.    |  Integer - New size of stack   |
+  | Deletion  | `pop`  | Removes a Node from the top of the Stack. | Node removed from top of Stack |
+  |   Meta    | `size` |  Returns the current size of the Stack.   |            Integer             |
 
 ## Queue Methods
 
 In the exercise that follows, we will implement a Queue data structure along
 with the following Queue methods:
 
-  | Type      | Name         | Description                                  | Returns                          |
-  | :-------: | :----------: | :------------------------------------------: | :------------------------------: |
-  | Insertion | `enqueue`    | Adds a Node to the front of the Queue.       | Integer - New size of Queue      |
-  | Deletion  | `dequeue`    | Removes a Node from the front of the Queue.  | Node removed from front of Queue |
-  | Meta      | `size`       | Returns the current size of the Queue.       | Integer                          |
+  |   Type    |   Name    |                 Description                 |             Returns              |
+  | :-------: | :-------: | :-----------------------------------------: | :------------------------------: |
+  | Insertion | `enqueue` |   Adds a Node to the front of the Queue.    |   Integer - New size of Queue    |
+  | Deletion  | `dequeue` | Removes a Node from the front of the Queue. | Node removed from front of Queue |
+  |   Meta    |  `size`   |   Returns the current size of the Queue.    |             Integer              |
 
 ## Time and Space Complexity Analysis
 
@@ -7563,10 +7529,10 @@ constraints of each Stack Operation.
 
   | Data Structure Operation | Time Complexity (Avg) | Time Complexity (Worst) | Space Complexity (Worst) |
   | :----------------------: | :-------------------: | :---------------------: | :----------------------: |
-  | Access                   | `Θ(n)`                | `O(n)`                  | `O(n)`                   |
-  | Search                   | `Θ(n)`                | `O(n)`                  | `O(n)`                   |
-  | Insertion                | `Θ(1)`                | `O(1)`                  | `O(n)`                   |
-  | Deletion                 | `Θ(1)`                | `O(1)`                  | `O(n)`                   |
+  |          Access          |        `Θ(n)`         |         `O(n)`          |          `O(n)`          |
+  |          Search          |        `Θ(n)`         |         `O(n)`          |          `O(n)`          |
+  |        Insertion         |        `Θ(1)`         |         `O(1)`          |          `O(n)`          |
+  |         Deletion         |        `Θ(1)`         |         `O(1)`          |          `O(n)`          |
 
 Before moving forward, see if you can reason to yourself why each operation has
 the time and space complexity listed above!
@@ -7680,8 +7646,6 @@ Keep making the top-most test pass until all tests pass.
 
 ## Instructions
 
-* Clone the project from
-  https://github.com/appacademy-starters/data-structures-linked-list-starter.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npm test` to run the specs
@@ -7701,8 +7665,6 @@ Keep making the top-most test pass until all tests pass.
 
 ## Instructions
 
-* Clone the project from
-  https://github.com/appacademy-starters/data-structures-stack-starter.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npm test` to run the specs
@@ -7722,8 +7684,6 @@ Keep making the top-most test pass until all tests pass.
 
 ## Instructions
 
-* Clone the project from
-  https://github.com/appacademy-starters/data-structures-queue-starter.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npm test` to run the specs

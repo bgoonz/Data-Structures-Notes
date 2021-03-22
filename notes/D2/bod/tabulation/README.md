@@ -2,8 +2,6 @@
 
 This project contains two test-driven problems and one problem on LeetCode.com.
 
-* Clone the project from
-  https://github.com/appacademy-starters/algorithms-tabulation-project.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npx test` to run the specs

@@ -4,18 +4,22 @@ ________________________________________________________________________________
 
 <!-- code_chunk_output -->
 
+- [WEEK 7<br>*Data Structures and Algorithms* {ignore=true}](#week-7data-structures-and-algorithms-ignoretrue)
+- [WEEK-07 <br>*Learning Objectives* {ignore=true}](#week-07-learning-objectives-ignoretrue)
 - [GitHub Profile and Projects Objectives](#github-profile-and-projects-objectives)
 - [Big O Learning Objectives](#big-o-learning-objectives)
 - [Memoization And Tabulation Learning Objectives](#memoization-and-tabulation-learning-objectives)
 - [Sorting Algorithms](#sorting-algorithms)
 - [Lists, Stacks, and Queues](#lists-stacks-and-queues)
 - [Graphs and Heaps](#graphs-and-heaps)
+- [WEEK-07 DAY-1<br>*Your GitHub Identity* {ignore=true}](#week-07-day-1your-github-identity-ignoretrue)
 - [GitHub Profile and Projects Objectives](#github-profile-and-projects-objectives-1)
 - [Improving Your Profile Using GitHub](#improving-your-profile-using-github)
   - [Wikis (pre-project)](#wikis-pre-project)
   - [README files (post-project)](#readme-files-post-project)
   - [Wrap up](#wrap-up)
 - [Your GitHub Identity](#your-github-identity)
+- [WEEK-07 DAY-2<br>*Big-O and Optimizations* {ignore=true}](#week-07-day-2big-o-and-optimizations-ignoretrue)
 - [Big O Learning Objectives](#big-o-learning-objectives-1)
 - [Memoization And Tabulation Learning Objectives](#memoization-and-tabulation-learning-objectives-1)
 - [Recursion Videos](#recursion-videos)
@@ -23,9 +27,34 @@ ________________________________________________________________________________
 - [Curating Complexity: A Guide to Big-O Notation](#curating-complexity-a-guide-to-big-o-notation)
   - [Why Big-O?](#why-big-o)
   - [Big-O Notation](#big-o-notation)
+    - [Simplifying Math Terms](#simplifying-math-terms)
+    - [Simplifying a Product](#simplifying-a-product)
+    - [Simplifying a Sum](#simplifying-a-sum)
+    - [Putting it all together](#putting-it-all-together)
   - [What you've learned](#what-youve-learned)
 - [Common Complexity Classes](#common-complexity-classes)
   - [The seven major classes](#the-seven-major-classes)
+    - [O(1) - Constant](#o1---constant)
+      - [Constant growth](#constant-growth)
+      - [Example Constant code](#example-constant-code)
+    - [O(log(n)) - Logarithmic](#ologn---logarithmic)
+      - [Logarithmic growth](#logarithmic-growth)
+      - [Example logarithmic code](#example-logarithmic-code)
+    - [O(n) - Linear](#on---linear)
+      - [Linear growth](#linear-growth)
+      - [Example linear code](#example-linear-code)
+    - [O(n \* log(n)) - Loglinear](#on--logn---loglinear)
+      - [Loglinear growth](#loglinear-growth)
+      - [Example loglinear code](#example-loglinear-code)
+    - [O(n<sup>c</sup>) - Polynomial](#onsupcsup---polynomial)
+      - [Polynomial growth](#polynomial-growth)
+      - [Example polynomial code](#example-polynomial-code)
+    - [O(c<sup>n</sup>) - Exponential](#ocsupnsup---exponential)
+      - [Exponential growth](#exponential-growth)
+      - [Exponential code example](#exponential-code-example)
+    - [O(n!) - Factorial](#on---factorial)
+      - [Factorial growth](#factorial-growth)
+      - [Factorial code example](#factorial-code-example)
   - [What you've learned](#what-youve-learned-1)
 - [Memoization](#memoization)
   - [Memoizing factorial](#memoizing-factorial)
@@ -35,6 +64,7 @@ ________________________________________________________________________________
 - [Tabulation](#tabulation)
   - [Tabulating the Fibonacci number](#tabulating-the-fibonacci-number)
   - [Aside: Refactoring for O(1) Space](#aside-refactoring-for-o1-space)
+    - [The Tabulation Formula](#the-tabulation-formula)
   - [What you learned](#what-you-learned-1)
 - [Analysis of Linear Search](#analysis-of-linear-search)
 - [Analysis of Binary Search](#analysis-of-binary-search)
@@ -43,9 +73,10 @@ ________________________________________________________________________________
 - [LeetCode.com](#leetcodecom)
 - [Memoization Problems](#memoization-problems)
 - [Tabulation Problems](#tabulation-problems)
+- [WEEK-07 DAY-3<br>*Sorting Algorithms* {ignore=true}](#week-07-day-3sorting-algorithms-ignoretrue)
 - [Sorting Algorithms](#sorting-algorithms-1)
 - [Bubble Sort](#bubble-sort)
-  - [_"But...then...why are we..."_](#_butthenwhy-are-we_)
+  - [_"But...then...why are we..."_](#butthenwhy-are-we)
   - [The algorithm bubbles up](#the-algorithm-bubbles-up)
   - [How does a pass of Bubble Sort work?](#how-does-a-pass-of-bubble-sort-work)
   - [Ending the Bubble Sort](#ending-the-bubble-sort)
@@ -62,12 +93,14 @@ ________________________________________________________________________________
 - [Quick Sort](#quick-sort)
   - [How does it work?](#how-does-it-work)
   - [The algorithm: divide and conquer](#the-algorithm-divide-and-conquer-1)
+    - [Partition](#partition)
   - [The pseudocode](#the-pseudocode-2)
 - [Binary Search](#binary-search)
   - [The Algorithm: "check the middle and half the search space"](#the-algorithm-check-the-middle-and-half-the-search-space)
   - [The pseudocode](#the-pseudocode-3)
 - [Bubble Sort Analysis](#bubble-sort-analysis)
-  - [Time Complexity: O(n2)](#time-complexity-onsup2sup)
+    - [Bubble Sort JS Implementation](#bubble-sort-js-implementation)
+  - [Time Complexity: O(n<sup>2</sup>)](#time-complexity-onsup2sup)
   - [Space Complexity: O(1)](#space-complexity-o1)
   - [When should you use Bubble Sort?](#when-should-you-use-bubble-sort)
 - [Selection Sort Analysis](#selection-sort-analysis)
@@ -77,16 +110,28 @@ ________________________________________________________________________________
   - [When should we use Selection Sort?](#when-should-we-use-selection-sort)
 - [Insertion Sort Analysis](#insertion-sort-analysis)
   - [Time and Space Complexity Analysis](#time-and-space-complexity-analysis)
+    - [Space Complexity: O(1)](#space-complexity-o1-1)
   - [When should you use Insertion Sort?](#when-should-you-use-insertion-sort)
 - [Merge Sort Analysis](#merge-sort-analysis)
   - [Full code](#full-code)
   - [Merging two sorted arrays](#merging-two-sorted-arrays)
   - [Divide and conquer, step-by-step](#divide-and-conquer-step-by-step)
   - [Time and Space Complexity Analysis](#time-and-space-complexity-analysis-1)
+    - [Time Complexity: O(n log(n))](#time-complexity-on-logn)
+    - [Space Complexity: O(n)](#space-complexity-on)
+    - [When should you use Merge Sort?](#when-should-you-use-merge-sort)
 - [Quick Sort](#quick-sort-1)
+    - [Quicksort Sort JS Implementation](#quicksort-sort-js-implementation)
   - [Time and Space Complexity Analysis](#time-and-space-complexity-analysis-2)
+    - [Time Complexity](#time-complexity)
+    - [Space Complexity](#space-complexity)
+    - [When should you use Quick Sort?](#when-should-you-use-quick-sort)
 - [Binary Search](#binary-search-1)
+    - [Binary Search JS Implementation](#binary-search-js-implementation)
   - [Time and Space Complexity Analysis](#time-and-space-complexity-analysis-3)
+    - [Time Complexity: O(log(n))](#time-complexity-ologn)
+    - [Space Complexity: O(n)](#space-complexity-on-1)
+    - [When should we use Binary Search?](#when-should-we-use-binary-search)
 - [Bubble Sort](#bubble-sort-1)
   - [Instructions](#instructions)
 - [Selection Sort](#selection-sort-1)
@@ -99,15 +144,25 @@ ________________________________________________________________________________
   - [Instructions](#instructions-4)
 - [Binary Search](#binary-search-2)
   - [Instructions](#instructions-5)
+- [WEEK-07 DAY-4<br>*Lists, Stacks, Queues* {ignore=true}](#week-07-day-4lists-stacks-queues-ignoretrue)
 - [Lists, Stacks, and Queues](#lists-stacks-and-queues-1)
 - [Linked Lists](#linked-lists)
   - [What is a Linked List?](#what-is-a-linked-list)
+      - [_"So...this sounds a lot like an Array..."_](#sothis-sounds-a-lot-like-an-array)
   - [Types of Linked Lists](#types-of-linked-lists)
   - [Linked List Methods](#linked-list-methods)
   - [Time and Space Complexity Analysis](#time-and-space-complexity-analysis-4)
-  - [Time Complexity - Access and Search:](#time-complexity-access-and-search)
-  - [Time Complexity - Insertion and Deletion:](#time-complexity-insertion-and-deletion)
+  - [Time Complexity - Access and Search:](#time-complexity---access-and-search)
+    - [Scenarios:](#scenarios)
+    - [Discussion:](#discussion)
+  - [Time Complexity - Insertion and Deletion:](#time-complexity---insertion-and-deletion)
+    - [Scenarios:](#scenarios-1)
+    - [Discussion:](#discussion-1)
+    - [NOTE:](#note)
   - [Space Complexity:](#space-complexity-1)
+    - [Scenarios:](#scenarios-2)
+    - [Discussion:](#discussion-2)
+    - [NOTE:](#note-1)
 - [Stacks and Queues](#stacks-and-queues)
   - [What is a Stack?](#what-is-a-stack)
   - [What is a Queue?](#what-is-a-queue)
@@ -115,20 +170,64 @@ ________________________________________________________________________________
   - [Stack Methods](#stack-methods)
   - [Queue Methods](#queue-methods)
   - [Time and Space Complexity Analysis](#time-and-space-complexity-analysis-5)
+      - [Time Complexity - Access and Search:](#time-complexity---access-and-search-1)
+      - [Time Complexity - Insertion and Deletion:](#time-complexity---insertion-and-deletion-1)
+      - [Space Complexity:](#space-complexity-2)
   - [When should we use Stacks and Queues?](#when-should-we-use-stacks-and-queues)
+      - [Stacks:](#stacks)
+      - [Queues:](#queues)
 - [Linked List Project](#linked-list-project)
   - [Instructions](#instructions-6)
 - [Stack Project](#stack-project)
   - [Instructions](#instructions-7)
 - [Queue Project](#queue-project)
   - [Instructions](#instructions-8)
+- [WEEK-07 DAY-5<br>*Heaps* {ignore=true}](#week-07-day-5heaps-ignoretrue)
 - [Graphs and Heaps](#graphs-and-heaps-1)
 - [Introduction to Heaps](#introduction-to-heaps)
+    - [Complete Trees](#complete-trees)
+    - [When to Use Heaps?](#when-to-use-heaps)
 - [Introduction to Heaps](#introduction-to-heaps-1)
+    - [Complete Trees](#complete-trees-1)
+    - [When to Use Heaps?](#when-to-use-heaps-1)
+    - [Complete Trees](#complete-trees-2)
+    - [When to Use Heaps?](#when-to-use-heaps-2)
   - [Binary Heap Implementation](#binary-heap-implementation)
+    - [Insert](#insert)
+      - [Visualizing our heap as a tree of nodes:](#visualizing-our-heap-as-a-tree-of-nodes)
+      - [Translating that into array operations:](#translating-that-into-array-operations)
+    - [DeleteMax](#deletemax)
+      - [Visualizing our heap as a tree of nodes:](#visualizing-our-heap-as-a-tree-of-nodes-1)
+      - [Translating that into array operations:](#translating-that-into-array-operations-1)
+    - [Time Complexity Analysis](#time-complexity-analysis-1)
+      - [Array Heapify Analysis](#array-heapify-analysis)
+    - [Space Complexity Analysis](#space-complexity-analysis)
+    - [Insert](#insert-1)
+      - [Visualizing our heap as a tree of nodes:](#visualizing-our-heap-as-a-tree-of-nodes-2)
+      - [Translating that into array operations:](#translating-that-into-array-operations-2)
+    - [DeleteMax](#deletemax-1)
+      - [Visualizing our heap as a tree of nodes:](#visualizing-our-heap-as-a-tree-of-nodes-3)
+      - [Translating that into array operations:](#translating-that-into-array-operations-3)
+    - [Time Complexity Analysis](#time-complexity-analysis-2)
+      - [Array Heapify Analysis](#array-heapify-analysis-1)
+    - [Space Complexity Analysis](#space-complexity-analysis-1)
   - [Binary Heap Implementation](#binary-heap-implementation-1)
+    - [Insert](#insert-2)
+      - [Visualizing our heap as a tree of nodes:](#visualizing-our-heap-as-a-tree-of-nodes-4)
+      - [Translating that into array operations:](#translating-that-into-array-operations-4)
+    - [DeleteMax](#deletemax-2)
+      - [Visualizing our heap as a tree of nodes:](#visualizing-our-heap-as-a-tree-of-nodes-5)
+      - [Translating that into array operations:](#translating-that-into-array-operations-5)
+    - [Time Complexity Analysis](#time-complexity-analysis-3)
+      - [Array Heapify Analysis](#array-heapify-analysis-2)
+    - [Space Complexity Analysis](#space-complexity-analysis-2)
   - [Heap Sort](#heap-sort)
+    - [Time Complexity Analysis: O(nlog(n))](#time-complexity-analysis-onlogn)
+    - [Space Complexity Analysis:](#space-complexity-analysis-3)
   - [In-Place Heap Sort](#in-place-heap-sort)
+    - [Heapify](#heapify)
+    - [Construct the Sorted Array](#construct-the-sorted-array)
+    - [In-Place Heap Sort JavaScript Implementation](#in-place-heap-sort-javascript-implementation)
 - [Heaps Project](#heaps-project)
   - [Instructions](#instructions-9)
 
@@ -481,7 +580,7 @@ day of starting to establish how other software developers and hiring managers
 will perceive you.
 
 Go to your GitHub profile page. Edit your profile to contain your description,
-"App Academy (@appacademy)" as your current company, your location (if you
+"Web-Dev (@appacademy)" as your current company, your location (if you
 desire), and your Web site.
 
 Now, make a personal Web site for your GitHub profile. You can do that using
@@ -1380,15 +1479,15 @@ console.log(tabulatedFib(7));      // => 13
 When you initialized the table and seeded the first two values, it looked like
 this:
 
-| i          | 0   | 1   | 2 | 3 | 4 | 5 | 6 | 7 |
-|------------|-----|-----|---|---|---|---|---|---|
-| `table[i]` | `0` | `1` |   |   |   |   |   |   |
+| i          | 0   | 1   | 2   | 3   | 4   | 5   | 6   | 7   |
+| ---------- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `table[i]` | `0` | `1` |     |     |     |     |     |     |
 
 
 After the loop finishes, the final table will be:
 
 | i          | 0   | 1   | 2   | 3   | 4   | 5   | 6   | 7    |
-|------------|-----|-----|-----|-----|-----|-----|-----|------|
+| ---------- | --- | --- | --- | --- | --- | --- | --- | ---- |
 | `table[i]` | `0` | `1` | `1` | `2` | `3` | `5` | `8` | `13` |
 
 Similar to the previous `memo`, by the time the function completes, the `table`
@@ -1632,8 +1731,6 @@ ________________________________________________________________________________
 
 This project contains two test-driven problems and one problem on LeetCode.com.
 
-* Clone the project from
-  https://github.com/appacademy-starters/algorithms-memoization-project.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npx test` to run the specs
@@ -1649,8 +1746,6 @@ ________________________________________________________________________________
 
 This project contains two test-driven problems and one problem on LeetCode.com.
 
-* Clone the project from
-  https://github.com/appacademy-starters/algorithms-tabulation-project.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npx test` to run the specs
@@ -3279,8 +3374,6 @@ Bubble Sort: (array)
 
 ## Instructions
 
-* Clone the project from
-  https://github.com/appacademy-starters/algorithms-bubble-sort-starter.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npm test` to run the specs
@@ -3333,8 +3426,6 @@ end procedure
 
 ## Instructions
 
-* Clone the project from
-  https://github.com/appacademy-starters/algorithms-selection-sort-starter.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npm test` to run the specs
@@ -3388,8 +3479,6 @@ end procedure
 
 ## Instructions
 
-* Clone the project from
-  https://github.com/appacademy-starters/algorithms-insertion-sort-starter.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npm test` to run the specs
@@ -3455,8 +3544,6 @@ end procedure
 
 ## Instructions
 
-* Clone the project from
-  https://github.com/appacademy-starters/algorithms-merge-sort-starter.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npm test` to run the specs
@@ -3489,8 +3576,6 @@ end procedure quick sort
 
 ## Instructions
 
-* Clone the project from
-  https://github.com/appacademy-starters/algorithms-quick-sort-starter.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npm test` to run the specs
@@ -3588,8 +3673,6 @@ end procedure binary search index
 
 ## Instructions
 
-* Clone the project from
-  https://github.com/appacademy-starters/algorithms-binary-search-starter.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npm test` to run the specs
@@ -3654,11 +3737,11 @@ A Linked List data structure represents a linear sequence of "vertices" (or
   <b>Linked List Properties:</b>
 </p>
 
-| Property    | Description                                         |
-| :---------: | :-------------------------------------------------: |
-| `head`      | The first node in the list.                         |
-| `tail`      | The last node in the list.                          |
-| `length`    | The number of nodes in the list; the list's length. |
+| Property |                     Description                     |
+| :------: | :-------------------------------------------------: |
+|  `head`  |             The first node in the list.             |
+|  `tail`  |             The last node in the list.              |
+| `length` | The number of nodes in the list; the list's length. |
 
 The data being tracked by a particular Linked List does not live inside the
 Linked List instance itself. Instead, each vertex is actually an instance of an
@@ -3671,11 +3754,11 @@ very important properties as well.
   <b>Linked List Node Properties:</b>
 </p>
 
-| Property    | Description                                            |
-| :---------: | :----------------------------------------------------: |
-| `value`     | The actual value this node represents.                 |
-| `next`      | The next node in the list (relative to this node).     |
-| `previous`  | The previous node in the list (relative to this node). |
+|  Property  |                      Description                       |
+| :--------: | :----------------------------------------------------: |
+|  `value`   |         The actual value this node represents.         |
+|   `next`   |   The next node in the list (relative to this node).   |
+| `previous` | The previous node in the list (relative to this node). |
 
 <p align="center">
   <b>NOTE:</b> The <code>previous</code> property is for Doubly Linked Lists only!
@@ -3743,12 +3826,12 @@ into your job interviews.
   <b>Linked List Types:</b>
 </p>
 
-| List Type             | Description                                                                       | Directionality                |
-| :-------------------: | :-------------------------------------------------------------------------------: | :--------------------------:  |
-| Singly Linked         | Nodes have a single pointer connecting them in a single direction.                | Head→Tail                     |
-| Doubly Linked         | Nodes have two pointers connecting them bi-directionally.                         | Head⇄Tail                     |
-| Multiply Linked       | Nodes have two or more pointers, providing a variety of potential node orderings. | Head⇄Tail, A→Z, Jan→Dec, etc. |
-| Circularly Linked     | Final node's `next` pointer points to the first node, creating a non-linear, circular version of a Linked List.   | Head→Tail→Head→Tail|
+|     List Type     |                                                   Description                                                   |        Directionality         |
+| :---------------: | :-------------------------------------------------------------------------------------------------------------: | :---------------------------: |
+|   Singly Linked   |                       Nodes have a single pointer connecting them in a single direction.                        |           Head→Tail           |
+|   Doubly Linked   |                            Nodes have two pointers connecting them bi-directionally.                            |           Head⇄Tail           |
+|  Multiply Linked  |                Nodes have two or more pointers, providing a variety of potential node orderings.                | Head⇄Tail, A→Z, Jan→Dec, etc. |
+| Circularly Linked | Final node's `next` pointer points to the first node, creating a non-linear, circular version of a Linked List. |      Head→Tail→Head→Tail      |
 
 <p align="center">
   <b>NOTE:</b> These Linked List types are not always mutually exclusive.
@@ -3780,18 +3863,18 @@ structures later on, like Trees and Graphs.
 In the project that follows, we will implement the following Linked List
 methods:
 
-| Type      | Name         | Description                                                                     | Returns             |
-| :-------: | :----------: | :-----------------------------------------------------------------------------: | :-----------------: |
-| Insertion | `addToTail`  | Adds a new node to the tail of the Linked List.                                 | Updated Linked List |
-| Insertion | `addToHead`  | Adds a new node to the head of the Linked List.                                 | Updated Linked List |
-| Insertion | `insertAt`   | Inserts a new node at the "index", or position, specified.                      | Boolean             |
-| Deletion  | `removeTail` | Removes the node at the tail of the Linked List.                                | Removed node        |
-| Deletion  | `removeHead` | Removes the node at the head of the Linked List.                                | Removed node        |
-| Deletion  | `removeFrom` | Removes the node at the "index", or position, specified.                        | Removed node        |
-| Search    | `contains`   | Searches the Linked List for a node with the value specified.                   | Boolean             |
-| Access    | `get`        | Gets the node at the "index", or position, specified.                           | Node at index       |
-| Access    | `set`        | Updates the value of a node at the "index", or position, specified.             | Boolean             |
-| Meta      | `size`       | Returns the current size of the Linked List.                                    | Integer             |
+|   Type    |     Name     |                             Description                             |       Returns       |
+| :-------: | :----------: | :-----------------------------------------------------------------: | :-----------------: |
+| Insertion | `addToTail`  |           Adds a new node to the tail of the Linked List.           | Updated Linked List |
+| Insertion | `addToHead`  |           Adds a new node to the head of the Linked List.           | Updated Linked List |
+| Insertion |  `insertAt`  |     Inserts a new node at the "index", or position, specified.      |       Boolean       |
+| Deletion  | `removeTail` |          Removes the node at the tail of the Linked List.           |    Removed node     |
+| Deletion  | `removeHead` |          Removes the node at the head of the Linked List.           |    Removed node     |
+| Deletion  | `removeFrom` |      Removes the node at the "index", or position, specified.       |    Removed node     |
+|  Search   |  `contains`  |    Searches the Linked List for a node with the value specified.    |       Boolean       |
+|  Access   |    `get`     |        Gets the node at the "index", or position, specified.        |    Node at index    |
+|  Access   |    `set`     | Updates the value of a node at the "index", or position, specified. |       Boolean       |
+|   Meta    |    `size`    |            Returns the current size of the Linked List.             |       Integer       |
 
 
 ## Time and Space Complexity Analysis
@@ -3802,10 +3885,10 @@ Singly and Doubly Linked Lists:
 
 | Data Structure Operation | Time Complexity (Avg) | Time Complexity (Worst) | Space Complexity (Worst) |
 | :----------------------: | :-------------------: | :---------------------: | :----------------------: |
-| Access                   | `Θ(n)`                | `O(n)`                  | `O(n)`                   |
-| Search                   | `Θ(n)`                | `O(n)`                  | `O(n)`                   |
-| Insertion                | `Θ(1)`                | `O(1)`                  | `O(n)`                   |
-| Deletion                 | `Θ(1)`                | `O(1)`                  | `O(n)`                   |
+|          Access          |        `Θ(n)`         |         `O(n)`          |          `O(n)`          |
+|          Search          |        `Θ(n)`         |         `O(n)`          |          `O(n)`          |
+|        Insertion         |        `Θ(1)`         |         `O(1)`          |          `O(n)`          |
+|         Deletion         |        `Θ(1)`         |         `O(1)`          |          `O(n)`          |
 
 Before moving forward, see if you can reason to yourself why each operation has
 the time and space complexity listed above!
@@ -4003,11 +4086,11 @@ properties together. They track the following three properties:
   <b>Stack Properties | Queue Properties:</b>
 </p>
 
-  | Stack Property | Description                                           | Queue Property | Description                                           |
+  | Stack Property |                      Description                      | Queue Property |                      Description                      |
   | :------------: | :---------------------------------------------------: | :------------: | :---------------------------------------------------: |
-  | `top`          | The first node in the Stack                           | `front`        | The first node in the Queue.                          |
-  | ----           | Stacks do not have an equivalent                      | `back`         | The last node in the Queue.                           |
-  | `length`       | The number of nodes in the Stack; the Stack's length. | `length`       | The number of nodes in the Queue; the Queue's length. |
+  |     `top`      |              The first node in the Stack              |    `front`     |             The first node in the Queue.              |
+  |      ----      |           Stacks do not have an equivalent            |     `back`     |              The last node in the Queue.              |
+  |    `length`    | The number of nodes in the Stack; the Stack's length. |    `length`    | The number of nodes in the Queue; the Queue's length. |
 
   Notice that rather than having a `head` and a `tail` like Linked Lists, Stacks
   have a `top`, and Queues have a `front` and a `back` instead. Stacks don't
@@ -4028,10 +4111,10 @@ properties together. They track the following three properties:
   <b>Stack & Queue Node Properties:</b>
 </p>
 
-  | Property    | Description                                            |
-  | :---------: | :----------------------------------------------------: |
-  | `value`     | The actual value this node represents.                 |
-  | `next`      | The next node in the Stack (relative to this node).    |
+  | Property |                     Description                     |
+  | :------: | :-------------------------------------------------: |
+  | `value`  |       The actual value this node represents.        |
+  |  `next`  | The next node in the Stack (relative to this node). |
 
 
 ## Stack Methods
@@ -4039,22 +4122,22 @@ properties together. They track the following three properties:
 In the exercise that follows, we will implement a Stack data structure along
 with the following Stack methods:
 
-  | Type      | Name         | Description                                | Returns                        |
-  | :-------: | :----------: | :----------------------------------------: | :----------------------------: |
-  | Insertion | `push`       | Adds a Node to the top of the Stack.       | Integer - New size of stack    |
-  | Deletion  | `pop`        | Removes a Node from the top of the Stack.  | Node removed from top of Stack |
-  | Meta      | `size`       | Returns the current size of the Stack.     | Integer                        |
+  |   Type    |  Name  |                Description                |            Returns             |
+  | :-------: | :----: | :---------------------------------------: | :----------------------------: |
+  | Insertion | `push` |   Adds a Node to the top of the Stack.    |  Integer - New size of stack   |
+  | Deletion  | `pop`  | Removes a Node from the top of the Stack. | Node removed from top of Stack |
+  |   Meta    | `size` |  Returns the current size of the Stack.   |            Integer             |
 
 ## Queue Methods
 
 In the exercise that follows, we will implement a Queue data structure along
 with the following Queue methods:
 
-  | Type      | Name         | Description                                  | Returns                          |
-  | :-------: | :----------: | :------------------------------------------: | :------------------------------: |
-  | Insertion | `enqueue`    | Adds a Node to the front of the Queue.       | Integer - New size of Queue      |
-  | Deletion  | `dequeue`    | Removes a Node from the front of the Queue.  | Node removed from front of Queue |
-  | Meta      | `size`       | Returns the current size of the Queue.       | Integer                          |
+  |   Type    |   Name    |                 Description                 |             Returns              |
+  | :-------: | :-------: | :-----------------------------------------: | :------------------------------: |
+  | Insertion | `enqueue` |   Adds a Node to the front of the Queue.    |   Integer - New size of Queue    |
+  | Deletion  | `dequeue` | Removes a Node from the front of the Queue. | Node removed from front of Queue |
+  |   Meta    |  `size`   |   Returns the current size of the Queue.    |             Integer              |
 
 ## Time and Space Complexity Analysis
 
@@ -4063,10 +4146,10 @@ constraints of each Stack Operation.
 
   | Data Structure Operation | Time Complexity (Avg) | Time Complexity (Worst) | Space Complexity (Worst) |
   | :----------------------: | :-------------------: | :---------------------: | :----------------------: |
-  | Access                   | `Θ(n)`                | `O(n)`                  | `O(n)`                   |
-  | Search                   | `Θ(n)`                | `O(n)`                  | `O(n)`                   |
-  | Insertion                | `Θ(1)`                | `O(1)`                  | `O(n)`                   |
-  | Deletion                 | `Θ(1)`                | `O(1)`                  | `O(n)`                   |
+  |          Access          |        `Θ(n)`         |         `O(n)`          |          `O(n)`          |
+  |          Search          |        `Θ(n)`         |         `O(n)`          |          `O(n)`          |
+  |        Insertion         |        `Θ(1)`         |         `O(1)`          |          `O(n)`          |
+  |         Deletion         |        `Θ(1)`         |         `O(1)`          |          `O(n)`          |
 
 Before moving forward, see if you can reason to yourself why each operation has
 the time and space complexity listed above!
@@ -4180,8 +4263,6 @@ Keep making the top-most test pass until all tests pass.
 
 ## Instructions
 
-* Clone the project from
-  https://github.com/appacademy-starters/data-structures-linked-list-starter.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npm test` to run the specs
@@ -4201,8 +4282,6 @@ Keep making the top-most test pass until all tests pass.
 
 ## Instructions
 
-* Clone the project from
-  https://github.com/appacademy-starters/data-structures-stack-starter.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npm test` to run the specs
@@ -4222,8 +4301,6 @@ Keep making the top-most test pass until all tests pass.
 
 ## Instructions
 
-* Clone the project from
-  https://github.com/appacademy-starters/data-structures-queue-starter.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npm test` to run the specs
@@ -4957,8 +5034,6 @@ Keep making the top-most test pass until all tests pass.
 
 ## Instructions
 
-* Clone the project from
-  https://github.com/appacademy-starters/data-structures-max-heap-starter.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npm test` to run the specs

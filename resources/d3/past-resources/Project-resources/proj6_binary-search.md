@@ -88,8 +88,6 @@ end procedure binary search index
 
 ## Instructions {ignore=true}
 
-* Clone the project from
-  https://github.com/appacademy-starters/algorithms-binary-search-starter.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npm test` to run the specs

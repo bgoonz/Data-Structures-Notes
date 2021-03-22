@@ -33,10 +33,10 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-(function (root, factory) {
+((root, factory) => {
   'use strict';
   if (typeof define === 'function' && define.amd) {
-    define('sinon', [], function () {
+    define('sinon', [], () => {
       return (root.sinon = factory());
     });
   } else if (typeof exports === 'object') {
@@ -44,10 +44,10 @@
   } else {
     root.sinon = factory();
   }
-}(this, function () {
+})(this, function () {
   'use strict';
-  var samsam, formatio, lolex;
-  (function () {
+  let samsam, formatio, lolex;
+  (() => {
                 function define(mod, deps, fn) {
                   if (mod == "samsam") {
                     samsam = deps();
@@ -58,19 +58,19 @@
                   }
                 }
     define.amd = {};
-((typeof define === "function" && define.amd && function (m) { define("samsam", m); }) ||
+((typeof define === "function" && define.amd && (m => { define("samsam", m); })) ||
  (typeof module === "object" &&
-      function (m) { module.exports = m(); }) || // Node
+      (m => { module.exports = m(); })) || // Node
  function (m) { this.samsam = m(); } // Browser globals
-)(function () {
-    var o = Object.prototype;
-    var div = typeof document !== "undefined" && document.createElement("div");
+)(() => {
+    const o = Object.prototype;
+    const div = typeof document !== "undefined" && document.createElement("div");
 
     function isNaN(value) {
         // Unlike global isNaN, this avoids type coercion
         // typeof check avoids IE host object issues, hat tip to
         // lodash
-        var val = value; // JsLint thinks value !== value is "weird"
+        const val = value; // JsLint thinks value !== value is "weird"
         return typeof value === "number" && value !== val;
     }
 
@@ -131,7 +131,8 @@
      * Return an array of own property names.
      */
     function keys(object) {
-        var ks = [], prop;
+        const ks = [];
+        let prop;
         for (prop in object) {
             if (o.hasOwnProperty.call(object, prop)) { ks.push(prop); }
         }
@@ -199,16 +200,16 @@
 
         // used for cyclic comparison
         // contain already visited objects
-        var objects1 = [],
-            objects2 = [],
-        // contain pathes (position in the object structure)
-        // of the already visited objects
-        // indexes same as in objects arrays
-            paths1 = [],
-            paths2 = [],
-        // contains combinations of already compared objects
-        // in the manner: { "$1['ref']$2['ref']": true }
-            compared = {};
+        const objects1 = [],
+              objects2 = [],
+              // contain pathes (position in the object structure)
+              // of the already visited objects
+              // indexes same as in objects arrays
+              paths1 = [],
+              paths2 = [],
+              // contains combinations of already compared objects
+              // in the manner: { "$1['ref']$2['ref']": true }
+              compared = {};
 
         /**
          * used to check, if the value of a property is an object
@@ -237,7 +238,7 @@
          */
         function getIndex(objects, obj) {
 
-            var i;
+            let i;
             for (i = 0; i < objects.length; i++) {
                 if (objects[i] === obj) {
                     return i;
@@ -248,9 +249,9 @@
         }
 
         // does the recursion for the deep equal check
-        return (function deepEqual(obj1, obj2, path1, path2) {
-            var type1 = typeof obj1;
-            var type2 = typeof obj2;
+        return function deepEqual(obj1, obj2, path1, path2) {
+            const type1 = typeof obj1;
+            const type2 = typeof obj2;
 
             // == null also matches undefined
             if (obj1 === obj2 ||
@@ -264,7 +265,7 @@
             // Elements are only equal if identical(expected, actual)
             if (isElement(obj1) || isElement(obj2)) { return false; }
 
-            var isDate1 = isDate(obj1), isDate2 = isDate(obj2);
+            const isDate1 = isDate(obj1), isDate2 = isDate(obj2);
             if (isDate1 || isDate2) {
                 if (!isDate1 || !isDate2 || obj1.getTime() !== obj2.getTime()) {
                     return false;
@@ -275,10 +276,10 @@
                 if (obj1.toString() !== obj2.toString()) { return false; }
             }
 
-            var class1 = getClass(obj1);
-            var class2 = getClass(obj2);
-            var keys1 = keys(obj1);
-            var keys2 = keys(obj2);
+            const class1 = getClass(obj1);
+            const class2 = getClass(obj2);
+            const keys1 = keys(obj1);
+            const keys2 = keys(obj2);
 
             if (isArguments(obj1) || isArguments(obj2)) {
                 if (obj1.length !== obj2.length) { return false; }
@@ -289,12 +290,18 @@
                 }
             }
 
-            var key, i, l,
+            let key,
+                i,
+                l,
                 // following vars are used for the cyclic logic
-                value1, value2,
-                isObject1, isObject2,
-                index1, index2,
-                newPath1, newPath2;
+                value1,
+                value2,
+                isObject1,
+                isObject2,
+                index1,
+                index2,
+                newPath1,
+                newPath2;
 
             for (i = 0, l = keys1.length; i < l; i++) {
                 key = keys1[i];
@@ -358,14 +365,14 @@
 
             return true;
 
-        }(obj1, obj2, '$1', '$2'));
+        }(obj1, obj2, '$1', '$2');
     }
 
-    var match;
+    let match;
 
     function arrayContains(array, subset) {
         if (subset.length === 0) { return true; }
-        var i, l, j, k;
+        let i, l, j, k;
         for (i = 0, l = array.length; i < l; ++i) {
             if (match(array[i], subset[0])) {
                 for (j = 0, k = subset.length; j < k; ++j) {
@@ -395,7 +402,7 @@
 
         if (typeof matcher === "string") {
             matcher = matcher.toLowerCase();
-            var notNull = typeof object === "string" || !!object;
+            const notNull = typeof object === "string" || !!object;
             return notNull &&
                 (String(object)).toLowerCase().indexOf(matcher) >= 0;
         }
@@ -424,9 +431,9 @@
             if (matcher === object) {
                 return true;
             }
-            var prop;
+            let prop;
             for (prop in matcher) {
-                var value = object[prop];
+                let value = object[prop];
                 if (typeof value === "undefined" &&
                         typeof object.getAttribute === "function") {
                     value = object.getAttribute(prop);
@@ -457,22 +464,21 @@
         keys: keys
     };
 });
-((typeof define === "function" && define.amd && function (m) {
+((typeof define === "function" && define.amd && (m => {
     define("formatio", ["samsam"], m);
-}) || (typeof module === "object" && function (m) {
+})) || (typeof module === "object" && (m => {
     module.exports = m(require("samsam"));
-}) || function (m) { this.formatio = m(this.samsam); }
-)(function (samsam) {
-    
-    var formatio = {
+})) || function (m) { this.formatio = m(this.samsam); }
+)(samsam => {
+    const formatio = {
         excludeConstructors: ["Object", /^.$/],
         quoteStrings: true,
         limitChildrenCount: 0
     };
 
-    var hasOwn = Object.prototype.hasOwnProperty;
+    const hasOwn = Object.prototype.hasOwnProperty;
 
-    var specialObjects = [];
+    const specialObjects = [];
     if (typeof global !== "undefined") {
         specialObjects.push({ object: global, value: "[object global]" });
     }
@@ -490,16 +496,16 @@
         if (!func) { return ""; }
         if (func.displayName) { return func.displayName; }
         if (func.name) { return func.name; }
-        var matches = func.toString().match(/function\s+([^\(]+)/m);
+        const matches = func.toString().match(/function\s+([^\(]+)/m);
         return (matches && matches[1]) || "";
     }
 
     function constructorName(f, object) {
-        var name = functionName(object && object.constructor);
-        var excludes = f.excludeConstructors ||
+        const name = functionName(object && object.constructor);
+        const excludes = f.excludeConstructors ||
                 formatio.excludeConstructors || [];
 
-        var i, l;
+        let i, l;
         for (i = 0, l = excludes.length; i < l; ++i) {
             if (typeof excludes[i] === "string" && excludes[i] === name) {
                 return "";
@@ -513,140 +519,148 @@
 
     function isCircular(object, objects) {
         if (typeof object !== "object") { return false; }
-        var i, l;
+        let i, l;
         for (i = 0, l = objects.length; i < l; ++i) {
             if (objects[i] === object) { return true; }
         }
         return false;
     }
 
-    function ascii(f, object, processed, indent) {
-        if (typeof object === "string") {
-            var qs = f.quoteStrings;
-            var quote = typeof qs !== "boolean" || qs;
-            return processed || quote ? '"' + object + '"' : object;
-        }
-
-        if (typeof object === "function" && !(object instanceof RegExp)) {
-            return ascii.func(object);
-        }
-
-        processed = processed || [];
-
-        if (isCircular(object, processed)) { return "[Circular]"; }
-
-        if (Object.prototype.toString.call(object) === "[object Array]") {
-            return ascii.array.call(f, object, processed);
-        }
-
-        if (!object) { return String((1/object) === -Infinity ? "-0" : object); }
-        if (samsam.isElement(object)) { return ascii.element(object); }
-
-        if (typeof object.toString === "function" &&
-                object.toString !== Object.prototype.toString) {
-            return object.toString();
-        }
-
-        var i, l;
-        for (i = 0, l = specialObjects.length; i < l; i++) {
-            if (object === specialObjects[i].object) {
-                return specialObjects[i].value;
+    class ascii {
+        constructor(f, object, processed, indent) {
+            if (typeof object === "string") {
+                const qs = f.quoteStrings;
+                const quote = typeof qs !== "boolean" || qs;
+                return processed || quote ? '"' + object + '"' : object;
             }
+
+            if (typeof object === "function" && !(object instanceof RegExp)) {
+                return ascii.func(object);
+            }
+
+            processed = processed || [];
+
+            if (isCircular(object, processed)) { return "[Circular]"; }
+
+            if (Object.prototype.toString.call(object) === "[object Array]") {
+                return ascii.array.call(f, object, processed);
+            }
+
+            if (!object) { return String((1/object) === -Infinity ? "-0" : object); }
+            if (samsam.isElement(object)) { return ascii.element(object); }
+
+            if (typeof object.toString === "function" &&
+                    object.toString !== Object.prototype.toString) {
+                return object.toString();
+            }
+
+            let i, l;
+            for (i = 0, l = specialObjects.length; i < l; i++) {
+                if (object === specialObjects[i].object) {
+                    return specialObjects[i].value;
+                }
+            }
+
+            return ascii.object.call(f, object, processed, indent);
         }
 
-        return ascii.object.call(f, object, processed, indent);
+        static func(func) {
+            return "function " + functionName(func) + "() {}";
+        }
+
+        static array(array, processed) {
+            processed = processed || [];
+            processed.push(array);
+            const pieces = [];
+            let i, l;
+            l = (this.limitChildrenCount > 0) ? 
+                Math.min(this.limitChildrenCount, array.length) : array.length;
+
+            for (i = 0; i < l; ++i) {
+                pieces.push(ascii(this, array[i], processed));
+            }
+
+            if(l < array.length)
+                pieces.push("[... " + (array.length - l) + " more elements]");
+
+            return "[" + pieces.join(", ") + "]";
+        }
+
+        static object(object, processed, indent) {
+            processed = processed || [];
+            processed.push(object);
+            indent = indent || 0;
+            const pieces = [], properties = samsam.keys(object).sort();
+            let length = 3;
+            let prop, str, obj, i, k, l;
+            l = (this.limitChildrenCount > 0) ? 
+                Math.min(this.limitChildrenCount, properties.length) : properties.length;
+
+            for (i = 0; i < l; ++i) {
+                prop = properties[i];
+                obj = object[prop];
+
+                if (isCircular(obj, processed)) {
+                    str = "[Circular]";
+                } else {
+                    str = ascii(this, obj, processed, indent + 2);
+                }
+
+                str = (/\s/.test(prop) ? '"' + prop + '"' : prop) + ": " + str;
+                length += str.length;
+                pieces.push(str);
+            }
+
+            const cons = constructorName(this, object);
+            const prefix = cons ? "[" + cons + "] " : "";
+            let is = "";
+            for (i = 0, k = indent; i < k; ++i) { is += " "; }
+
+            if(l < properties.length)
+                pieces.push("[... " + (properties.length - l) + " more elements]");
+
+            if (length + indent > 80) {
+                return prefix + "{\n  " + is + pieces.join(",\n  " + is) + "\n" +
+                    is + "}";
+            }
+            return prefix + "{ " + pieces.join(", ") + " }";
+        }
+
+        static element(element) {
+            const tagName = element.tagName.toLowerCase();
+            const attrs = element.attributes;
+            let attr;
+            const pairs = [];
+            let attrName;
+            let i;
+            let l;
+            let val;
+
+            for (i = 0, l = attrs.length; i < l; ++i) {
+                attr = attrs.item(i);
+                attrName = attr.nodeName.toLowerCase().replace("html:", "");
+                val = attr.nodeValue;
+                if (attrName !== "contenteditable" || val !== "inherit") {
+                    if (!!val) { pairs.push(attrName + "=\"" + val + "\""); }
+                }
+            }
+
+            const formatted = "<" + tagName + (pairs.length > 0 ? " " : "");
+            let content = element.innerHTML;
+
+            if (content.length > 20) {
+                content = content.substr(0, 20) + "[...]";
+            }
+
+            const res = formatted + pairs.join(" ") + ">" + content +
+                    "</" + tagName + ">";
+
+            return res.replace(/ contentEditable="inherit"/, "");
+        }
     }
 
-    ascii.func = function (func) {
-        return "function " + functionName(func) + "() {}";
-    };
-
-    ascii.array = function (array, processed) {
-        processed = processed || [];
-        processed.push(array);
-        var pieces = [];
-        var i, l;
-        l = (this.limitChildrenCount > 0) ? 
-            Math.min(this.limitChildrenCount, array.length) : array.length;
-
-        for (i = 0; i < l; ++i) {
-            pieces.push(ascii(this, array[i], processed));
-        }
-
-        if(l < array.length)
-            pieces.push("[... " + (array.length - l) + " more elements]");
-
-        return "[" + pieces.join(", ") + "]";
-    };
-
-    ascii.object = function (object, processed, indent) {
-        processed = processed || [];
-        processed.push(object);
-        indent = indent || 0;
-        var pieces = [], properties = samsam.keys(object).sort();
-        var length = 3;
-        var prop, str, obj, i, k, l;
-        l = (this.limitChildrenCount > 0) ? 
-            Math.min(this.limitChildrenCount, properties.length) : properties.length;
-
-        for (i = 0; i < l; ++i) {
-            prop = properties[i];
-            obj = object[prop];
-
-            if (isCircular(obj, processed)) {
-                str = "[Circular]";
-            } else {
-                str = ascii(this, obj, processed, indent + 2);
-            }
-
-            str = (/\s/.test(prop) ? '"' + prop + '"' : prop) + ": " + str;
-            length += str.length;
-            pieces.push(str);
-        }
-
-        var cons = constructorName(this, object);
-        var prefix = cons ? "[" + cons + "] " : "";
-        var is = "";
-        for (i = 0, k = indent; i < k; ++i) { is += " "; }
-
-        if(l < properties.length)
-            pieces.push("[... " + (properties.length - l) + " more elements]");
-
-        if (length + indent > 80) {
-            return prefix + "{\n  " + is + pieces.join(",\n  " + is) + "\n" +
-                is + "}";
-        }
-        return prefix + "{ " + pieces.join(", ") + " }";
-    };
-
-    ascii.element = function (element) {
-        var tagName = element.tagName.toLowerCase();
-        var attrs = element.attributes, attr, pairs = [], attrName, i, l, val;
-
-        for (i = 0, l = attrs.length; i < l; ++i) {
-            attr = attrs.item(i);
-            attrName = attr.nodeName.toLowerCase().replace("html:", "");
-            val = attr.nodeValue;
-            if (attrName !== "contenteditable" || val !== "inherit") {
-                if (!!val) { pairs.push(attrName + "=\"" + val + "\""); }
-            }
-        }
-
-        var formatted = "<" + tagName + (pairs.length > 0 ? " " : "");
-        var content = element.innerHTML;
-
-        if (content.length > 20) {
-            content = content.substr(0, 20) + "[...]";
-        }
-
-        var res = formatted + pairs.join(" ") + ">" + content +
-                "</" + tagName + ">";
-
-        return res.replace(/ contentEditable="inherit"/, "");
-    };
-
     function Formatio(options) {
-        for (var opt in options) {
+        for (const opt in options) {
             this[opt] = options[opt];
         }
     }
@@ -654,22 +668,43 @@
     Formatio.prototype = {
         functionName: functionName,
 
-        configure: function (options) {
+        configure(options) {
             return new Formatio(options);
         },
 
-        constructorName: function (object) {
+        constructorName(object) {
             return constructorName(this, object);
         },
 
-        ascii: function (object, processed, indent) {
+        ascii(object, processed, indent) {
             return ascii(this, object, processed, indent);
         }
     };
 
     return Formatio.prototype;
 });
-!function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.lolex=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+!(e => {if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{let f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.lolex=e()}})(() => {let define, module, exports;return (function e(t,n,r){
+    class s {
+        constructor(o, u) {if(!n[o]){if(!t[o]){const a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);const f=new Error("Cannot find module '"+o+"'");throw (f.code="MODULE_NOT_FOUND", f)}const l=n[o]={exports:{}};t[o][0].call(l.exports,e => {const n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}
+
+        static useFakeTimers() {
+            let now;
+            const methods = Array.prototype.slice.call(arguments);
+
+            if (typeof methods[0] === "string") {
+                now = 0;
+            } else {
+                now = methods.shift();
+            }
+
+            const clock = llx.install(now || 0, methods);
+            clock.restore = clock.uninstall;
+            return clock;
+        }
+    }
+
+    var i=typeof require=="function"&&require;for(let o=0;o<r.length;o++)s(r[o]);return s
+})({1:[function(require,module,exports){
 (function (global){
 /*global global, window*/
 /**
@@ -679,12 +714,12 @@
  * Copyright (c) 2010-2014 Christian Johansen
  */
 
-(function (global) {
+(global => {
     
     // Make properties writable in IE, as per
     // http://www.adequatelygood.com/Replacing-setTimeout-Globally.html
     // JSLint being anal
-    var glbl = global;
+    const glbl = global;
 
     global.setTimeout = glbl.setTimeout;
     global.clearTimeout = glbl.clearTimeout;
@@ -703,13 +738,13 @@
     // browsers, a number.
     // see https://github.com/cjohansen/Sinon.JS/pull/436
 
-    var NOOP = function () { return undefined; };
-    var timeoutResult = setTimeout(NOOP, 0);
-    var addTimerReturnsObject = typeof timeoutResult === "object";
+    const NOOP = () => { return undefined; };
+    const timeoutResult = setTimeout(NOOP, 0);
+    const addTimerReturnsObject = typeof timeoutResult === "object";
     clearTimeout(timeoutResult);
 
-    var NativeDate = Date;
-    var uniqueTimerId = 1;
+    const NativeDate = Date;
+    let uniqueTimerId = 1;
 
     /**
      * Parse strings like "01:10:00" (meaning 1 hour, 10 minutes, 0 seconds) into
@@ -721,9 +756,10 @@
             return 0;
         }
 
-        var strings = str.split(":");
-        var l = strings.length, i = l;
-        var ms = 0, parsed;
+        const strings = str.split(":");
+        const l = strings.length;
+        let i = l;
+        let ms = 0, parsed;
 
         if (l > 3 || !/^(\d\d:){0,2}\d\d?$/.test(str)) {
             throw new Error("tick only understands numbers and 'h:m:s'");
@@ -757,7 +793,7 @@
     }
 
     function mirrorDateProperties(target, source) {
-        var prop;
+        let prop;
         for (prop in source) {
             if (source.hasOwnProperty(prop)) {
                 target[prop] = source[prop];
@@ -886,10 +922,10 @@
     }
 
     function firstTimerInRange(clock, from, to) {
-        var timers = clock.timers,
-            timer = null,
-            id,
-            isInRange;
+        const timers = clock.timers;
+        let timer = null;
+        let id;
+        let isInRange;
 
         for (id in timers) {
             if (timers.hasOwnProperty(id)) {
@@ -905,7 +941,7 @@
     }
 
     function callTimer(clock, timer) {
-        var exception;
+        let exception;
 
         if (typeof timer.interval === "number") {
             clock.timers[timer.id].callAt += timer.interval;
@@ -964,7 +1000,7 @@
 
         if (clock.timers.hasOwnProperty(timerId)) {
             // check that the ID matches a timer of the correct type
-            var timer = clock.timers[timerId];
+            const timer = clock.timers[timerId];
             if (timerType(timer) === ttype) {
                 delete clock.timers[timerId];
             } else {
@@ -974,9 +1010,7 @@
     }
 
     function uninstall(clock, target) {
-        var method,
-            i,
-            l;
+        let method, i, l;
 
         for (i = 0, l = clock.methods.length; i < l; i++) {
             method = clock.methods[i];
@@ -995,13 +1029,13 @@
     }
 
     function hijackMethod(target, method, clock) {
-        var prop;
+        let prop;
 
         clock[method].hadOwnProperty = Object.prototype.hasOwnProperty.call(target, method);
         clock["_" + method] = target[method];
 
         if (method === "Date") {
-            var date = mirrorDateProperties(clock[method], target[method]);
+            const date = mirrorDateProperties(clock[method], target[method]);
             target[method] = date;
         } else {
             target[method] = function () {
@@ -1018,7 +1052,7 @@
         target[method].clock = clock;
     }
 
-    var timers = {
+    const timers = {
         setTimeout: setTimeout,
         clearTimeout: clearTimeout,
         setImmediate: global.setImmediate,
@@ -1028,9 +1062,9 @@
         Date: Date
     };
 
-    var keys = Object.keys || function (obj) {
-        var ks = [],
-            key;
+    const keys = Object.keys || (obj => {
+        const ks = [];
+        let key;
 
         for (key in obj) {
             if (obj.hasOwnProperty(key)) {
@@ -1039,12 +1073,12 @@
         }
 
         return ks;
-    };
+    });
 
     exports.timers = timers;
 
     function createClock(now) {
-        var clock = {
+        const clock = {
             now: getEpoch(now),
             timeouts: {},
             Date: createDate()
@@ -1091,13 +1125,13 @@
 
         clock.tick = function tick(ms) {
             ms = typeof ms === "number" ? ms : parseTime(ms);
-            var tickFrom = clock.now, tickTo = clock.now + ms, previous = clock.now;
-            var timer = firstTimerInRange(clock, tickFrom, tickTo);
-            var oldNow;
+            let tickFrom = clock.now, tickTo = clock.now + ms, previous = clock.now;
+            let timer = firstTimerInRange(clock, tickFrom, tickTo);
+            let oldNow;
 
             clock.duringTick = true;
 
-            var firstException;
+            let firstException;
             while (timer && tickFrom <= tickTo) {
                 if (clock.timers[timer.id]) {
                     tickFrom = clock.now = timer.callAt;
@@ -1135,16 +1169,16 @@
 
         clock.setSystemTime = function setSystemTime(now) {
             // determine time difference
-            var newNow = getEpoch(now);
-            var difference = newNow - clock.now;
+            const newNow = getEpoch(now);
+            const difference = newNow - clock.now;
 
             // update 'system clock'
             clock.now = newNow;
 
             // update timers and intervals to keep them stable
-            for (var id in clock.timers) {
+            for (const id in clock.timers) {
                 if (clock.timers.hasOwnProperty(id)) {
-                    var timer = clock.timers[id];
+                    const timer = clock.timers[id];
                     timer.createdAt += difference;
                     timer.callAt += difference;
                 }
@@ -1156,8 +1190,7 @@
     exports.createClock = createClock;
 
     exports.install = function install(target, now, toFake) {
-        var i,
-            l;
+        let i, l;
 
         if (typeof target === "number") {
             toFake = now;
@@ -1169,9 +1202,9 @@
             target = global;
         }
 
-        var clock = createClock(now);
+        const clock = createClock(now);
 
-        clock.uninstall = function () {
+        clock.uninstall = () => {
             uninstall(clock, target);
         };
 
@@ -1188,13 +1221,13 @@
         return clock;
     };
 
-}(global || this));
+})(global || this);
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}]},{},[1])(1)
+},{}]},{},[1])(1);
 });
   })();
-  var define;
+  let define;
 /**
  * Sinon core utilities. For internal use only.
  *
@@ -1203,13 +1236,13 @@
  *
  * Copyright (c) 2010-2013 Christian Johansen
  */
-var sinon = (function () {
+const sinon = (() => {
 "use strict";
  // eslint-disable-line no-unused-vars
     
-    var sinonModule;
-    var isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
-    var isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
+    let sinonModule;
+    const isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
+    const isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
 
     function loadDependencies(require, exports, module) {
         sinonModule = module.exports = require("./sinon/util/core");
@@ -1242,7 +1275,7 @@ var sinon = (function () {
     }
 
     return sinonModule;
-}());
+})();
 
 /**
  * @depend ../../sinon.js
@@ -1255,13 +1288,13 @@ var sinon = (function () {
  *
  * Copyright (c) 2010-2013 Christian Johansen
  */
-(function (sinonGlobal) {
+(sinonGlobal => {
     
-    var div = typeof document !== "undefined" && document.createElement("div");
-    var hasOwn = Object.prototype.hasOwnProperty;
+    const div = typeof document !== "undefined" && document.createElement("div");
+    const hasOwn = Object.prototype.hasOwnProperty;
 
     function isDOMNode(obj) {
-        var success = false;
+        let success = false;
 
         try {
             obj.appendChild(div);
@@ -1292,7 +1325,7 @@ var sinon = (function () {
     }
 
     function mirrorProperties(target, source) {
-        for (var prop in source) {
+        for (const prop in source) {
             if (!hasOwn.call(target, prop)) {
                 target[prop] = source[prop];
             }
@@ -1304,7 +1337,7 @@ var sinon = (function () {
     }
 
     // Cheap way to detect if we have ES5 support.
-    var hasES5Support = "keys" in Object;
+    const hasES5Support = "keys" in Object;
 
     function makeApi(sinon) {
         sinon.wrapMethod = function wrapMethod(object, property, method) {
@@ -1317,7 +1350,7 @@ var sinon = (function () {
             }
 
             function checkWrappedMethod(wrappedMethod) {
-                var error;
+                let error;
 
                 if (!isFunction(wrappedMethod)) {
                     error = new TypeError("Attempted to wrap " + (typeof wrappedMethod) + " property " +
@@ -1325,7 +1358,7 @@ var sinon = (function () {
                 } else if (wrappedMethod.restore && wrappedMethod.restore.sinon) {
                     error = new TypeError("Attempted to wrap " + property + " which is already wrapped");
                 } else if (wrappedMethod.calledBefore) {
-                    var verb = wrappedMethod.returns ? "stubbed" : "spied on";
+                    const verb = wrappedMethod.returns ? "stubbed" : "spied on";
                     error = new TypeError("Attempted to wrap " + property + " which is already " + verb);
                 }
 
@@ -1337,7 +1370,7 @@ var sinon = (function () {
                 }
             }
 
-            var error, wrappedMethod, i;
+            let error, wrappedMethod, i;
 
             function simplePropertyAssignment() {
                 wrappedMethod = object[property];
@@ -1348,10 +1381,10 @@ var sinon = (function () {
 
             // IE 8 does not support hasOwnProperty on the window object and Firefox has a problem
             // when using hasOwn.call on objects from other frames.
-            var owned = object.hasOwnProperty ? object.hasOwnProperty(property) : hasOwn.call(object, property);
+            const owned = object.hasOwnProperty ? object.hasOwnProperty(property) : hasOwn.call(object, property);
 
             if (hasES5Support) {
-                var methodDesc = (typeof method === "function") ? {value: method} : method;
+                const methodDesc = (typeof method === "function") ? {value: method} : method;
                 var wrappedMethodDesc = sinon.getPropertyDescriptor(object, property);
 
                 if (!wrappedMethodDesc) {
@@ -1367,7 +1400,7 @@ var sinon = (function () {
                     throw error;
                 }
 
-                var types = sinon.objectKeys(methodDesc);
+                const types = sinon.objectKeys(methodDesc);
                 for (i = 0; i < types.length; i++) {
                     wrappedMethod = wrappedMethodDesc[types[i]];
                     checkWrappedMethod(wrappedMethod);
@@ -1397,7 +1430,7 @@ var sinon = (function () {
             // code the original method was created on.
             method.stackTrace = (new Error("Stack Trace for original")).stack;
 
-            method.restore = function () {
+            method.restore = () => {
                 // For prototype properties try to reset by delete first.
                 // If this fails (ex: localStorage on mobile safari) then force a reset
                 // via direct assignment.
@@ -1429,7 +1462,7 @@ var sinon = (function () {
         };
 
         sinon.create = function create(proto) {
-            var F = function () {};
+            const F = () => {};
             F.prototype = proto;
             return new F();
         };
@@ -1460,7 +1493,7 @@ var sinon = (function () {
                     (a.ignoreCase === b.ignoreCase) && (a.multiline === b.multiline);
             }
 
-            var aString = Object.prototype.toString.call(a);
+            const aString = Object.prototype.toString.call(a);
             if (aString !== Object.prototype.toString.call(b)) {
                 return false;
             }
@@ -1469,9 +1502,9 @@ var sinon = (function () {
                 return a.valueOf() === b.valueOf();
             }
 
-            var prop;
-            var aLength = 0;
-            var bLength = 0;
+            let prop;
+            let aLength = 0;
+            let bLength = 0;
 
             if (aString === "[object Array]" && a.length !== b.length) {
                 return false;
@@ -1501,14 +1534,14 @@ var sinon = (function () {
         };
 
         sinon.functionName = function functionName(func) {
-            var name = func.displayName || func.name;
+            let name = func.displayName || func.name;
 
             // Use function decomposition as a last resort to get function
             // name. Does not rely on function decomposition to work - if it
             // doesn't debugging will be slightly less informative
             // (i.e. toString will say 'spy' rather than 'myFunc').
             if (!name) {
-                var matches = func.toString().match(/function ([^\s\(]+)/);
+                const matches = func.toString().match(/function ([^\s\(]+)/);
                 name = matches && matches[1];
             }
 
@@ -1517,9 +1550,8 @@ var sinon = (function () {
 
         sinon.functionToString = function toString() {
             if (this.getCall && this.callCount) {
-                var thisValue,
-                    prop;
-                var i = this.callCount;
+                let thisValue, prop;
+                let i = this.callCount;
 
                 while (i--) {
                     thisValue = this.getCall(i).thisValue;
@@ -1540,8 +1572,8 @@ var sinon = (function () {
                 throw new TypeError("sinon.objectKeys called on a non-object");
             }
 
-            var keys = [];
-            var key;
+            const keys = [];
+            let key;
             for (key in obj) {
                 if (hasOwn.call(obj, key)) {
                     keys.push(key);
@@ -1552,8 +1584,8 @@ var sinon = (function () {
         };
 
         sinon.getPropertyDescriptor = function getPropertyDescriptor(object, property) {
-            var proto = object;
-            var descriptor;
+            let proto = object;
+            let descriptor;
 
             while (proto && !(descriptor = Object.getOwnPropertyDescriptor(proto, property))) {
                 proto = Object.getPrototypeOf(proto);
@@ -1561,12 +1593,12 @@ var sinon = (function () {
             return descriptor;
         };
 
-        sinon.getConfig = function (custom) {
-            var config = {};
+        sinon.getConfig = custom => {
+            const config = {};
             custom = custom || {};
-            var defaults = sinon.defaultConfig;
+            const defaults = sinon.defaultConfig;
 
-            for (var prop in defaults) {
+            for (const prop in defaults) {
                 if (defaults.hasOwnProperty(prop)) {
                     config[prop] = custom.hasOwnProperty(prop) ? custom[prop] : defaults[prop];
                 }
@@ -1590,8 +1622,8 @@ var sinon = (function () {
                 (count || 0) + " times";
         };
 
-        sinon.calledInOrder = function (spies) {
-            for (var i = 1, l = spies.length; i < l; i++) {
+        sinon.calledInOrder = spies => {
+            for (let i = 1, l = spies.length; i < l; i++) {
                 if (!spies[i - 1].calledBefore(spies[i]) || !spies[i].called) {
                     return false;
                 }
@@ -1600,28 +1632,28 @@ var sinon = (function () {
             return true;
         };
 
-        sinon.orderByFirstCall = function (spies) {
-            return spies.sort(function (a, b) {
+        sinon.orderByFirstCall = spies => {
+            return spies.sort((a, b) => {
                 // uuid, won't ever be equal
-                var aCall = a.getCall(0);
-                var bCall = b.getCall(0);
-                var aId = aCall && aCall.callId || -1;
-                var bId = bCall && bCall.callId || -1;
+                const aCall = a.getCall(0);
+                const bCall = b.getCall(0);
+                const aId = aCall && aCall.callId || -1;
+                const bId = bCall && bCall.callId || -1;
 
                 return aId < bId ? -1 : 1;
             });
         };
 
-        sinon.createStubInstance = function (constructor) {
+        sinon.createStubInstance = constructor => {
             if (typeof constructor !== "function") {
                 throw new TypeError("The constructor should be a function.");
             }
             return sinon.stub(sinon.create(constructor.prototype));
         };
 
-        sinon.restore = function (object) {
+        sinon.restore = object => {
             if (object !== null && typeof object === "object") {
-                for (var prop in object) {
+                for (const prop in object) {
                     if (isRestorable(object[prop])) {
                         object[prop].restore();
                     }
@@ -1634,8 +1666,8 @@ var sinon = (function () {
         return sinon;
     }
 
-    var isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
-    var isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
+    const isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
+    const isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
 
     function loadDependencies(require, exports) {
         makeApi(exports);
@@ -1654,54 +1686,53 @@ var sinon = (function () {
     if (sinonGlobal) {
         makeApi(sinonGlobal);
     }
-}(
-    typeof sinon === "object" && sinon // eslint-disable-line no-undef
-));
+})(// eslint-disable-line no-undef
+typeof sinon === "object" && sinon);
 
 /**
  * @depend util/core.js
  */
-(function (sinonGlobal) {
+(sinonGlobal => {
     
     function makeApi(sinon) {
 
         // Adapted from https://developer.mozilla.org/en/docs/ECMAScript_DontEnum_attribute#JScript_DontEnum_Bug
-        var hasDontEnumBug = (function () {
-            var obj = {
-                constructor: function () {
+        const hasDontEnumBug = (() => {
+            const obj = {
+                constructor() {
                     return "0";
                 },
-                toString: function () {
+                toString() {
                     return "1";
                 },
-                valueOf: function () {
+                valueOf() {
                     return "2";
                 },
-                toLocaleString: function () {
+                toLocaleString() {
                     return "3";
                 },
-                prototype: function () {
+                prototype() {
                     return "4";
                 },
-                isPrototypeOf: function () {
+                isPrototypeOf() {
                     return "5";
                 },
-                propertyIsEnumerable: function () {
+                propertyIsEnumerable() {
                     return "6";
                 },
-                hasOwnProperty: function () {
+                hasOwnProperty() {
                     return "7";
                 },
-                length: function () {
+                length() {
                     return "8";
                 },
-                unique: function () {
+                unique() {
                     return "9";
                 }
             };
 
-            var result = [];
-            for (var prop in obj) {
+            const result = [];
+            for (const prop in obj) {
                 if (obj.hasOwnProperty(prop)) {
                     result.push(obj[prop]());
                 }
@@ -1718,8 +1749,8 @@ var sinon = (function () {
          * Returns the extended target
          */
         function extend(target /*, sources */) {
-            var sources = Array.prototype.slice.call(arguments, 1);
-            var source, i, prop;
+            const sources = Array.prototype.slice.call(arguments, 1);
+            let source, i, prop;
 
             for (i = 0; i < sources.length; i++) {
                 source = sources[i];
@@ -1745,12 +1776,12 @@ var sinon = (function () {
     }
 
     function loadDependencies(require, exports, module) {
-        var sinon = require("./util/core");
+        const sinon = require("./util/core");
         module.exports = makeApi(sinon);
     }
 
-    var isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
-    var isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
+    const isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
+    const isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
 
     if (isAMD) {
         define(loadDependencies);
@@ -1765,14 +1796,13 @@ var sinon = (function () {
     if (sinonGlobal) {
         makeApi(sinonGlobal);
     }
-}(
-    typeof sinon === "object" && sinon // eslint-disable-line no-undef
-));
+})(// eslint-disable-line no-undef
+typeof sinon === "object" && sinon);
 
 /**
  * @depend util/core.js
  */
-(function (sinonGlobal) {
+(sinonGlobal => {
     
     function makeApi(sinon) {
 
@@ -1794,12 +1824,12 @@ var sinon = (function () {
     }
 
     function loadDependencies(require, exports, module) {
-        var core = require("./util/core");
+        const core = require("./util/core");
         module.exports = makeApi(core);
     }
 
-    var isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
-    var isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
+    const isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
+    const isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
 
     if (isAMD) {
         define(loadDependencies);
@@ -1814,9 +1844,8 @@ var sinon = (function () {
     if (sinonGlobal) {
         makeApi(sinonGlobal);
     }
-}(
-    typeof sinon === "object" && sinon // eslint-disable-line no-undef
-));
+})(// eslint-disable-line no-undef
+typeof sinon === "object" && sinon);
 
 /**
  * @depend util/core.js
@@ -1829,7 +1858,7 @@ var sinon = (function () {
  *
  * Copyright (c) 2010-2014 Christian Johansen
  */
-(function (sinonGlobal) {
+(sinonGlobal => {
     
     function makeApi(sinon) {
         function typeOf(value) {
@@ -1838,7 +1867,7 @@ var sinon = (function () {
             } else if (value === undefined) {
                 return "undefined";
             }
-            var string = Object.prototype.toString.call(value);
+            const string = Object.prototype.toString.call(value);
             return string.substring(8, string.length - 1).toLowerCase();
         }
 
@@ -1847,12 +1876,12 @@ var sinon = (function () {
     }
 
     function loadDependencies(require, exports, module) {
-        var core = require("./util/core");
+        const core = require("./util/core");
         module.exports = makeApi(core);
     }
 
-    var isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
-    var isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
+    const isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
+    const isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
 
     if (isAMD) {
         define(loadDependencies);
@@ -1867,9 +1896,8 @@ var sinon = (function () {
     if (sinonGlobal) {
         makeApi(sinonGlobal);
     }
-}(
-    typeof sinon === "object" && sinon // eslint-disable-line no-undef
-));
+})(// eslint-disable-line no-undef
+typeof sinon === "object" && sinon);
 
 /**
  * @depend util/core.js
@@ -1885,19 +1913,19 @@ var sinon = (function () {
  *
  * Copyright (c) 2012 Maximilian Antoni
  */
-(function (sinonGlobal) {
+(sinonGlobal => {
     
     function makeApi(sinon) {
         function assertType(value, type, name) {
-            var actual = sinon.typeOf(value);
+            const actual = sinon.typeOf(value);
             if (actual !== type) {
                 throw new TypeError("Expected type of " + name + " to be " +
                     type + ", but was " + actual);
             }
         }
 
-        var matcher = {
-            toString: function () {
+        const matcher = {
+            toString() {
                 return this.message;
             }
         };
@@ -1910,10 +1938,10 @@ var sinon = (function () {
             if (actual === null || actual === undefined) {
                 return false;
             }
-            for (var key in expectation) {
+            for (const key in expectation) {
                 if (expectation.hasOwnProperty(key)) {
-                    var exp = expectation[key];
-                    var act = actual[key];
+                    const exp = expectation[key];
+                    const act = actual[key];
                     if (isMatcher(exp)) {
                         if (!exp.test(act)) {
                             return false;
@@ -1931,36 +1959,36 @@ var sinon = (function () {
         }
 
         function match(expectation, message) {
-            var m = sinon.create(matcher);
-            var type = sinon.typeOf(expectation);
+            const m = sinon.create(matcher);
+            const type = sinon.typeOf(expectation);
             switch (type) {
             case "object":
                 if (typeof expectation.test === "function") {
-                    m.test = function (actual) {
+                    m.test = actual => {
                         return expectation.test(actual) === true;
                     };
                     m.message = "match(" + sinon.functionName(expectation.test) + ")";
                     return m;
                 }
-                var str = [];
-                for (var key in expectation) {
+                const str = [];
+                for (const key in expectation) {
                     if (expectation.hasOwnProperty(key)) {
                         str.push(key + ": " + expectation[key]);
                     }
                 }
-                m.test = function (actual) {
+                m.test = actual => {
                     return matchObject(expectation, actual);
                 };
                 m.message = "match(" + str.join(", ") + ")";
                 break;
             case "number":
-                m.test = function (actual) {
+                m.test = actual => {
                     // we need type coercion here
                     return expectation == actual; // eslint-disable-line eqeqeq
                 };
                 break;
             case "string":
-                m.test = function (actual) {
+                m.test = actual => {
                     if (typeof actual !== "string") {
                         return false;
                     }
@@ -1969,7 +1997,7 @@ var sinon = (function () {
                 m.message = "match(\"" + expectation + "\")";
                 break;
             case "regexp":
-                m.test = function (actual) {
+                m.test = actual => {
                     if (typeof actual !== "string") {
                         return false;
                     }
@@ -1985,7 +2013,7 @@ var sinon = (function () {
                 }
                 break;
             default:
-                m.test = function (actual) {
+                m.test = actual => {
                     return sinon.deepEqual(expectation, actual);
                 };
             }
@@ -2001,9 +2029,9 @@ var sinon = (function () {
             } else if (!isMatcher(m2)) {
                 m2 = match(m2);
             }
-            var m1 = this;
-            var or = sinon.create(matcher);
-            or.test = function (actual) {
+            const m1 = this;
+            const or = sinon.create(matcher);
+            or.test = actual => {
                 return m1.test(actual) || m2.test(actual);
             };
             or.message = m1.message + ".or(" + m2.message + ")";
@@ -2016,9 +2044,9 @@ var sinon = (function () {
             } else if (!isMatcher(m2)) {
                 m2 = match(m2);
             }
-            var m1 = this;
-            var and = sinon.create(matcher);
-            and.test = function (actual) {
+            const m1 = this;
+            const and = sinon.create(matcher);
+            and.test = actual => {
                 return m1.test(actual) && m2.test(actual);
             };
             and.message = m1.message + ".and(" + m2.message + ")";
@@ -2027,38 +2055,38 @@ var sinon = (function () {
 
         match.isMatcher = isMatcher;
 
-        match.any = match(function () {
+        match.any = match(() => {
             return true;
         }, "any");
 
-        match.defined = match(function (actual) {
+        match.defined = match(actual => {
             return actual !== null && actual !== undefined;
         }, "defined");
 
-        match.truthy = match(function (actual) {
+        match.truthy = match(actual => {
             return !!actual;
         }, "truthy");
 
-        match.falsy = match(function (actual) {
+        match.falsy = match(actual => {
             return !actual;
         }, "falsy");
 
-        match.same = function (expectation) {
-            return match(function (actual) {
+        match.same = expectation => {
+            return match(actual => {
                 return expectation === actual;
             }, "same(" + expectation + ")");
         };
 
-        match.typeOf = function (type) {
+        match.typeOf = type => {
             assertType(type, "string", "type");
-            return match(function (actual) {
+            return match(actual => {
                 return sinon.typeOf(actual) === type;
             }, "typeOf(\"" + type + "\")");
         };
 
-        match.instanceOf = function (type) {
+        match.instanceOf = type => {
             assertType(type, "function", "type");
-            return match(function (actual) {
+            return match(actual => {
                 return actual instanceof type;
             }, "instanceOf(" + sinon.functionName(type) + ")");
         };
@@ -2066,13 +2094,13 @@ var sinon = (function () {
         function createPropertyMatcher(propertyTest, messagePrefix) {
             return function (property, value) {
                 assertType(property, "string", "property");
-                var onlyProperty = arguments.length === 1;
-                var message = messagePrefix + "(\"" + property + "\"";
+                const onlyProperty = arguments.length === 1;
+                let message = messagePrefix + "(\"" + property + "\"";
                 if (!onlyProperty) {
                     message += ", " + value;
                 }
                 message += ")";
-                return match(function (actual) {
+                return match(actual => {
                     if (actual === undefined || actual === null ||
                             !propertyTest(actual, property)) {
                         return false;
@@ -2082,14 +2110,14 @@ var sinon = (function () {
             };
         }
 
-        match.has = createPropertyMatcher(function (actual, property) {
+        match.has = createPropertyMatcher((actual, property) => {
             if (typeof actual === "object") {
                 return property in actual;
             }
             return actual[property] !== undefined;
         }, "has");
 
-        match.hasOwn = createPropertyMatcher(function (actual, property) {
+        match.hasOwn = createPropertyMatcher((actual, property) => {
             return actual.hasOwnProperty(property);
         }, "hasOwn");
 
@@ -2106,11 +2134,11 @@ var sinon = (function () {
         return match;
     }
 
-    var isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
-    var isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
+    const isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
+    const isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
 
     function loadDependencies(require, exports, module) {
-        var sinon = require("./util/core");
+        const sinon = require("./util/core");
         require("./typeOf");
         module.exports = makeApi(sinon);
     }
@@ -2128,9 +2156,8 @@ var sinon = (function () {
     if (sinonGlobal) {
         makeApi(sinonGlobal);
     }
-}(
-    typeof sinon === "object" && sinon // eslint-disable-line no-undef
-));
+})(// eslint-disable-line no-undef
+typeof sinon === "object" && sinon);
 
 /**
  * @depend util/core.js
@@ -2143,7 +2170,7 @@ var sinon = (function () {
  *
  * Copyright (c) 2010-2014 Christian Johansen
  */
-(function (sinonGlobal, formatio) {
+((sinonGlobal, formatio) => {
     
     function makeApi(sinon) {
         function valueFormatter(value) {
@@ -2151,7 +2178,7 @@ var sinon = (function () {
         }
 
         function getFormatioFormatter() {
-            var formatter = formatio.configure({
+            const formatter = formatio.configure({
                     quoteStrings: false,
                     limitChildrenCount: 250
                 });
@@ -2171,15 +2198,15 @@ var sinon = (function () {
             }
 
             function format(v) {
-                var isObjectWithNativeToString = typeof v === "object" && v.toString === Object.prototype.toString;
+                const isObjectWithNativeToString = typeof v === "object" && v.toString === Object.prototype.toString;
                 return isObjectWithNativeToString ? util.inspect(v) : v;
             }
 
             return util ? format : valueFormatter;
         }
 
-        var isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
-        var formatter;
+        const isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
+        let formatter;
 
         if (isNode) {
             try {
@@ -2201,12 +2228,12 @@ var sinon = (function () {
     }
 
     function loadDependencies(require, exports, module) {
-        var sinon = require("./util/core");
+        const sinon = require("./util/core");
         module.exports = makeApi(sinon);
     }
 
-    var isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
-    var isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
+    const isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
+    const isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
 
     if (isAMD) {
         define(loadDependencies);
@@ -2221,10 +2248,9 @@ var sinon = (function () {
     if (sinonGlobal) {
         makeApi(sinonGlobal);
     }
-}(
-    typeof sinon === "object" && sinon, // eslint-disable-line no-undef
-    typeof formatio === "object" && formatio // eslint-disable-line no-undef
-));
+})(// eslint-disable-line no-undef
+typeof sinon === "object" && sinon, // eslint-disable-line no-undef
+typeof formatio === "object" && formatio);
 
 /**
   * @depend util/core.js
@@ -2241,20 +2267,20 @@ var sinon = (function () {
   * Copyright (c) 2010-2013 Christian Johansen
   * Copyright (c) 2013 Maximilian Antoni
   */
-(function (sinonGlobal) {
+(sinonGlobal => {
     
-    var slice = Array.prototype.slice;
+    const slice = Array.prototype.slice;
 
     function makeApi(sinon) {
         function throwYieldError(proxy, text, args) {
-            var msg = sinon.functionName(proxy) + text;
+            let msg = sinon.functionName(proxy) + text;
             if (args.length) {
                 msg += " Received [" + slice.call(args).join(", ") + "]";
             }
             throw new Error(msg);
         }
 
-        var callProto = {
+        const callProto = {
             calledOn: function calledOn(thisValue) {
                 if (sinon.match && sinon.match.isMatcher(thisValue)) {
                     return thisValue.test(this.thisValue);
@@ -2263,11 +2289,11 @@ var sinon = (function () {
             },
 
             calledWith: function calledWith() {
-                var l = arguments.length;
+                const l = arguments.length;
                 if (l > this.args.length) {
                     return false;
                 }
-                for (var i = 0; i < l; i += 1) {
+                for (let i = 0; i < l; i += 1) {
                     if (!sinon.deepEqual(arguments[i], this.args[i])) {
                         return false;
                     }
@@ -2277,13 +2303,13 @@ var sinon = (function () {
             },
 
             calledWithMatch: function calledWithMatch() {
-                var l = arguments.length;
+                const l = arguments.length;
                 if (l > this.args.length) {
                     return false;
                 }
-                for (var i = 0; i < l; i += 1) {
-                    var actual = this.args[i];
-                    var expectation = arguments[i];
+                for (let i = 0; i < l; i += 1) {
+                    const actual = this.args[i];
+                    const expectation = arguments[i];
                     if (!sinon.match || !sinon.match(expectation).test(actual)) {
                         return false;
                     }
@@ -2320,28 +2346,28 @@ var sinon = (function () {
                 return this.proxy.prototype && this.thisValue instanceof this.proxy;
             },
 
-            calledBefore: function (other) {
+            calledBefore(other) {
                 return this.callId < other.callId;
             },
 
-            calledAfter: function (other) {
+            calledAfter(other) {
                 return this.callId > other.callId;
             },
 
-            callArg: function (pos) {
+            callArg(pos) {
                 this.args[pos]();
             },
 
-            callArgOn: function (pos, thisValue) {
+            callArgOn(pos, thisValue) {
                 this.args[pos].apply(thisValue);
             },
 
-            callArgWith: function (pos) {
+            callArgWith(pos) {
                 this.callArgOnWith.apply(this, [pos, null].concat(slice.call(arguments, 1)));
             },
 
-            callArgOnWith: function (pos, thisValue) {
-                var args = slice.call(arguments, 2);
+            callArgOnWith(pos, thisValue) {
+                const args = slice.call(arguments, 2);
                 this.args[pos].apply(thisValue, args);
             },
 
@@ -2349,9 +2375,9 @@ var sinon = (function () {
                 this.yieldOn.apply(this, [null].concat(slice.call(arguments, 0)));
             },
 
-            yieldOn: function (thisValue) {
-                var args = this.args;
-                for (var i = 0, l = args.length; i < l; ++i) {
+            yieldOn(thisValue) {
+                const args = this.args;
+                for (let i = 0, l = args.length; i < l; ++i) {
                     if (typeof args[i] === "function") {
                         args[i].apply(thisValue, slice.call(arguments, 1));
                         return;
@@ -2360,13 +2386,13 @@ var sinon = (function () {
                 throwYieldError(this.proxy, " cannot yield since no callback was passed.", args);
             },
 
-            yieldTo: function (prop) {
+            yieldTo(prop) {
                 this.yieldToOn.apply(this, [prop, null].concat(slice.call(arguments, 1)));
             },
 
-            yieldToOn: function (prop, thisValue) {
-                var args = this.args;
-                for (var i = 0, l = args.length; i < l; ++i) {
+            yieldToOn(prop, thisValue) {
+                const args = this.args;
+                for (let i = 0, l = args.length; i < l; ++i) {
                     if (args[i] && typeof args[i][prop] === "function") {
                         args[i][prop].apply(thisValue, slice.call(arguments, 2));
                         return;
@@ -2376,20 +2402,20 @@ var sinon = (function () {
                     "' since no callback was passed.", args);
             },
 
-            getStackFrames: function () {
+            getStackFrames() {
                 // Omit the error message and the two top stack frames in sinon itself:
                 return this.stack && this.stack.split("\n").slice(3);
             },
 
-            toString: function () {
-                var callStr = this.proxy ? this.proxy.toString() + "(" : "";
-                var args = [];
+            toString() {
+                let callStr = this.proxy ? this.proxy.toString() + "(" : "";
+                const args = [];
 
                 if (!this.args) {
                     return ":(";
                 }
 
-                for (var i = 0, l = this.args.length; i < l; ++i) {
+                for (let i = 0, l = this.args.length; i < l; ++i) {
                     args.push(sinon.format(this.args[i]));
                 }
 
@@ -2421,7 +2447,7 @@ var sinon = (function () {
             if (typeof id !== "number") {
                 throw new TypeError("Call id is not a number");
             }
-            var proxyCall = sinon.create(callProto);
+            const proxyCall = sinon.create(callProto);
             proxyCall.proxy = spy;
             proxyCall.thisValue = thisValue;
             proxyCall.args = args;
@@ -2438,11 +2464,11 @@ var sinon = (function () {
         return createSpyCall;
     }
 
-    var isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
-    var isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
+    const isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
+    const isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
 
     function loadDependencies(require, exports, module) {
-        var sinon = require("./util/core");
+        const sinon = require("./util/core");
         require("./match");
         require("./format");
         module.exports = makeApi(sinon);
@@ -2461,9 +2487,8 @@ var sinon = (function () {
     if (sinonGlobal) {
         makeApi(sinonGlobal);
     }
-}(
-    typeof sinon === "object" && sinon // eslint-disable-line no-undef
-));
+})(// eslint-disable-line no-undef
+typeof sinon === "object" && sinon);
 
 /**
   * @depend times_in_words.js
@@ -2480,12 +2505,12 @@ var sinon = (function () {
   *
   * Copyright (c) 2010-2013 Christian Johansen
   */
-(function (sinonGlobal) {
+(sinonGlobal => {
     
     function makeApi(sinon) {
-        var push = Array.prototype.push;
-        var slice = Array.prototype.slice;
-        var callId = 0;
+        const push = Array.prototype.push;
+        const slice = Array.prototype.slice;
+        let callId = 0;
 
         function spy(object, property, types) {
             if (!property && typeof object === "function") {
@@ -2493,12 +2518,12 @@ var sinon = (function () {
             }
 
             if (!object && !property) {
-                return spy.create(function () { });
+                return spy.create(() => { });
             }
 
             if (types) {
-                var methodDesc = sinon.getPropertyDescriptor(object, property);
-                for (var i = 0; i < types.length; i++) {
+                const methodDesc = sinon.getPropertyDescriptor(object, property);
+                for (let i = 0; i < types.length; i++) {
                     methodDesc[types[i]] = spy.create(methodDesc[types[i]]);
                 }
                 return sinon.wrapMethod(object, property, methodDesc);
@@ -2512,7 +2537,7 @@ var sinon = (function () {
                 return undefined;
             }
 
-            for (var i = 0, l = fakes.length; i < l; i++) {
+            for (let i = 0, l = fakes.length; i < l; i++) {
                 if (fakes[i].matches(args, strict)) {
                     return fakes[i];
                 }
@@ -2535,10 +2560,10 @@ var sinon = (function () {
             this.lastCall = this.getCall(this.callCount - 1);
         }
 
-        var vars = "a,b,c,d,e,f,g,h,i,j,k,l";
+        const vars = "a,b,c,d,e,f,g,h,i,j,k,l";
         function createProxy(func, proxyLength) {
             // Retain the function length:
-            var p;
+            let p;
             if (proxyLength) {
                 eval("p = (function proxy(" + vars.substring(0, proxyLength * 2 - 1) + // eslint-disable-line no-eval
                     ") { return p.invoke(func, this, slice.call(arguments)); });");
@@ -2551,13 +2576,13 @@ var sinon = (function () {
             return p;
         }
 
-        var uuid = 0;
+        let uuid = 0;
 
         // Public API
-        var spyApi = {
-            reset: function () {
+        const spyApi = {
+            reset() {
                 if (this.invoking) {
-                    var err = new Error("Cannot reset Sinon function while invoking it. " +
+                    const err = new Error("Cannot reset Sinon function while invoking it. " +
                                         "Move the call to .reset outside of the callback.");
                     err.name = "InvalidResetException";
                     throw err;
@@ -2580,7 +2605,7 @@ var sinon = (function () {
                 this.callIds = [];
                 this.stacks = [];
                 if (this.fakes) {
-                    for (var i = 0; i < this.fakes.length; i++) {
+                    for (let i = 0; i < this.fakes.length; i++) {
                         this.fakes[i].reset();
                     }
                 }
@@ -2589,10 +2614,10 @@ var sinon = (function () {
             },
 
             create: function create(func, spyLength) {
-                var name;
+                let name;
 
                 if (typeof func !== "function") {
-                    func = function () { };
+                    func = () => { };
                 } else {
                     name = sinon.functionName(func);
                 }
@@ -2601,7 +2626,7 @@ var sinon = (function () {
                     spyLength = func.length;
                 }
 
-                var proxy = createProxy(func, spyLength);
+                const proxy = createProxy(func, spyLength);
 
                 sinon.extend(proxy, spy);
                 delete proxy.create;
@@ -2618,8 +2643,8 @@ var sinon = (function () {
             },
 
             invoke: function invoke(func, thisValue, args) {
-                var matching = matchingFake(this.fakes, args);
-                var exception, returnValue;
+                const matching = matchingFake(this.fakes, args);
+                let exception, returnValue;
 
                 incrementCallCount.call(this);
                 push.call(this.thisValues, thisValue);
@@ -2638,7 +2663,7 @@ var sinon = (function () {
                         returnValue = (this.func || func).apply(thisValue, args);
                     }
 
-                    var thisCall = this.getCall(this.callCount - 1);
+                    const thisCall = this.getCall(this.callCount - 1);
                     if (thisCall.calledWithNew() && typeof returnValue !== "object") {
                         returnValue = thisValue;
                     }
@@ -2677,9 +2702,9 @@ var sinon = (function () {
                                         this.callIds[i], this.stacks[i]);
             },
 
-            getCalls: function () {
-                var calls = [];
-                var i;
+            getCalls() {
+                const calls = [];
+                let i;
 
                 for (i = 0; i < this.callCount; i++) {
                     calls.push(this.getCall(i));
@@ -2708,11 +2733,11 @@ var sinon = (function () {
                 return this.callIds[this.callCount - 1] > spyFn.callIds[spyFn.callCount - 1];
             },
 
-            withArgs: function () {
-                var args = slice.call(arguments);
+            withArgs() {
+                const args = slice.call(arguments);
 
                 if (this.fakes) {
-                    var match = matchingFake(this.fakes, args, true);
+                    const match = matchingFake(this.fakes, args, true);
 
                     if (match) {
                         return match;
@@ -2721,8 +2746,8 @@ var sinon = (function () {
                     this.fakes = [];
                 }
 
-                var original = this;
-                var fake = this.instantiateFake();
+                const original = this;
+                const fake = this.instantiateFake();
                 fake.matchingAguments = args;
                 fake.parent = this;
                 push.call(this.fakes, fake);
@@ -2731,7 +2756,7 @@ var sinon = (function () {
                     return original.withArgs.apply(original, arguments);
                 };
 
-                for (var i = 0; i < this.args.length; i++) {
+                for (let i = 0; i < this.args.length; i++) {
                     if (fake.matches(this.args[i])) {
                         incrementCallCount.call(fake);
                         push.call(fake.thisValues, this.thisValues[i]);
@@ -2746,8 +2771,8 @@ var sinon = (function () {
                 return fake;
             },
 
-            matches: function (args, strict) {
-                var margs = this.matchingAguments;
+            matches(args, strict) {
+                const margs = this.matchingAguments;
 
                 if (margs.length <= args.length &&
                     sinon.deepEqual(margs, args.slice(0, margs.length))) {
@@ -2755,12 +2780,12 @@ var sinon = (function () {
                 }
             },
 
-            printf: function (format) {
-                var spyInstance = this;
-                var args = slice.call(arguments, 1);
-                var formatter;
+            printf(format) {
+                const spyInstance = this;
+                const args = slice.call(arguments, 1);
+                let formatter;
 
-                return (format || "").replace(/%(.)/g, function (match, specifyer) {
+                return (format || "").replace(/%(.)/g, (match, specifyer) => {
                     formatter = spyApi.formatters[specifyer];
 
                     if (typeof formatter === "function") {
@@ -2783,10 +2808,10 @@ var sinon = (function () {
                     return false;
                 }
 
-                var currentCall;
-                var matches = 0;
+                let currentCall;
+                let matches = 0;
 
-                for (var i = 0, l = this.callCount; i < l; i += 1) {
+                for (let i = 0, l = this.callCount; i < l; i += 1) {
                     currentCall = this.getCall(i);
 
                     if (currentCall[actual || method].apply(currentCall, arguments)) {
@@ -2810,10 +2835,10 @@ var sinon = (function () {
         delegateToCalls("alwaysCalledWithMatch", false, "calledWithMatch");
         delegateToCalls("calledWithExactly", true);
         delegateToCalls("alwaysCalledWithExactly", false, "calledWithExactly");
-        delegateToCalls("neverCalledWith", false, "notCalledWith", function () {
+        delegateToCalls("neverCalledWith", false, "notCalledWith", () => {
             return true;
         });
-        delegateToCalls("neverCalledWithMatch", false, "notCalledWithMatch", function () {
+        delegateToCalls("neverCalledWithMatch", false, "notCalledWithMatch", () => {
             return true;
         });
         delegateToCalls("threw", true);
@@ -2848,19 +2873,19 @@ var sinon = (function () {
         });
 
         spyApi.formatters = {
-            c: function (spyInstance) {
+            c(spyInstance) {
                 return sinon.timesInWords(spyInstance.callCount);
             },
 
-            n: function (spyInstance) {
+            n(spyInstance) {
                 return spyInstance.toString();
             },
 
-            C: function (spyInstance) {
-                var calls = [];
+            C(spyInstance) {
+                const calls = [];
 
-                for (var i = 0, l = spyInstance.callCount; i < l; ++i) {
-                    var stringifiedCall = "    " + spyInstance.getCall(i).toString();
+                for (let i = 0, l = spyInstance.callCount; i < l; ++i) {
+                    let stringifiedCall = "    " + spyInstance.getCall(i).toString();
                     if (/\n/.test(calls[i - 1])) {
                         stringifiedCall = "\n" + stringifiedCall;
                     }
@@ -2870,10 +2895,10 @@ var sinon = (function () {
                 return calls.length > 0 ? "\n" + calls.join("\n") : "";
             },
 
-            t: function (spyInstance) {
-                var objects = [];
+            t(spyInstance) {
+                const objects = [];
 
-                for (var i = 0, l = spyInstance.callCount; i < l; ++i) {
+                for (let i = 0, l = spyInstance.callCount; i < l; ++i) {
                     push.call(objects, sinon.format(spyInstance.thisValues[i]));
                 }
 
@@ -2881,9 +2906,9 @@ var sinon = (function () {
             },
 
             "*": function (spyInstance, args) {
-                var formatted = [];
+                const formatted = [];
 
-                for (var i = 0, l = args.length; i < l; ++i) {
+                for (let i = 0, l = args.length; i < l; ++i) {
                     push.call(formatted, sinon.format(args[i]));
                 }
 
@@ -2899,11 +2924,11 @@ var sinon = (function () {
         return spy;
     }
 
-    var isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
-    var isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
+    const isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
+    const isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
 
     function loadDependencies(require, exports, module) {
-        var core = require("./util/core");
+        const core = require("./util/core");
         require("./call");
         require("./extend");
         require("./times_in_words");
@@ -2924,9 +2949,8 @@ var sinon = (function () {
     if (sinonGlobal) {
         makeApi(sinonGlobal);
     }
-}(
-    typeof sinon === "object" && sinon // eslint-disable-line no-undef
-));
+})(// eslint-disable-line no-undef
+typeof sinon === "object" && sinon);
 
 /**
  * @depend util/core.js
@@ -2941,14 +2965,14 @@ var sinon = (function () {
  *
  * Copyright (c) 2010-2013 Christian Johansen
  */
-(function (sinonGlobal) {
+(sinonGlobal => {
     
-    var slice = Array.prototype.slice;
-    var join = Array.prototype.join;
-    var useLeftMostCallback = -1;
-    var useRightMostCallback = -2;
+    const slice = Array.prototype.slice;
+    const join = Array.prototype.join;
+    const useLeftMostCallback = -1;
+    const useRightMostCallback = -2;
 
-    var nextTick = (function () {
+    const nextTick = (() => {
         if (typeof process === "object" && typeof process.nextTick === "function") {
             return process.nextTick;
         }
@@ -2957,7 +2981,7 @@ var sinon = (function () {
             return setImmediate;
         }
 
-        return function (callback) {
+        return callback => {
             setTimeout(callback, 0);
         };
     })();
@@ -2976,13 +3000,13 @@ var sinon = (function () {
     }
 
     function getCallback(behavior, args) {
-        var callArgAt = behavior.callArgAt;
+        const callArgAt = behavior.callArgAt;
 
         if (callArgAt >= 0) {
             return args[callArgAt];
         }
 
-        var argumentList;
+        let argumentList;
 
         if (callArgAt === useLeftMostCallback) {
             argumentList = args;
@@ -2992,9 +3016,9 @@ var sinon = (function () {
             argumentList = slice.call(args).reverse();
         }
 
-        var callArgProp = behavior.callArgProp;
+        const callArgProp = behavior.callArgProp;
 
-        for (var i = 0, l = argumentList.length; i < l; ++i) {
+        for (let i = 0, l = argumentList.length; i < l; ++i) {
             if (!callArgProp && typeof argumentList[i] === "function") {
                 return argumentList[i];
             }
@@ -3011,7 +3035,7 @@ var sinon = (function () {
     function makeApi(sinon) {
         function getCallbackError(behavior, func, args) {
             if (behavior.callArgAt < 0) {
-                var msg;
+                let msg;
 
                 if (behavior.callArgProp) {
                     msg = sinon.functionName(behavior.stub) +
@@ -3034,14 +3058,14 @@ var sinon = (function () {
 
         function callCallback(behavior, args) {
             if (typeof behavior.callArgAt === "number") {
-                var func = getCallback(behavior, args);
+                const func = getCallback(behavior, args);
 
                 if (typeof func !== "function") {
                     throw new TypeError(getCallbackError(behavior, func, args));
                 }
 
                 if (behavior.callbackAsync) {
-                    nextTick(function () {
+                    nextTick(() => {
                         func.apply(behavior.callbackContext, behavior.callbackArguments);
                     });
                 } else {
@@ -3050,9 +3074,9 @@ var sinon = (function () {
             }
         }
 
-        var proto = {
+        const proto = {
             create: function create(stub) {
-                var behavior = sinon.extend({}, sinon.behavior);
+                const behavior = sinon.extend({}, sinon.behavior);
                 delete behavior.create;
                 behavior.stub = stub;
 
@@ -3167,7 +3191,7 @@ var sinon = (function () {
                 return this;
             },
 
-            yields: function () {
+            yields() {
                 this.callArgAt = useLeftMostCallback;
                 this.callbackArguments = slice.call(arguments, 0);
                 this.callbackContext = undefined;
@@ -3177,7 +3201,7 @@ var sinon = (function () {
                 return this;
             },
 
-            yieldsRight: function () {
+            yieldsRight() {
                 this.callArgAt = useRightMostCallback;
                 this.callbackArguments = slice.call(arguments, 0);
                 this.callbackContext = undefined;
@@ -3187,7 +3211,7 @@ var sinon = (function () {
                 return this;
             },
 
-            yieldsOn: function (context) {
+            yieldsOn(context) {
                 if (typeof context !== "object") {
                     throw new TypeError("argument context is not an object");
                 }
@@ -3201,7 +3225,7 @@ var sinon = (function () {
                 return this;
             },
 
-            yieldsTo: function (prop) {
+            yieldsTo(prop) {
                 this.callArgAt = useLeftMostCallback;
                 this.callbackArguments = slice.call(arguments, 1);
                 this.callbackContext = undefined;
@@ -3211,7 +3235,7 @@ var sinon = (function () {
                 return this;
             },
 
-            yieldsToOn: function (prop, context) {
+            yieldsToOn(prop, context) {
                 if (typeof context !== "object") {
                     throw new TypeError("argument context is not an object");
                 }
@@ -3255,14 +3279,14 @@ var sinon = (function () {
 
         function createAsyncVersion(syncFnName) {
             return function () {
-                var result = this[syncFnName].apply(this, arguments);
+                const result = this[syncFnName].apply(this, arguments);
                 this.callbackAsync = true;
                 return result;
             };
         }
 
         // create asynchronous versions of callsArg* and yields* methods
-        for (var method in proto) {
+        for (const method in proto) {
             // need to avoid creating anotherasync versions of the newly added async methods
             if (proto.hasOwnProperty(method) && method.match(/^(callsArg|yields)/) && !method.match(/Async/)) {
                 proto[method + "Async"] = createAsyncVersion(method);
@@ -3273,11 +3297,11 @@ var sinon = (function () {
         return proto;
     }
 
-    var isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
-    var isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
+    const isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
+    const isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
 
     function loadDependencies(require, exports, module) {
-        var sinon = require("./util/core");
+        const sinon = require("./util/core");
         require("./extend");
         module.exports = makeApi(sinon);
     }
@@ -3295,18 +3319,17 @@ var sinon = (function () {
     if (sinonGlobal) {
         makeApi(sinonGlobal);
     }
-}(
-    typeof sinon === "object" && sinon // eslint-disable-line no-undef
-));
+})(// eslint-disable-line no-undef
+typeof sinon === "object" && sinon);
 
 /**
  * @depend util/core.js
  */
-(function (sinonGlobal) {
+(sinonGlobal => {
     
     function makeApi(sinon) {
         function walkInternal(obj, iterator, context, originalObj, seen) {
-            var proto, prop;
+            let proto, prop;
 
             if (typeof Object.getOwnPropertyNames !== "function") {
                 // We explicitly want to enumerate through all of the prototype's properties
@@ -3320,10 +3343,10 @@ var sinon = (function () {
                 return;
             }
 
-            Object.getOwnPropertyNames(obj).forEach(function (k) {
+            Object.getOwnPropertyNames(obj).forEach(k => {
                 if (!seen[k]) {
                     seen[k] = true;
-                    var target = typeof Object.getOwnPropertyDescriptor(obj, k).get === "function" ?
+                    const target = typeof Object.getOwnPropertyDescriptor(obj, k).get === "function" ?
                         originalObj : obj;
                     iterator.call(context, target[k], k, target);
                 }
@@ -3354,12 +3377,12 @@ var sinon = (function () {
     }
 
     function loadDependencies(require, exports, module) {
-        var sinon = require("./util/core");
+        const sinon = require("./util/core");
         module.exports = makeApi(sinon);
     }
 
-    var isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
-    var isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
+    const isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
+    const isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
 
     if (isAMD) {
         define(loadDependencies);
@@ -3374,9 +3397,8 @@ var sinon = (function () {
     if (sinonGlobal) {
         makeApi(sinonGlobal);
     }
-}(
-    typeof sinon === "object" && sinon // eslint-disable-line no-undef
-));
+})(// eslint-disable-line no-undef
+typeof sinon === "object" && sinon);
 
 /**
  * @depend util/core.js
@@ -3393,7 +3415,7 @@ var sinon = (function () {
  *
  * Copyright (c) 2010-2013 Christian Johansen
  */
-(function (sinonGlobal) {
+(sinonGlobal => {
     
     function makeApi(sinon) {
         function stub(object, property, func) {
@@ -3401,7 +3423,7 @@ var sinon = (function () {
                 throw new TypeError("Custom stub should be a function or a property descriptor");
             }
 
-            var wrapper;
+            let wrapper;
 
             if (func) {
                 if (typeof func === "function") {
@@ -3409,14 +3431,14 @@ var sinon = (function () {
                 } else {
                     wrapper = func;
                     if (sinon.spy && sinon.spy.create) {
-                        var types = sinon.objectKeys(wrapper);
-                        for (var i = 0; i < types.length; i++) {
+                        const types = sinon.objectKeys(wrapper);
+                        for (let i = 0; i < types.length; i++) {
                             wrapper[types[i]] = sinon.spy.create(wrapper[types[i]]);
                         }
                     }
                 }
             } else {
-                var stubLength = 0;
+                let stubLength = 0;
                 if (typeof object === "object" && typeof object[property] === "function") {
                     stubLength = object[property].length;
                 }
@@ -3428,7 +3450,7 @@ var sinon = (function () {
             }
 
             if (typeof property === "undefined" && typeof object === "object") {
-                sinon.walk(object || {}, function (value, prop, propOwner) {
+                sinon.walk(object || {}, (value, prop, propOwner) => {
                     // we don't want to stub things like toString(), valueOf(), etc. so we only stub if the object
                     // is not Object.prototype
                     if (
@@ -3459,21 +3481,21 @@ var sinon = (function () {
         }
 
         function getCurrentBehavior(stubInstance) {
-            var behavior = stubInstance.behaviors[stubInstance.callCount - 1];
+            const behavior = stubInstance.behaviors[stubInstance.callCount - 1];
             return behavior && behavior.isPresent() ? behavior : getDefaultBehavior(stubInstance);
         }
         /*eslint-enable no-use-before-define*/
 
-        var uuid = 0;
+        let uuid = 0;
 
-        var proto = {
+        const proto = {
             create: function create(stubLength) {
-                var functionStub = function () {
+                let functionStub = function () {
                     return getCurrentBehavior(functionStub).invoke(this, arguments);
                 };
 
                 functionStub.id = "stub#" + uuid++;
-                var orig = functionStub;
+                const orig = functionStub;
                 functionStub = sinon.spy.create(functionStub, stubLength);
                 functionStub.func = orig;
 
@@ -3488,8 +3510,8 @@ var sinon = (function () {
                 return functionStub;
             },
 
-            resetBehavior: function () {
-                var i;
+            resetBehavior() {
+                let i;
 
                 this.defaultBehavior = null;
                 this.behaviors = [];
@@ -3534,7 +3556,7 @@ var sinon = (function () {
             };
         }
 
-        for (var method in sinon.behavior) {
+        for (const method in sinon.behavior) {
             if (sinon.behavior.hasOwnProperty(method) &&
                 !proto.hasOwnProperty(method) &&
                 method !== "create" &&
@@ -3550,11 +3572,11 @@ var sinon = (function () {
         return stub;
     }
 
-    var isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
-    var isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
+    const isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
+    const isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
 
     function loadDependencies(require, exports, module) {
-        var core = require("./util/core");
+        const core = require("./util/core");
         require("./behavior");
         require("./spy");
         require("./extend");
@@ -3574,9 +3596,8 @@ var sinon = (function () {
     if (sinonGlobal) {
         makeApi(sinonGlobal);
     }
-}(
-    typeof sinon === "object" && sinon // eslint-disable-line no-undef
-));
+})(// eslint-disable-line no-undef
+typeof sinon === "object" && sinon);
 
 /**
  * @depend times_in_words.js
@@ -3596,11 +3617,11 @@ var sinon = (function () {
  *
  * Copyright (c) 2010-2013 Christian Johansen
  */
-(function (sinonGlobal) {
+(sinonGlobal => {
     
     function makeApi(sinon) {
-        var push = [].push;
-        var match = sinon.match;
+        const push = [].push;
+        const match = sinon.match;
 
         function mock(object) {
             // if (typeof console !== undefined && console.warn) {
@@ -3619,7 +3640,7 @@ var sinon = (function () {
                 return;
             }
 
-            for (var i = 0, l = collection.length; i < l; i += 1) {
+            for (let i = 0, l = collection.length; i < l; i += 1) {
                 callback(collection[i]);
             }
         }
@@ -3629,7 +3650,7 @@ var sinon = (function () {
                 return false;
             }
 
-            for (var i = 0, l = arr1.length; i < l; i++) {
+            for (let i = 0, l = arr1.length; i < l; i++) {
                 if (!sinon.deepEqual(arr1[i], arr2[i])) {
                     return false;
                 }
@@ -3643,7 +3664,7 @@ var sinon = (function () {
                     throw new TypeError("object is null");
                 }
 
-                var mockObject = sinon.extend({}, mock);
+                const mockObject = sinon.extend({}, mock);
                 mockObject.object = object;
                 delete mockObject.create;
 
@@ -3662,7 +3683,7 @@ var sinon = (function () {
 
                 if (!this.expectations[method]) {
                     this.expectations[method] = [];
-                    var mockObject = this;
+                    const mockObject = this;
 
                     sinon.wrapMethod(this.object, method, function () {
                         return mockObject.invokeMethod(method, this, arguments);
@@ -3671,16 +3692,16 @@ var sinon = (function () {
                     push.call(this.proxies, method);
                 }
 
-                var expectation = sinon.expectation.create(method);
+                const expectation = sinon.expectation.create(method);
                 push.call(this.expectations[method], expectation);
 
                 return expectation;
             },
 
             restore: function restore() {
-                var object = this.object;
+                const object = this.object;
 
-                each(this.proxies, function (proxy) {
+                each(this.proxies, proxy => {
                     if (typeof object[proxy].restore === "function") {
                         object[proxy].restore();
                     }
@@ -3688,12 +3709,12 @@ var sinon = (function () {
             },
 
             verify: function verify() {
-                var expectations = this.expectations || {};
-                var messages = [];
-                var met = [];
+                const expectations = this.expectations || {};
+                const messages = [];
+                const met = [];
 
-                each(this.proxies, function (proxy) {
-                    each(expectations[proxy], function (expectation) {
+                each(this.proxies, proxy => {
+                    each(expectations[proxy], expectation => {
                         if (!expectation.met()) {
                             push.call(messages, expectation.toString());
                         } else {
@@ -3714,13 +3735,13 @@ var sinon = (function () {
             },
 
             invokeMethod: function invokeMethod(method, thisValue, args) {
-                var expectations = this.expectations && this.expectations[method] ? this.expectations[method] : [];
-                var expectationsWithMatchingArgs = [];
-                var currentArgs = args || [];
-                var i, available;
+                const expectations = this.expectations && this.expectations[method] ? this.expectations[method] : [];
+                const expectationsWithMatchingArgs = [];
+                const currentArgs = args || [];
+                let i, available;
 
                 for (i = 0; i < expectations.length; i += 1) {
-                    var expectedArgs = expectations[i].expectedArguments || [];
+                    const expectedArgs = expectations[i].expectedArguments || [];
                     if (arrayEquals(expectedArgs, currentArgs, expectations[i].expectsExactArgCount)) {
                         expectationsWithMatchingArgs.push(expectations[i]);
                     }
@@ -3733,8 +3754,8 @@ var sinon = (function () {
                     }
                 }
 
-                var messages = [];
-                var exhausted = 0;
+                const messages = [];
+                let exhausted = 0;
 
                 for (i = 0; i < expectationsWithMatchingArgs.length; i += 1) {
                     if (expectationsWithMatchingArgs[i].allowsCall(thisValue, args)) {
@@ -3761,8 +3782,8 @@ var sinon = (function () {
             }
         });
 
-        var times = sinon.timesInWords;
-        var slice = Array.prototype.slice;
+        const times = sinon.timesInWords;
+        const slice = Array.prototype.slice;
 
         function callCountInWords(callCount) {
             if (callCount === 0) {
@@ -3773,11 +3794,11 @@ var sinon = (function () {
         }
 
         function expectedCallCountInWords(expectation) {
-            var min = expectation.minCalls;
-            var max = expectation.maxCalls;
+            const min = expectation.minCalls;
+            const max = expectation.maxCalls;
 
             if (typeof min === "number" && typeof max === "number") {
-                var str = times(min);
+                let str = times(min);
 
                 if (min !== max) {
                     str = "at least " + str + " and at most " + times(max);
@@ -3794,7 +3815,7 @@ var sinon = (function () {
         }
 
         function receivedMinCalls(expectation) {
-            var hasMinLimit = typeof expectation.minCalls === "number";
+            const hasMinLimit = typeof expectation.minCalls === "number";
             return !hasMinLimit || expectation.callCount >= expectation.minCalls;
         }
 
@@ -3807,7 +3828,7 @@ var sinon = (function () {
         }
 
         function verifyMatcher(possibleMatcher, arg) {
-            var isMatcher = match && match.isMatcher(possibleMatcher);
+            const isMatcher = match && match.isMatcher(possibleMatcher);
 
             return isMatcher && possibleMatcher.test(arg) || true;
         }
@@ -3817,7 +3838,7 @@ var sinon = (function () {
             maxCalls: 1,
 
             create: function create(methodName) {
-                var expectation = sinon.extend(sinon.stub.create(), sinon.expectation);
+                const expectation = sinon.extend(sinon.stub.create(), sinon.expectation);
                 delete expectation.create;
                 expectation.method = methodName;
 
@@ -3920,7 +3941,7 @@ var sinon = (function () {
                         "), expected " + sinon.format(this.expectedArguments));
                 }
 
-                for (var i = 0, l = this.expectedArguments.length; i < l; i += 1) {
+                for (let i = 0, l = this.expectedArguments.length; i < l; i += 1) {
 
                     if (!verifyMatcher(this.expectedArguments[i], args[i])) {
                         sinon.expectation.fail(this.method + " received wrong arguments " + sinon.format(args) +
@@ -3958,7 +3979,7 @@ var sinon = (function () {
                     return false;
                 }
 
-                for (var i = 0, l = this.expectedArguments.length; i < l; i += 1) {
+                for (let i = 0, l = this.expectedArguments.length; i < l; i += 1) {
                     if (!verifyMatcher(this.expectedArguments[i], args[i])) {
                         return false;
                     }
@@ -3987,19 +4008,19 @@ var sinon = (function () {
                 return this;
             },
 
-            toString: function () {
-                var args = (this.expectedArguments || []).slice();
+            toString() {
+                const args = (this.expectedArguments || []).slice();
 
                 if (!this.expectsExactArgCount) {
                     push.call(args, "[...]");
                 }
 
-                var callStr = sinon.spyCall.toString.call({
+                const callStr = sinon.spyCall.toString.call({
                     proxy: this.method || "anonymous mock expectation",
                     args: args
                 });
 
-                var message = callStr.replace(", [...", "[, ...") + " " +
+                const message = callStr.replace(", [...", "[, ...") + " " +
                     expectedCallCountInWords(this);
 
                 if (this.met()) {
@@ -4025,7 +4046,7 @@ var sinon = (function () {
             },
 
             fail: function fail(message) {
-                var exception = new Error(message);
+                const exception = new Error(message);
                 exception.name = "ExpectationError";
 
                 throw exception;
@@ -4036,11 +4057,11 @@ var sinon = (function () {
         return mock;
     }
 
-    var isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
-    var isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
+    const isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
+    const isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
 
     function loadDependencies(require, exports, module) {
-        var sinon = require("./util/core");
+        const sinon = require("./util/core");
         require("./times_in_words");
         require("./call");
         require("./extend");
@@ -4065,9 +4086,8 @@ var sinon = (function () {
     if (sinonGlobal) {
         makeApi(sinonGlobal);
     }
-}(
-    typeof sinon === "object" && sinon // eslint-disable-line no-undef
-));
+})(// eslint-disable-line no-undef
+typeof sinon === "object" && sinon);
 
 /**
  * @depend util/core.js
@@ -4083,10 +4103,10 @@ var sinon = (function () {
  *
  * Copyright (c) 2010-2013 Christian Johansen
  */
-(function (sinonGlobal) {
+(sinonGlobal => {
     
-    var push = [].push;
-    var hasOwnProperty = Object.prototype.hasOwnProperty;
+    const push = [].push;
+    const hasOwnProperty = Object.prototype.hasOwnProperty;
 
     function getFakes(fakeCollection) {
         if (!fakeCollection.fakes) {
@@ -4097,9 +4117,9 @@ var sinon = (function () {
     }
 
     function each(fakeCollection, method) {
-        var fakes = getFakes(fakeCollection);
+        const fakes = getFakes(fakeCollection);
 
-        for (var i = 0, l = fakes.length; i < l; i += 1) {
+        for (let i = 0, l = fakes.length; i < l; i += 1) {
             if (typeof fakes[i][method] === "function") {
                 fakes[i][method]();
             }
@@ -4107,15 +4127,15 @@ var sinon = (function () {
     }
 
     function compact(fakeCollection) {
-        var fakes = getFakes(fakeCollection);
-        var i = 0;
+        const fakes = getFakes(fakeCollection);
+        const i = 0;
         while (i < fakes.length) {
             fakes.splice(i, 1);
         }
     }
 
     function makeApi(sinon) {
-        var collection = {
+        const collection = {
             verify: function resolve() {
                 each(this, "verify");
             },
@@ -4130,7 +4150,7 @@ var sinon = (function () {
             },
 
             verifyAndRestore: function verifyAndRestore() {
-                var exception;
+                let exception;
 
                 try {
                     this.verify();
@@ -4156,7 +4176,7 @@ var sinon = (function () {
 
             stub: function stub(object, property, value) {
                 if (property) {
-                    var original = object[property];
+                    const original = object[property];
 
                     if (typeof original !== "function") {
                         if (!hasOwnProperty.call(object, property)) {
@@ -4166,16 +4186,16 @@ var sinon = (function () {
                         object[property] = value;
 
                         return this.add({
-                            restore: function () {
+                            restore() {
                                 object[property] = original;
                             }
                         });
                     }
                 }
                 if (!property && !!object && typeof object === "object") {
-                    var stubbedObj = sinon.stub.apply(sinon, arguments);
+                    const stubbedObj = sinon.stub.apply(sinon, arguments);
 
-                    for (var prop in stubbedObj) {
+                    for (const prop in stubbedObj) {
                         if (typeof stubbedObj[prop] === "function") {
                             this.add(stubbedObj[prop]);
                         }
@@ -4192,7 +4212,7 @@ var sinon = (function () {
             },
 
             inject: function inject(obj) {
-                var col = this;
+                const col = this;
 
                 obj.spy = function () {
                     return col.spy.apply(col, arguments);
@@ -4214,11 +4234,11 @@ var sinon = (function () {
         return collection;
     }
 
-    var isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
-    var isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
+    const isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
+    const isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
 
     function loadDependencies(require, exports, module) {
-        var sinon = require("./util/core");
+        const sinon = require("./util/core");
         require("./mock");
         require("./spy");
         require("./stub");
@@ -4238,9 +4258,8 @@ var sinon = (function () {
     if (sinonGlobal) {
         makeApi(sinonGlobal);
     }
-}(
-    typeof sinon === "object" && sinon // eslint-disable-line no-undef
-));
+})(// eslint-disable-line no-undef
+typeof sinon === "object" && sinon);
 
 /**
  * Fake timer API
@@ -4259,29 +4278,14 @@ var sinon = (function () {
  *
  * Copyright (c) 2010-2013 Christian Johansen
  */
-(function () {
+(() => {
     
     function makeApi(s, lol) {
         /*global lolex */
-        var llx = typeof lolex !== "undefined" ? lolex : lol;
-
-        s.useFakeTimers = function () {
-            var now;
-            var methods = Array.prototype.slice.call(arguments);
-
-            if (typeof methods[0] === "string") {
-                now = 0;
-            } else {
-                now = methods.shift();
-            }
-
-            var clock = llx.install(now || 0, methods);
-            clock.restore = clock.uninstall;
-            return clock;
-        };
+        const llx = typeof lolex !== "undefined" ? lolex : lol;
 
         s.clock = {
-            create: function (now) {
+            create(now) {
                 return llx.createClock(now);
             }
         };
@@ -4297,11 +4301,11 @@ var sinon = (function () {
         };
     }
 
-    var isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
-    var isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
+    const isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
+    const isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
 
     function loadDependencies(require, epxorts, module, lolex) {
-        var core = require("./core");
+        const core = require("./core");
         makeApi(core, lolex);
         module.exports = core;
     }
@@ -4313,7 +4317,7 @@ var sinon = (function () {
     } else {
         makeApi(sinon); // eslint-disable-line no-undef
     }
-}());
+})();
 
 /**
  * Minimal Event interface implementation
@@ -4331,9 +4335,9 @@ if (typeof sinon === "undefined") {
     this.sinon = {};
 }
 
-(function () {
+(() => {
     
-    var push = [].push;
+    const push = [].push;
 
     function makeApi(sinon) {
         sinon.Event = function Event(type, bubbles, cancelable, target) {
@@ -4341,16 +4345,16 @@ if (typeof sinon === "undefined") {
         };
 
         sinon.Event.prototype = {
-            initEvent: function (type, bubbles, cancelable, target) {
+            initEvent(type, bubbles, cancelable, target) {
                 this.type = type;
                 this.bubbles = bubbles;
                 this.cancelable = cancelable;
                 this.target = target;
             },
 
-            stopPropagation: function () {},
+            stopPropagation() {},
 
-            preventDefault: function () {
+            preventDefault() {
                 this.defaultPrevented = true;
             }
         };
@@ -4383,9 +4387,9 @@ if (typeof sinon === "undefined") {
             },
 
             removeEventListener: function removeEventListener(event, listener) {
-                var listeners = this.eventListeners && this.eventListeners[event] || [];
+                const listeners = this.eventListeners && this.eventListeners[event] || [];
 
-                for (var i = 0, l = listeners.length; i < l; ++i) {
+                for (let i = 0, l = listeners.length; i < l; ++i) {
                     if (listeners[i] === listener) {
                         return listeners.splice(i, 1);
                     }
@@ -4393,10 +4397,10 @@ if (typeof sinon === "undefined") {
             },
 
             dispatchEvent: function dispatchEvent(event) {
-                var type = event.type;
-                var listeners = this.eventListeners && this.eventListeners[type] || [];
+                const type = event.type;
+                const listeners = this.eventListeners && this.eventListeners[type] || [];
 
-                for (var i = 0; i < listeners.length; i++) {
+                for (let i = 0; i < listeners.length; i++) {
                     if (typeof listeners[i] === "function") {
                         listeners[i].call(this, event);
                     } else {
@@ -4409,11 +4413,11 @@ if (typeof sinon === "undefined") {
         };
     }
 
-    var isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
-    var isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
+    const isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
+    const isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
 
     function loadDependencies(require) {
-        var sinon = require("./core");
+        const sinon = require("./core");
         makeApi(sinon);
     }
 
@@ -4424,7 +4428,7 @@ if (typeof sinon === "undefined") {
     } else {
         makeApi(sinon); // eslint-disable-line no-undef
     }
-}());
+})();
 
 /**
  * @depend util/core.js
@@ -4437,35 +4441,41 @@ if (typeof sinon === "undefined") {
  *
  * Copyright (c) 2010-2014 Christian Johansen
  */
-(function (sinonGlobal) {
+(sinonGlobal => {
     
     // cache a reference to setTimeout, so that our reference won't be stubbed out
     // when using fake timers and errors will still get logged
     // https://github.com/cjohansen/Sinon.JS/issues/381
-    var realSetTimeout = setTimeout;
+    const realSetTimeout = setTimeout;
 
     function makeApi(sinon) {
-
         function log() {}
 
-        function logError(label, err) {
-            var msg = label + " threw exception: ";
+        class logError {
+            constructor(label, err) {
+                const msg = label + " threw exception: ";
 
-            function throwLoggedError() {
-                err.message = msg + err.message;
-                throw err;
+                function throwLoggedError() {
+                    err.message = msg + err.message;
+                    throw err;
+                }
+
+                sinon.log(msg + "[" + err.name + "] " + err.message);
+
+                if (err.stack) {
+                    sinon.log(err.stack);
+                }
+
+                if (logError.useImmediateExceptions) {
+                    throwLoggedError();
+                } else {
+                    logError.setTimeout(throwLoggedError, 0);
+                }
             }
 
-            sinon.log(msg + "[" + err.name + "] " + err.message);
-
-            if (err.stack) {
-                sinon.log(err.stack);
-            }
-
-            if (logError.useImmediateExceptions) {
-                throwLoggedError();
-            } else {
-                logError.setTimeout(throwLoggedError, 0);
+            // wrap realSetTimeout with something we can stub in tests
+            static setTimeout(func, timeout) {
+                realSetTimeout(func, timeout);
             }
         }
 
@@ -4473,12 +4483,7 @@ if (typeof sinon === "undefined") {
         // If set to false, the errors will be thrown in separate execution frame.
         logError.useImmediateExceptions = false;
 
-        // wrap realSetTimeout with something we can stub in tests
-        logError.setTimeout = function (func, timeout) {
-            realSetTimeout(func, timeout);
-        };
-
-        var exports = {};
+        const exports = {};
         exports.log = sinon.log = log;
         exports.logError = sinon.logError = logError;
 
@@ -4486,12 +4491,12 @@ if (typeof sinon === "undefined") {
     }
 
     function loadDependencies(require, exports, module) {
-        var sinon = require("./util/core");
+        const sinon = require("./util/core");
         module.exports = makeApi(sinon);
     }
 
-    var isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
-    var isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
+    const isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
+    const isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
 
     if (isAMD) {
         define(loadDependencies);
@@ -4506,9 +4511,8 @@ if (typeof sinon === "undefined") {
     if (sinonGlobal) {
         makeApi(sinonGlobal);
     }
-}(
-    typeof sinon === "object" && sinon // eslint-disable-line no-undef
-));
+})(// eslint-disable-line no-undef
+typeof sinon === "object" && sinon);
 
 /**
  * @depend core.js
@@ -4539,9 +4543,9 @@ if (typeof sinon === "undefined") {
 }
 
 // wrapper for global
-(function (global) {
+(global => {
     
-    var xdr = { XDomainRequest: global.XDomainRequest };
+    const xdr = { XDomainRequest: global.XDomainRequest };
     xdr.GlobalXDomainRequest = global.XDomainRequest;
     xdr.supportsXDR = typeof xdr.GlobalXDomainRequest !== "undefined";
     xdr.workingXDR = xdr.supportsXDR ? xdr.GlobalXDomainRequest : false;
@@ -4582,7 +4586,7 @@ if (typeof sinon === "undefined") {
 
         function verifyResponseBodyType(body) {
             if (typeof body !== "string") {
-                var error = new Error("Attempted to respond to fake XDomainRequest with " +
+                const error = new Error("Attempted to respond to fake XDomainRequest with " +
                                     body + ", which is not a string.");
                 error.name = "InvalidBodyException";
                 throw error;
@@ -4602,7 +4606,7 @@ if (typeof sinon === "undefined") {
 
             readyStateChange: function readyStateChange(state) {
                 this.readyState = state;
-                var eventName = "";
+                let eventName = "";
                 switch (this.readyState) {
                 case FakeXDomainRequest.UNSENT:
                     break;
@@ -4669,8 +4673,8 @@ if (typeof sinon === "undefined") {
                 verifyRequestSent(this);
                 verifyResponseBodyType(body);
 
-                var chunkSize = this.chunkSize || 10;
-                var index = 0;
+                const chunkSize = this.chunkSize || 10;
+                let index = 0;
                 this.responseText = "";
 
                 do {
@@ -4727,11 +4731,11 @@ if (typeof sinon === "undefined") {
         sinon.FakeXDomainRequest = FakeXDomainRequest;
     }
 
-    var isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
-    var isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
+    const isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
+    const isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
 
     function loadDependencies(require, exports, module) {
-        var sinon = require("./core");
+        const sinon = require("./core");
         require("../extend");
         require("./event");
         require("../log_error");
@@ -4762,17 +4766,16 @@ if (typeof sinon === "undefined") {
  *
  * Copyright (c) 2010-2013 Christian Johansen
  */
-(function (sinonGlobal, global) {
-    
+((sinonGlobal, global) => {
     function getWorkingXHR(globalScope) {
-        var supportsXHR = typeof globalScope.XMLHttpRequest !== "undefined";
+        const supportsXHR = typeof globalScope.XMLHttpRequest !== "undefined";
         if (supportsXHR) {
             return globalScope.XMLHttpRequest;
         }
 
-        var supportsActiveX = typeof globalScope.ActiveXObject !== "undefined";
+        const supportsActiveX = typeof globalScope.ActiveXObject !== "undefined";
         if (supportsActiveX) {
-            return function () {
+            return () => {
                 return new globalScope.ActiveXObject("MSXML2.XMLHTTP.3.0");
             };
         }
@@ -4780,18 +4783,18 @@ if (typeof sinon === "undefined") {
         return false;
     }
 
-    var supportsProgress = typeof ProgressEvent !== "undefined";
-    var supportsCustomEvent = typeof CustomEvent !== "undefined";
-    var supportsFormData = typeof FormData !== "undefined";
-    var supportsArrayBuffer = typeof ArrayBuffer !== "undefined";
-    var supportsBlob = (function () {
+    const supportsProgress = typeof ProgressEvent !== "undefined";
+    const supportsCustomEvent = typeof CustomEvent !== "undefined";
+    const supportsFormData = typeof FormData !== "undefined";
+    const supportsArrayBuffer = typeof ArrayBuffer !== "undefined";
+    const supportsBlob = (() => {
         try {
             return !!new Blob();
         } catch (e) {
             return false;
         }
     })();
-    var sinonXhr = { XMLHttpRequest: global.XMLHttpRequest };
+    const sinonXhr = { XMLHttpRequest: global.XMLHttpRequest };
     sinonXhr.GlobalXMLHttpRequest = global.XMLHttpRequest;
     sinonXhr.GlobalActiveXObject = global.ActiveXObject;
     sinonXhr.supportsActiveX = typeof sinonXhr.GlobalActiveXObject !== "undefined";
@@ -4799,7 +4802,7 @@ if (typeof sinon === "undefined") {
     sinonXhr.workingXHR = getWorkingXHR(global);
     sinonXhr.supportsCORS = sinonXhr.supportsXHR && "withCredentials" in (new sinonXhr.GlobalXMLHttpRequest());
 
-    var unsafeHeaders = {
+    const unsafeHeaders = {
         "Accept-Charset": true,
         "Accept-Encoding": true,
         Connection: true,
@@ -4824,74 +4827,183 @@ if (typeof sinon === "undefined") {
     // FakeXMLHttpRequest and allows upload
     // events to be simulated using uploadProgress
     // and uploadError.
-    function UploadProgress() {
-        this.eventListeners = {
-            abort: [],
-            error: [],
-            load: [],
-            loadend: [],
-            progress: []
-        };
-    }
+    class UploadProgress {
+        constructor() {
+            this.eventListeners = {
+                abort: [],
+                error: [],
+                load: [],
+                loadend: [],
+                progress: []
+            };
+        }
 
-    UploadProgress.prototype.addEventListener = function addEventListener(event, listener) {
-        this.eventListeners[event].push(listener);
-    };
+        addEventListener(event, listener) {
+            this.eventListeners[event].push(listener);
+        }
 
-    UploadProgress.prototype.removeEventListener = function removeEventListener(event, listener) {
-        var listeners = this.eventListeners[event] || [];
+        removeEventListener(event, listener) {
+            const listeners = this.eventListeners[event] || [];
 
-        for (var i = 0, l = listeners.length; i < l; ++i) {
-            if (listeners[i] === listener) {
-                return listeners.splice(i, 1);
+            for (let i = 0, l = listeners.length; i < l; ++i) {
+                if (listeners[i] === listener) {
+                    return listeners.splice(i, 1);
+                }
             }
         }
-    };
 
-    UploadProgress.prototype.dispatchEvent = function dispatchEvent(event) {
-        var listeners = this.eventListeners[event.type] || [];
+        dispatchEvent(event) {
+            const listeners = this.eventListeners[event.type] || [];
 
-        for (var i = 0, listener; (listener = listeners[i]) != null; i++) {
-            listener(event);
+            for (let i = 0, listener; (listener = listeners[i]) != null; i++) {
+                listener(event);
+            }
         }
-    };
+    }
 
     // Note that for FakeXMLHttpRequest to work pre ES5
     // we lose some of the alignment with the spec.
     // To ensure as close a match as possible,
     // set responseType before calling open, send or respond;
-    function FakeXMLHttpRequest() {
-        this.readyState = FakeXMLHttpRequest.UNSENT;
-        this.requestHeaders = {};
-        this.requestBody = null;
-        this.status = 0;
-        this.statusText = "";
-        this.upload = new UploadProgress();
-        this.responseType = "";
-        this.response = "";
-        if (sinonXhr.supportsCORS) {
-            this.withCredentials = false;
+    class FakeXMLHttpRequest {
+        constructor() {
+            this.readyState = FakeXMLHttpRequest.UNSENT;
+            this.requestHeaders = {};
+            this.requestBody = null;
+            this.status = 0;
+            this.statusText = "";
+            this.upload = new UploadProgress();
+            this.responseType = "";
+            this.response = "";
+            if (sinonXhr.supportsCORS) {
+                this.withCredentials = false;
+            }
+
+            const xhr = this;
+            const events = ["loadstart", "load", "abort", "error", "loadend"];
+
+            function addEventListener(eventName) {
+                xhr.addEventListener(eventName, function (event) {
+                    const listener = xhr["on" + eventName];
+
+                    if (listener && typeof listener === "function") {
+                        listener.call(this, event);
+                    }
+                });
+            }
+
+            for (let i = events.length - 1; i >= 0; i--) {
+                addEventListener(events[i]);
+            }
+
+            if (typeof FakeXMLHttpRequest.onCreate === "function") {
+                FakeXMLHttpRequest.onCreate(this);
+            }
         }
 
-        var xhr = this;
-        var events = ["loadstart", "load", "abort", "error", "loadend"];
+        static addFilter(fn) {
+            this.filters.push(fn);
+        }
 
-        function addEventListener(eventName) {
-            xhr.addEventListener(eventName, function (event) {
-                var listener = xhr["on" + eventName];
+        static defake(fakeXhr, xhrArgs) {
+            const xhr = new sinonXhr.workingXHR(); // eslint-disable-line new-cap
 
-                if (listener && typeof listener === "function") {
-                    listener.call(this, event);
-                }
+            each([
+                "open",
+                "setRequestHeader",
+                "send",
+                "abort",
+                "getResponseHeader",
+                "getAllResponseHeaders",
+                "addEventListener",
+                "overrideMimeType",
+                "removeEventListener"
+            ], method => {
+                fakeXhr[method] = function () {
+                    return apply(xhr, method, arguments);
+                };
             });
+
+            const copyAttrs = args => {
+                each(args, attr => {
+                    try {
+                        fakeXhr[attr] = xhr[attr];
+                    } catch (e) {
+                        if (!IE6Re.test(navigator.userAgent)) {
+                            throw e;
+                        }
+                    }
+                });
+            };
+
+            const stateChange = function stateChange() {
+                fakeXhr.readyState = xhr.readyState;
+                if (xhr.readyState >= FakeXMLHttpRequest.HEADERS_RECEIVED) {
+                    copyAttrs(["status", "statusText"]);
+                }
+                if (xhr.readyState >= FakeXMLHttpRequest.LOADING) {
+                    copyAttrs(["responseText", "response"]);
+                }
+                if (xhr.readyState === FakeXMLHttpRequest.DONE) {
+                    copyAttrs(["responseXML"]);
+                }
+                if (fakeXhr.onreadystatechange) {
+                    fakeXhr.onreadystatechange.call(fakeXhr, { target: fakeXhr });
+                }
+            };
+
+            if (xhr.addEventListener) {
+                for (const event in fakeXhr.eventListeners) {
+                    if (fakeXhr.eventListeners.hasOwnProperty(event)) {
+
+                        /*eslint-disable no-loop-func*/
+                        each(fakeXhr.eventListeners[event], handler => {
+                            xhr.addEventListener(event, handler);
+                        });
+                        /*eslint-enable no-loop-func*/
+                    }
+                }
+                xhr.addEventListener("readystatechange", stateChange);
+            } else {
+                xhr.onreadystatechange = stateChange;
+            }
+            apply(xhr, "open", xhrArgs);
         }
 
-        for (var i = events.length - 1; i >= 0; i--) {
-            addEventListener(events[i]);
+        static parseXML(text) {
+            // Treat empty string as parsing failure
+            if (text !== "") {
+                try {
+                    if (typeof DOMParser !== "undefined") {
+                        const parser = new DOMParser();
+                        return parser.parseFromString(text, "text/xml");
+                    }
+                    const xmlDoc = new window.ActiveXObject("Microsoft.XMLDOM");
+                    xmlDoc.async = "false";
+                    xmlDoc.loadXML(text);
+                    return xmlDoc;
+                } catch (e) {
+                    // Unable to parse XML - no biggie
+                }
+            }
+
+            return null;
         }
 
-        if (typeof FakeXMLHttpRequest.onCreate === "function") {
-            FakeXMLHttpRequest.onCreate(this);
+        static restore(keepOnCreate) {
+            if (sinonXhr.supportsXHR) {
+                global.XMLHttpRequest = sinonXhr.GlobalXMLHttpRequest;
+            }
+
+            if (sinonXhr.supportsActiveX) {
+                global.ActiveXObject = sinonXhr.GlobalActiveXObject;
+            }
+
+            delete FakeXMLHttpRequest.restore;
+
+            if (keepOnCreate !== true) {
+                delete FakeXMLHttpRequest.onCreate;
+            }
         }
     }
 
@@ -4908,7 +5020,7 @@ if (typeof sinon === "undefined") {
     function getHeader(headers, header) {
         header = header.toLowerCase();
 
-        for (var h in headers) {
+        for (const h in headers) {
             if (h.toLowerCase() === header) {
                 return h;
             }
@@ -4924,12 +5036,12 @@ if (typeof sinon === "undefined") {
             return;
         }
 
-        for (var i = 0, l = collection.length; i < l; i += 1) {
+        for (let i = 0, l = collection.length; i < l; i += 1) {
             callback(collection[i]);
         }
     }
     function some(collection, callback) {
-        for (var index = 0; index < collection.length; index++) {
+        for (let index = 0; index < collection.length; index++) {
             if (callback(collection[index]) === true) {
                 return true;
             }
@@ -4937,7 +5049,7 @@ if (typeof sinon === "undefined") {
         return false;
     }
     // largest arity in XHR is 5 - XHR#open
-    var apply = function (obj, method, args) {
+    var apply = (obj, method, args) => {
         switch (args.length) {
         case 0: return obj[method]();
         case 1: return obj[method](args[0]);
@@ -4949,74 +5061,7 @@ if (typeof sinon === "undefined") {
     };
 
     FakeXMLHttpRequest.filters = [];
-    FakeXMLHttpRequest.addFilter = function addFilter(fn) {
-        this.filters.push(fn);
-    };
     var IE6Re = /MSIE 6/;
-    FakeXMLHttpRequest.defake = function defake(fakeXhr, xhrArgs) {
-        var xhr = new sinonXhr.workingXHR(); // eslint-disable-line new-cap
-
-        each([
-            "open",
-            "setRequestHeader",
-            "send",
-            "abort",
-            "getResponseHeader",
-            "getAllResponseHeaders",
-            "addEventListener",
-            "overrideMimeType",
-            "removeEventListener"
-        ], function (method) {
-            fakeXhr[method] = function () {
-                return apply(xhr, method, arguments);
-            };
-        });
-
-        var copyAttrs = function (args) {
-            each(args, function (attr) {
-                try {
-                    fakeXhr[attr] = xhr[attr];
-                } catch (e) {
-                    if (!IE6Re.test(navigator.userAgent)) {
-                        throw e;
-                    }
-                }
-            });
-        };
-
-        var stateChange = function stateChange() {
-            fakeXhr.readyState = xhr.readyState;
-            if (xhr.readyState >= FakeXMLHttpRequest.HEADERS_RECEIVED) {
-                copyAttrs(["status", "statusText"]);
-            }
-            if (xhr.readyState >= FakeXMLHttpRequest.LOADING) {
-                copyAttrs(["responseText", "response"]);
-            }
-            if (xhr.readyState === FakeXMLHttpRequest.DONE) {
-                copyAttrs(["responseXML"]);
-            }
-            if (fakeXhr.onreadystatechange) {
-                fakeXhr.onreadystatechange.call(fakeXhr, { target: fakeXhr });
-            }
-        };
-
-        if (xhr.addEventListener) {
-            for (var event in fakeXhr.eventListeners) {
-                if (fakeXhr.eventListeners.hasOwnProperty(event)) {
-
-                    /*eslint-disable no-loop-func*/
-                    each(fakeXhr.eventListeners[event], function (handler) {
-                        xhr.addEventListener(event, handler);
-                    });
-                    /*eslint-enable no-loop-func*/
-                }
-            }
-            xhr.addEventListener("readystatechange", stateChange);
-        } else {
-            xhr.onreadystatechange = stateChange;
-        }
-        apply(xhr, "open", xhrArgs);
-    };
     FakeXMLHttpRequest.useFilters = false;
 
     function verifyRequestOpened(xhr) {
@@ -5039,7 +5084,7 @@ if (typeof sinon === "undefined") {
 
     function verifyResponseBodyType(body) {
         if (typeof body !== "string") {
-            var error = new Error("Attempted to respond to fake XMLHttpRequest with " +
+            const error = new Error("Attempted to respond to fake XMLHttpRequest with " +
                                  body + ", which is not a string.");
             error.name = "InvalidBodyException";
             throw error;
@@ -5047,10 +5092,10 @@ if (typeof sinon === "undefined") {
     }
 
     function convertToArrayBuffer(body) {
-        var buffer = new ArrayBuffer(body.length);
-        var view = new Uint8Array(buffer);
-        for (var i = 0; i < body.length; i++) {
-            var charCode = body.charCodeAt(i);
+        const buffer = new ArrayBuffer(body.length);
+        const view = new Uint8Array(buffer);
+        for (let i = 0; i < body.length; i++) {
+            const charCode = body.charCodeAt(i);
             if (charCode >= 256) {
                 throw new TypeError("arraybuffer or blob responseTypes require binary string, " +
                                     "invalid character " + body[i] + " found.");
@@ -5077,7 +5122,7 @@ if (typeof sinon === "undefined") {
                 return null;
             }
         } else if (supportsBlob && responseType === "blob") {
-            var blobOptions = {};
+            const blobOptions = {};
             if (contentType) {
                 blobOptions.type = contentType;
             }
@@ -5099,26 +5144,6 @@ if (typeof sinon === "undefined") {
         }
         xhr.responseXML = null;
     }
-
-    FakeXMLHttpRequest.parseXML = function parseXML(text) {
-        // Treat empty string as parsing failure
-        if (text !== "") {
-            try {
-                if (typeof DOMParser !== "undefined") {
-                    var parser = new DOMParser();
-                    return parser.parseFromString(text, "text/xml");
-                }
-                var xmlDoc = new window.ActiveXObject("Microsoft.XMLDOM");
-                xmlDoc.async = "false";
-                xmlDoc.loadXML(text);
-                return xmlDoc;
-            } catch (e) {
-                // Unable to parse XML - no biggie
-            }
-        }
-
-        return null;
-    };
 
     FakeXMLHttpRequest.statusCodes = {
         100: "Continue",
@@ -5182,8 +5207,8 @@ if (typeof sinon === "undefined") {
                 this.sendFlag = false;
 
                 if (FakeXMLHttpRequest.useFilters === true) {
-                    var xhrArgs = arguments;
-                    var defake = some(FakeXMLHttpRequest.filters, function (filter) {
+                    const xhrArgs = arguments;
+                    const defake = some(FakeXMLHttpRequest.filters, function (filter) {
                         return filter.apply(this, xhrArgs);
                     });
                     if (defake) {
@@ -5196,8 +5221,8 @@ if (typeof sinon === "undefined") {
             readyStateChange: function readyStateChange(state) {
                 this.readyState = state;
 
-                var readyStateChangeEvent = new sinon.Event("readystatechange", false, false, this);
-                var event, progress;
+                const readyStateChangeEvent = new sinon.Event("readystatechange", false, false, this);
+                let event, progress;
 
                 if (typeof this.onreadystatechange === "function") {
                     try {
@@ -5254,7 +5279,7 @@ if (typeof sinon === "undefined") {
                 verifyRequestOpened(this);
                 this.responseHeaders = {};
 
-                for (var header in headers) {
+                for (const header in headers) {
                     if (headers.hasOwnProperty(header)) {
                         this.responseHeaders[header] = headers[header];
                     }
@@ -5272,9 +5297,9 @@ if (typeof sinon === "undefined") {
                 verifyState(this);
 
                 if (!/^(get|head)$/i.test(this.method)) {
-                    var contentType = getHeader(this.requestHeaders, "Content-Type");
+                    const contentType = getHeader(this.requestHeaders, "Content-Type");
                     if (this.requestHeaders[contentType]) {
-                        var value = this.requestHeaders[contentType].split(";");
+                        const value = this.requestHeaders[contentType].split(";");
                         this.requestHeaders[contentType] = value[0] + ";charset=utf-8";
                     } else if (supportsFormData && !(data instanceof FormData)) {
                         this.requestHeaders["Content-Type"] = "text/plain;charset=utf-8";
@@ -5338,9 +5363,9 @@ if (typeof sinon === "undefined") {
                     return "";
                 }
 
-                var headers = "";
+                let headers = "";
 
-                for (var header in this.responseHeaders) {
+                for (const header in this.responseHeaders) {
                     if (this.responseHeaders.hasOwnProperty(header) &&
                         !/^Set-Cookie2?$/i.test(header)) {
                         headers += header + ": " + this.responseHeaders[header] + "\r\n";
@@ -5354,13 +5379,13 @@ if (typeof sinon === "undefined") {
                 verifyRequestSent(this);
                 verifyHeadersReceived(this);
                 verifyResponseBodyType(body);
-                var contentType = this.getResponseHeader("Content-Type");
+                const contentType = this.getResponseHeader("Content-Type");
 
-                var isTextResponse = this.responseType === "" || this.responseType === "text";
+                const isTextResponse = this.responseType === "" || this.responseType === "text";
                 clearResponse(this);
                 if (this.async) {
-                    var chunkSize = this.chunkSize || 10;
-                    var index = 0;
+                    const chunkSize = this.chunkSize || 10;
+                    let index = 0;
 
                     do {
                         this.readyStateChange(FakeXMLHttpRequest.LOADING);
@@ -5420,22 +5445,7 @@ if (typeof sinon === "undefined") {
             DONE: 4
         });
 
-        sinon.useFakeXMLHttpRequest = function () {
-            FakeXMLHttpRequest.restore = function restore(keepOnCreate) {
-                if (sinonXhr.supportsXHR) {
-                    global.XMLHttpRequest = sinonXhr.GlobalXMLHttpRequest;
-                }
-
-                if (sinonXhr.supportsActiveX) {
-                    global.ActiveXObject = sinonXhr.GlobalActiveXObject;
-                }
-
-                delete FakeXMLHttpRequest.restore;
-
-                if (keepOnCreate !== true) {
-                    delete FakeXMLHttpRequest.onCreate;
-                }
-            };
+        sinon.useFakeXMLHttpRequest = () => {
             if (sinonXhr.supportsXHR) {
                 global.XMLHttpRequest = FakeXMLHttpRequest;
             }
@@ -5457,11 +5467,11 @@ if (typeof sinon === "undefined") {
         sinon.FakeXMLHttpRequest = FakeXMLHttpRequest;
     }
 
-    var isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
-    var isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
+    const isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
+    const isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
 
     function loadDependencies(require, exports, module) {
-        var sinon = require("./core");
+        const sinon = require("./core");
         require("../extend");
         require("./event");
         require("../log_error");
@@ -5482,10 +5492,8 @@ if (typeof sinon === "undefined") {
     if (sinonGlobal) {
         makeApi(sinonGlobal);
     }
-}(
-    typeof sinon === "object" && sinon, // eslint-disable-line no-undef
-    typeof global !== "undefined" ? global : self
-));
+})(// eslint-disable-line no-undef
+typeof sinon === "object" && sinon, typeof global !== "undefined" ? global : self);
 
 /**
  * @depend fake_xdomain_request.js
@@ -5504,12 +5512,12 @@ if (typeof sinon === "undefined") {
  *
  * Copyright (c) 2010-2013 Christian Johansen
  */
-(function () {
+(() => {
     
-    var push = [].push;
+    const push = [].push;
 
     function responseArray(handler) {
-        var response = handler;
+        let response = handler;
 
         if (Object.prototype.toString.call(handler) !== "[object Array]") {
             response = [200, {}, handler];
@@ -5523,20 +5531,20 @@ if (typeof sinon === "undefined") {
         return response;
     }
 
-    var wloc = typeof window !== "undefined" ? window.location : {};
-    var rCurrLoc = new RegExp("^" + wloc.protocol + "//" + wloc.host);
+    const wloc = typeof window !== "undefined" ? window.location : {};
+    const rCurrLoc = new RegExp("^" + wloc.protocol + "//" + wloc.host);
 
     function matchOne(response, reqMethod, reqUrl) {
-        var rmeth = response.method;
-        var matchMethod = !rmeth || rmeth.toLowerCase() === reqMethod.toLowerCase();
-        var url = response.url;
-        var matchUrl = !url || url === reqUrl || (typeof url.test === "function" && url.test(reqUrl));
+        const rmeth = response.method;
+        const matchMethod = !rmeth || rmeth.toLowerCase() === reqMethod.toLowerCase();
+        const url = response.url;
+        const matchUrl = !url || url === reqUrl || (typeof url.test === "function" && url.test(reqUrl));
 
         return matchMethod && matchUrl;
     }
 
     function match(response, request) {
-        var requestUrl = request.url;
+        let requestUrl = request.url;
 
         if (!/^https?:\/\//.test(requestUrl) || rCurrLoc.test(requestUrl)) {
             requestUrl = requestUrl.replace(rCurrLoc, "");
@@ -5544,8 +5552,8 @@ if (typeof sinon === "undefined") {
 
         if (matchOne(response, this.getHTTPMethod(request), requestUrl)) {
             if (typeof response.response === "function") {
-                var ru = response.url;
-                var args = [request].concat(ru && typeof ru.exec === "function" ? ru.exec(requestUrl).slice(1) : []);
+                const ru = response.url;
+                const args = [request].concat(ru && typeof ru.exec === "function" ? ru.exec(requestUrl).slice(1) : []);
                 return response.response.apply(response, args);
             }
 
@@ -5557,8 +5565,8 @@ if (typeof sinon === "undefined") {
 
     function makeApi(sinon) {
         sinon.fakeServer = {
-            create: function (config) {
-                var server = sinon.create(this);
+            create(config) {
+                const server = sinon.create(this);
                 server.configure(config);
                 if (!sinon.xhr.supportsCORS) {
                     this.xhr = sinon.useFakeXDomainRequest();
@@ -5567,20 +5575,20 @@ if (typeof sinon === "undefined") {
                 }
                 server.requests = [];
 
-                this.xhr.onCreate = function (xhrObj) {
+                this.xhr.onCreate = xhrObj => {
                     server.addRequest(xhrObj);
                 };
 
                 return server;
             },
-            configure: function (config) {
-                var whitelist = {
+            configure(config) {
+                const whitelist = {
                     "autoRespond": true,
                     "autoRespondAfter": true,
                     "respondImmediately": true,
                     "fakeHTTPMethods": true
                 };
-                var setting;
+                let setting;
 
                 config = config || {};
                 for (setting in config) {
@@ -5590,7 +5598,7 @@ if (typeof sinon === "undefined") {
                 }
             },
             addRequest: function addRequest(xhrObj) {
-                var server = this;
+                const server = this;
                 push.call(this.requests, xhrObj);
 
                 xhrObj.onSend = function () {
@@ -5599,7 +5607,7 @@ if (typeof sinon === "undefined") {
                     if (server.respondImmediately) {
                         server.respond();
                     } else if (server.autoRespond && !server.responding) {
-                        setTimeout(function () {
+                        setTimeout(() => {
                             server.responding = false;
                             server.respond();
                         }, server.autoRespondAfter || 10);
@@ -5611,7 +5619,7 @@ if (typeof sinon === "undefined") {
 
             getHTTPMethod: function getHTTPMethod(request) {
                 if (this.fakeHTTPMethods && /post/i.test(request.method)) {
-                    var matches = (request.requestBody || "").match(/_method=([^\b;]+)/);
+                    const matches = (request.requestBody || "").match(/_method=([^\b;]+)/);
                     return matches ? matches[1] : request.method;
                 }
 
@@ -5631,7 +5639,7 @@ if (typeof sinon === "undefined") {
             },
 
             log: function log(response, request) {
-                var str;
+                let str;
 
                 str = "Request:\n" + sinon.format(request) + "\n\n";
                 str += "Response:\n" + sinon.format(response) + "\n\n";
@@ -5672,10 +5680,10 @@ if (typeof sinon === "undefined") {
                     this.respondWith.apply(this, arguments);
                 }
 
-                var queue = this.queue || [];
-                var requests = queue.splice(0, queue.length);
+                const queue = this.queue || [];
+                const requests = queue.splice(0, queue.length);
 
-                for (var i = 0; i < requests.length; i++) {
+                for (let i = 0; i < requests.length; i++) {
                     this.processRequest(requests[i]);
                 }
             },
@@ -5686,10 +5694,10 @@ if (typeof sinon === "undefined") {
                         return;
                     }
 
-                    var response = this.response || [404, {}, ""];
+                    let response = this.response || [404, {}, ""];
 
                     if (this.responses) {
-                        for (var l = this.responses.length, i = l - 1; i >= 0; i--) {
+                        for (let l = this.responses.length, i = l - 1; i >= 0; i--) {
                             if (match.call(this, this.responses[i], request)) {
                                 response = this.responses[i].response;
                                 break;
@@ -5713,11 +5721,11 @@ if (typeof sinon === "undefined") {
         };
     }
 
-    var isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
-    var isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
+    const isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
+    const isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
 
     function loadDependencies(require, exports, module) {
-        var sinon = require("./core");
+        const sinon = require("./core");
         require("./fake_xdomain_request");
         require("./fake_xml_http_request");
         require("../format");
@@ -5732,7 +5740,7 @@ if (typeof sinon === "undefined") {
     } else {
         makeApi(sinon); // eslint-disable-line no-undef
     }
-}());
+})();
 
 /**
  * @depend fake_server.js
@@ -5752,7 +5760,7 @@ if (typeof sinon === "undefined") {
  *
  * Copyright (c) 2010-2013 Christian Johansen
  */
-(function () {
+(() => {
     
     function makeApi(sinon) {
         function Server() {}
@@ -5770,9 +5778,9 @@ if (typeof sinon === "undefined") {
                 }
 
                 if (!this.longestTimeout) {
-                    var clockSetTimeout = this.clock.setTimeout;
-                    var clockSetInterval = this.clock.setInterval;
-                    var server = this;
+                    const clockSetTimeout = this.clock.setTimeout;
+                    const clockSetInterval = this.clock.setInterval;
+                    const server = this;
 
                     this.clock.setTimeout = function (fn, timeout) {
                         server.longestTimeout = Math.max(timeout, server.longestTimeout || 0);
@@ -5792,7 +5800,7 @@ if (typeof sinon === "undefined") {
         };
 
         sinon.fakeServerWithClock.respond = function respond() {
-            var returnVal = sinon.fakeServer.respond.apply(this, arguments);
+            const returnVal = sinon.fakeServer.respond.apply(this, arguments);
 
             if (this.clock) {
                 this.clock.tick(this.longestTimeout || 0);
@@ -5816,11 +5824,11 @@ if (typeof sinon === "undefined") {
         };
     }
 
-    var isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
-    var isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
+    const isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
+    const isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
 
     function loadDependencies(require) {
-        var sinon = require("./core");
+        const sinon = require("./core");
         require("./fake_server");
         require("./fake_timers");
         makeApi(sinon);
@@ -5833,7 +5841,7 @@ if (typeof sinon === "undefined") {
     } else {
         makeApi(sinon); // eslint-disable-line no-undef
     }
-}());
+})();
 
 /**
  * @depend util/core.js
@@ -5851,10 +5859,10 @@ if (typeof sinon === "undefined") {
  *
  * Copyright (c) 2010-2013 Christian Johansen
  */
-(function (sinonGlobal) {
+(sinonGlobal => {
     
     function makeApi(sinon) {
-        var push = [].push;
+        const push = [].push;
 
         function exposeValue(sandbox, config, key, value) {
             if (!value) {
@@ -5870,7 +5878,7 @@ if (typeof sinon === "undefined") {
         }
 
         function prepareSandboxFromConfig(config) {
-            var sandbox = sinon.create(sinon.sandbox);
+            const sandbox = sinon.create(sinon.sandbox);
 
             if (config.useFakeServer) {
                 if (typeof config.useFakeServer === "object") {
@@ -5901,7 +5909,7 @@ if (typeof sinon === "undefined") {
             serverPrototype: sinon.fakeServer,
 
             useFakeServer: function useFakeServer() {
-                var proto = this.serverPrototype || sinon.fakeServer;
+                const proto = this.serverPrototype || sinon.fakeServer;
 
                 if (!proto || !proto.create) {
                     return null;
@@ -5911,7 +5919,7 @@ if (typeof sinon === "undefined") {
                 return this.add(this.server);
             },
 
-            inject: function (obj) {
+            inject(obj) {
                 sinon.collection.inject.call(this, obj);
 
                 if (this.clock) {
@@ -5928,7 +5936,7 @@ if (typeof sinon === "undefined") {
                 return obj;
             },
 
-            restore: function () {
+            restore() {
                 if (arguments.length) {
                     throw new Error("sandbox.restore() does not take any parameters. Perhaps you meant stub.restore()");
                 }
@@ -5937,30 +5945,29 @@ if (typeof sinon === "undefined") {
                 this.restoreContext();
             },
 
-            restoreContext: function () {
+            restoreContext() {
                 if (this.injectedKeys) {
-                    for (var i = 0, j = this.injectedKeys.length; i < j; i++) {
+                    for (let i = 0, j = this.injectedKeys.length; i < j; i++) {
                         delete this.injectInto[this.injectedKeys[i]];
                     }
                     this.injectedKeys = [];
                 }
             },
 
-            create: function (config) {
+            create(config) {
                 if (!config) {
                     return sinon.create(sinon.sandbox);
                 }
 
-                var sandbox = prepareSandboxFromConfig(config);
+                const sandbox = prepareSandboxFromConfig(config);
                 sandbox.args = sandbox.args || [];
                 sandbox.injectedKeys = [];
                 sandbox.injectInto = config.injectInto;
-                var prop,
-                    value;
-                var exposed = sandbox.inject({});
+                let prop, value;
+                const exposed = sandbox.inject({});
 
                 if (config.properties) {
-                    for (var i = 0, l = config.properties.length; i < l; i++) {
+                    for (let i = 0, l = config.properties.length; i < l; i++) {
                         prop = config.properties[i];
                         value = exposed[prop] || prop === "sandbox" && sandbox;
                         exposeValue(sandbox, config, prop, value);
@@ -5980,11 +5987,11 @@ if (typeof sinon === "undefined") {
         return sinon.sandbox;
     }
 
-    var isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
-    var isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
+    const isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
+    const isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
 
     function loadDependencies(require, exports, module) {
-        var sinon = require("./util/core");
+        const sinon = require("./util/core");
         require("./extend");
         require("./util/fake_server_with_clock");
         require("./util/fake_timers");
@@ -6005,9 +6012,8 @@ if (typeof sinon === "undefined") {
     if (sinonGlobal) {
         makeApi(sinonGlobal);
     }
-}(
-    typeof sinon === "object" && sinon // eslint-disable-line no-undef
-));
+})(// eslint-disable-line no-undef
+typeof sinon === "object" && sinon);
 
 /**
  * @depend util/core.js
@@ -6021,25 +6027,25 @@ if (typeof sinon === "undefined") {
  *
  * Copyright (c) 2010-2013 Christian Johansen
  */
-(function (sinonGlobal) {
+(sinonGlobal => {
     
     function makeApi(sinon) {
-        var slice = Array.prototype.slice;
+        const slice = Array.prototype.slice;
 
         function test(callback) {
-            var type = typeof callback;
+            const type = typeof callback;
 
             if (type !== "function") {
                 throw new TypeError("sinon.test needs to wrap a test function, got " + type);
             }
 
             function sinonSandboxedTest() {
-                var config = sinon.getConfig(sinon.config);
+                const config = sinon.getConfig(sinon.config);
                 config.injectInto = config.injectIntoThis && this || config.injectInto;
-                var sandbox = sinon.sandbox.create(config);
-                var args = slice.call(arguments);
-                var oldDone = args.length && args[args.length - 1];
-                var exception, result;
+                const sandbox = sinon.sandbox.create(config);
+                const args = slice.call(arguments);
+                const oldDone = args.length && args[args.length - 1];
+                let exception, result;
 
                 if (typeof oldDone === "function") {
                     args[args.length - 1] = function sinonDone(res) {
@@ -6089,11 +6095,11 @@ if (typeof sinon === "undefined") {
         return test;
     }
 
-    var isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
-    var isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
+    const isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
+    const isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
 
     function loadDependencies(require, exports, module) {
-        var core = require("./util/core");
+        const core = require("./util/core");
         require("./sandbox");
         module.exports = makeApi(core);
     }
@@ -6105,7 +6111,7 @@ if (typeof sinon === "undefined") {
     } else if (sinonGlobal) {
         makeApi(sinonGlobal);
     }
-}(typeof sinon === "object" && sinon || null)); // eslint-disable-line no-undef
+})(typeof sinon === "object" && sinon || null); // eslint-disable-line no-undef
 
 /**
  * @depend util/core.js
@@ -6119,7 +6125,7 @@ if (typeof sinon === "undefined") {
  *
  * Copyright (c) 2010-2013 Christian Johansen
  */
-(function (sinonGlobal) {
+(sinonGlobal => {
     
     function createTest(property, setUp, tearDown) {
         return function () {
@@ -6127,7 +6133,7 @@ if (typeof sinon === "undefined") {
                 setUp.apply(this, arguments);
             }
 
-            var exception, result;
+            let exception, result;
 
             try {
                 result = property.apply(this, arguments);
@@ -6154,13 +6160,11 @@ if (typeof sinon === "undefined") {
             }
 
             prefix = prefix || "test";
-            var rPrefix = new RegExp("^" + prefix);
-            var methods = {};
-            var setUp = tests.setUp;
-            var tearDown = tests.tearDown;
-            var testName,
-                property,
-                method;
+            const rPrefix = new RegExp("^" + prefix);
+            const methods = {};
+            const setUp = tests.setUp;
+            const tearDown = tests.tearDown;
+            let testName, property, method;
 
             for (testName in tests) {
                 if (tests.hasOwnProperty(testName) && !/^(setUp|tearDown)$/.test(testName)) {
@@ -6187,11 +6191,11 @@ if (typeof sinon === "undefined") {
         return testCase;
     }
 
-    var isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
-    var isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
+    const isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
+    const isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
 
     function loadDependencies(require, exports, module) {
-        var core = require("./util/core");
+        const core = require("./util/core");
         require("./test");
         module.exports = makeApi(core);
     }
@@ -6209,9 +6213,8 @@ if (typeof sinon === "undefined") {
     if (sinonGlobal) {
         makeApi(sinonGlobal);
     }
-}(
-    typeof sinon === "object" && sinon // eslint-disable-line no-undef
-));
+})(// eslint-disable-line no-undef
+typeof sinon === "object" && sinon);
 
 /**
  * @depend times_in_words.js
@@ -6227,17 +6230,17 @@ if (typeof sinon === "undefined") {
  *
  * Copyright (c) 2010-2013 Christian Johansen
  */
-(function (sinonGlobal, global) {
+((sinonGlobal, global) => {
     
-    var slice = Array.prototype.slice;
+    const slice = Array.prototype.slice;
 
     function makeApi(sinon) {
-        var assert;
+        let assert;
 
         function verifyIsStub() {
-            var method;
+            let method;
 
-            for (var i = 0, l = arguments.length; i < l; ++i) {
+            for (let i = 0, l = arguments.length; i < l; ++i) {
                 method = arguments[i];
 
                 if (!method) {
@@ -6279,7 +6282,7 @@ if (typeof sinon === "undefined") {
 
         function failAssertion(object, msg) {
             object = object || global;
-            var failMethod = object.fail || assert.fail;
+            const failMethod = object.fail || assert.fail;
             failMethod.call(object, msg);
         }
 
@@ -6292,10 +6295,10 @@ if (typeof sinon === "undefined") {
             assert[name] = function (fake) {
                 verifyIsStub(fake);
 
-                var args = slice.call(arguments, 1);
+                const args = slice.call(arguments, 1);
                 verifyIsValidAssertion(name, args);
 
-                var failed = false;
+                let failed = false;
 
                 if (typeof method === "function") {
                     failed = !method(fake);
@@ -6321,7 +6324,7 @@ if (typeof sinon === "undefined") {
             failException: "AssertError",
 
             fail: function fail(message) {
-                var error = new Error(message);
+                const error = new Error(message);
                 error.name = this.failException || assert.failException;
 
                 throw error;
@@ -6331,14 +6334,14 @@ if (typeof sinon === "undefined") {
 
             callOrder: function assertCallOrder() {
                 verifyIsStub.apply(null, arguments);
-                var expected = "";
-                var actual = "";
+                let expected = "";
+                let actual = "";
 
                 if (!sinon.calledInOrder(arguments)) {
                     try {
                         expected = [].join.call(arguments, ", ");
-                        var calls = slice.call(arguments);
-                        var i = calls.length;
+                        const calls = slice.call(arguments);
+                        let i = calls.length;
                         while (i) {
                             if (!calls[--i].called) {
                                 calls.splice(i, 1);
@@ -6360,7 +6363,7 @@ if (typeof sinon === "undefined") {
                 verifyIsStub(method);
 
                 if (method.callCount !== count) {
-                    var msg = "expected %n to be called " + sinon.timesInWords(count) +
+                    const msg = "expected %n to be called " + sinon.timesInWords(count) +
                         " but was called %c%C";
                     failAssertion(this, method.printf(msg));
                 } else {
@@ -6373,11 +6376,11 @@ if (typeof sinon === "undefined") {
                     throw new TypeError("target is null or undefined");
                 }
 
-                var o = options || {};
-                var prefix = typeof o.prefix === "undefined" && "assert" || o.prefix;
-                var includeFail = typeof o.includeFail === "undefined" || !!o.includeFail;
+                const o = options || {};
+                const prefix = typeof o.prefix === "undefined" && "assert" || o.prefix;
+                const includeFail = typeof o.includeFail === "undefined" || !!o.includeFail;
 
-                for (var method in this) {
+                for (const method in this) {
                     if (method !== "expose" && (includeFail || !/^(fail)/.test(method))) {
                         target[exposedName(prefix, method)] = this[method];
                     }
@@ -6387,11 +6390,11 @@ if (typeof sinon === "undefined") {
             },
 
             match: function match(actual, expectation) {
-                var matcher = sinon.match(expectation);
+                const matcher = sinon.match(expectation);
                 if (matcher.test(actual)) {
                     assert.pass("match");
                 } else {
-                    var formatted = [
+                    const formatted = [
                         "expected value to match",
                         "    expected = " + sinon.format(expectation),
                         "    actual = " + sinon.format(actual)
@@ -6403,7 +6406,7 @@ if (typeof sinon === "undefined") {
         };
 
         mirrorPropAsAssertion("called", "expected %n to have been called at least once but was never called");
-        mirrorPropAsAssertion("notCalled", function (spy) {
+        mirrorPropAsAssertion("notCalled", spy => {
             return !spy.called;
         }, "expected %n to not have been called but was called %c%C");
         mirrorPropAsAssertion("calledOnce", "expected %n to be called once but was called %c%C");
@@ -6431,11 +6434,11 @@ if (typeof sinon === "undefined") {
         return assert;
     }
 
-    var isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
-    var isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
+    const isNode = typeof module !== "undefined" && module.exports && typeof require === "function";
+    const isAMD = typeof define === "function" && typeof define.amd === "object" && define.amd;
 
     function loadDependencies(require, exports, module) {
-        var sinon = require("./util/core");
+        const sinon = require("./util/core");
         require("./match");
         require("./format");
         module.exports = makeApi(sinon);
@@ -6454,10 +6457,8 @@ if (typeof sinon === "undefined") {
     if (sinonGlobal) {
         makeApi(sinonGlobal);
     }
-}(
-    typeof sinon === "object" && sinon, // eslint-disable-line no-undef
-    typeof global !== "undefined" ? global : self
-));
+})(// eslint-disable-line no-undef
+typeof sinon === "object" && sinon, typeof global !== "undefined" ? global : self);
 
   return sinon;
-}));
+});

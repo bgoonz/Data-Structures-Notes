@@ -179,7 +179,7 @@ day of starting to establish how other software developers and hiring managers
 will perceive you.
 
 Go to your GitHub profile page. Edit your profile to contain your description,
-"App Academy (@appacademy)" as your current company, your location (if you
+"Web-Dev (@appacademy)" as your current company, your location (if you
 desire), and your Web site.
 
 Now, make a personal Web site for your GitHub profile. You can do that using

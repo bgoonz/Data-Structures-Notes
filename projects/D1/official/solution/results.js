@@ -1,4 +1,11 @@
-const { recurBSearch, iterBSearch, recurBSearchIdx, recurBSearchIdxV2, iterBSearchIdx } = require('./bsearch');
+import {
+ recurBSearch,
+ iterBSearch,
+ recurBSearchIdx,
+ recurBSearchIdxV2,
+ iterBSearchIdx,
+} from './bsearch';
+
 /*------------------ DONT TOUCH THE CODE ABOVE THIS LINE ------------------*/
 
 /*******************************************************************

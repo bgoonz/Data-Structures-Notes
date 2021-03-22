@@ -1,4 +1,4 @@
-const LinkedList = require('.')
+import LinkedList from '.';
 
 describe('test linked-list DS operations', () => {
     test('construction', () => {

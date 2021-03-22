@@ -4,6 +4,6 @@ function insertionSort(list) {
   // your code here
 }
 
-module.exports = {
+export default {
   insertionSort
 };

@@ -1,5 +1,5 @@
-const { expect } = require('chai');
-const { quickSort } = require('../problems/05-quick-sort');
+import {expect} from 'chai';
+import {quickSort} from '../problems/05-quick-sort';
 
 
 describe('quickSort()', () => {

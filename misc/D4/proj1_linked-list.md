@@ -9,8 +9,6 @@ Keep making the top-most test pass until all tests pass.
 
 ## Instructions {ignore=true}
 
-* Clone the project from
-  https://github.com/appacademy-starters/data-structures-linked-list-starter.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npm test` to run the specs

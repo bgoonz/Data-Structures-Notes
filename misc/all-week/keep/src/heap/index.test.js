@@ -1,4 +1,4 @@
-const Heap = require('./index')
+import Heap from './index';
 
 test('pushing one element', () => {
     const heap = new Heap()

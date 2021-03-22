@@ -9,7 +9,7 @@ function selectionSort(list) {
   // your code here
 }
 
-module.exports = {
+export default {
   selectionSort,
   swap
 };

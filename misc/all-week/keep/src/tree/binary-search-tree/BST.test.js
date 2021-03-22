@@ -1,5 +1,5 @@
-const BST = require('./BST')
-const Node = require('../BinaryTreeNode')
+import BST from './BST';
+import Node from '../BinaryTreeNode';
 
 it('should instantiate', () => {
     const bst = new BST()

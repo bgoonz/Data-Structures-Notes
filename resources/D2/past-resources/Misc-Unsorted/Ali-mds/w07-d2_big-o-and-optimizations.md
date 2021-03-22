@@ -876,15 +876,15 @@ console.log(tabulatedFib(7));      // => 13
 When you initialized the table and seeded the first two values, it looked like
 this:
 
-| i          | 0   | 1   | 2 | 3 | 4 | 5 | 6 | 7 |
-|------------|-----|-----|---|---|---|---|---|---|
-| `table[i]` | `0` | `1` |   |   |   |   |   |   |
+| i          | 0   | 1   | 2   | 3   | 4   | 5   | 6   | 7   |
+| ---------- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `table[i]` | `0` | `1` |     |     |     |     |     |     |
 
 
 After the loop finishes, the final table will be:
 
 | i          | 0   | 1   | 2   | 3   | 4   | 5   | 6   | 7    |
-|------------|-----|-----|-----|-----|-----|-----|-----|------|
+| ---------- | --- | --- | --- | --- | --- | --- | --- | ---- |
 | `table[i]` | `0` | `1` | `1` | `2` | `3` | `5` | `8` | `13` |
 
 Similar to the previous `memo`, by the time the function completes, the `table`
@@ -1128,8 +1128,6 @@ ________________________________________________________________________________
 
 This project contains two test-driven problems and one problem on LeetCode.com.
 
-* Clone the project from
-  https://github.com/appacademy-starters/algorithms-memoization-project.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npx test` to run the specs
@@ -1145,8 +1143,6 @@ ________________________________________________________________________________
 
 This project contains two test-driven problems and one problem on LeetCode.com.
 
-* Clone the project from
-  https://github.com/appacademy-starters/algorithms-tabulation-project.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npx test` to run the specs

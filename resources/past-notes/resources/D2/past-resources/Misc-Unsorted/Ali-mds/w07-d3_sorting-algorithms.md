@@ -1616,8 +1616,6 @@ Bubble Sort: (array)
 
 ## Instructions
 
-* Clone the project from
-  https://github.com/appacademy-starters/algorithms-bubble-sort-starter.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npm test` to run the specs
@@ -1670,8 +1668,6 @@ end procedure
 
 ## Instructions
 
-* Clone the project from
-  https://github.com/appacademy-starters/algorithms-selection-sort-starter.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npm test` to run the specs
@@ -1725,8 +1721,6 @@ end procedure
 
 ## Instructions
 
-* Clone the project from
-  https://github.com/appacademy-starters/algorithms-insertion-sort-starter.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npm test` to run the specs
@@ -1792,8 +1786,6 @@ end procedure
 
 ## Instructions
 
-* Clone the project from
-  https://github.com/appacademy-starters/algorithms-merge-sort-starter.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npm test` to run the specs
@@ -1826,8 +1818,6 @@ end procedure quick sort
 
 ## Instructions
 
-* Clone the project from
-  https://github.com/appacademy-starters/algorithms-quick-sort-starter.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npm test` to run the specs
@@ -1925,8 +1915,6 @@ end procedure binary search index
 
 ## Instructions
 
-* Clone the project from
-  https://github.com/appacademy-starters/algorithms-binary-search-starter.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npm test` to run the specs

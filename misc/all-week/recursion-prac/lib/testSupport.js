@@ -1,16 +1,16 @@
-(function() {
+(() => {
   'use strict';
 
   mocha.setup({ui: 'bdd'});
   window.expect = chai.expect;
 
-  window.onload = function() {
+  window.onload = () => {
     window.mochaPhantomJS ? mochaPhantomJS.run() : mocha.run();
   };
 
 
   // Disabling native methods is dangerous, we should spy on them instead
-  before(function() {
+  before(() => {
     sinon.spy(Array.prototype,'map');
     sinon.spy(Array.prototype,'sort');
     sinon.spy(Array.prototype,'reverse');
@@ -27,7 +27,7 @@
     };
   });
 
-  afterEach(function() {
+  afterEach(() => {
     Array.prototype.map.reset();
     Array.prototype.sort.reset();
     Array.prototype.reverse.reset();
@@ -36,7 +36,7 @@
     JSON.parse.reset();
   });
 
-  after(function() {
+  after(() => {
     Array.prototype.map.restore();
     Array.prototype.sort.restore();
     Array.prototype.reverse.restore();
@@ -46,4 +46,4 @@
     delete window.analyze;
   });
 
-}());
+})();

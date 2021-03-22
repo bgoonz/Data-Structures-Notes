@@ -124,4 +124,4 @@ const swap = (array, a, b) => {
     array[b] = temp
 }
 
-module.exports = Heap
+export default Heap;

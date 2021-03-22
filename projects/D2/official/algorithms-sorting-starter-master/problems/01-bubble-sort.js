@@ -10,7 +10,7 @@ function bubbleSort(array) {
   // your code here
 }
 
-module.exports = {
+export default {
   bubbleSort,
   swap
 };

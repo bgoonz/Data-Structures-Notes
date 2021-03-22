@@ -1,5 +1,5 @@
-const { expect } = require('chai');
-const { selectionSort, swap } = require('../problems/02-selection-sort');
+import {expect} from 'chai';
+import {selectionSort, swap} from '../problems/02-selection-sort';
 
 describe('swap()', () => {
   // it should accept an array and two indices as args

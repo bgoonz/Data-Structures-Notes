@@ -1,5 +1,5 @@
-const { expect } = require('chai');
-const { bubbleSort, swap } = require('../problems/01-bubble-sort');
+import {expect} from 'chai';
+import {bubbleSort, swap} from '../problems/01-bubble-sort';
 
 describe('bubbleSort()', () => {
   it('should sort the elements of the array in increasing order, in-place', () => {

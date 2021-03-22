@@ -54,7 +54,7 @@ function minChange(coins, amount, memo = {}) {
 }
 
 
-module.exports = {
+export default {
     lucasNumberMemo,
     minChange
 };

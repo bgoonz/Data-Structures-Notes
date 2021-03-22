@@ -195,10 +195,10 @@ function iterBSearchIdx(array, target) {
   return -1;
 }
 
-module.exports = {
+export default {
   recurBSearch,
   iterBSearch,
   recurBSearchIdx,
   recurBSearchIdxV2,
   iterBSearchIdx
-}
+};

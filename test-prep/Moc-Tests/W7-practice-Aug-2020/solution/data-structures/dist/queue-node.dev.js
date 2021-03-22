@@ -1,22 +1,25 @@
 "use strict";
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+function _defineProperties(target, props) {
+  props.forEach(descriptor => {
+    descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+  });
+}
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 //! Queue Node
-var Node = function Node(val) {
+const Node = function Node(val) {
   _classCallCheck(this, Node);
 
   this.value = val;
   this.next = null;
 };
 
-var Queue =
-/*#__PURE__*/
-function () {
+const Queue = /*#__PURE__*/
+(() => {
   function Queue() {
     _classCallCheck(this, Queue);
 
@@ -28,7 +31,7 @@ function () {
   _createClass(Queue, [{
     key: "enqueue",
     value: function enqueue(val) {
-      var newNode = new Node(val);
+      const newNode = new Node(val);
 
       if (!this.front) {
         this.front = newNode;
@@ -47,7 +50,7 @@ function () {
         return null;
       }
 
-      var temp = this.front;
+      const temp = this.front;
 
       if (this.front === this.back) {
         this.back = null;
@@ -65,4 +68,4 @@ function () {
   }]);
 
   return Queue;
-}();
+})();

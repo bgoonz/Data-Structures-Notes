@@ -141,5 +141,5 @@ class LinkedList {
 	}
 }
 
-exports.Node = Node;
-exports.LinkedList = LinkedList;
+export {Node};
+export {LinkedList};

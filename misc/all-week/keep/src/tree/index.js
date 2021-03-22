@@ -1,5 +1,5 @@
-const BST = require('./binary-search-tree')
+import BST from './binary-search-tree';
 
-module.exports = {
+export default {
     BST
-}
+};

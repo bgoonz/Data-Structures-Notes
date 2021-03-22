@@ -56,8 +56,6 @@ end procedure
 
 ## Instructions {ignore=true}
 
-* Clone the project from
-  https://github.com/appacademy-starters/algorithms-merge-sort-starter.
 * `cd` into the project folder
 * `npm install` to install dependencies in the project root directory
 * `npm test` to run the specs

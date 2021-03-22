@@ -1,8 +1,8 @@
-const LinkedList = require('../linked-list')
+import LinkedList from '../linked-list';
 
 class Queue {
-    constructor () {
-        this.container = new LinkedList(Array.from(arguments))
+    constructor(...args) {
+        this.container = new LinkedList(Array.from(args))
     }
 
     enqueue (data) {
@@ -34,4 +34,4 @@ class Queue {
     }
 }
 
-module.exports = Queue
+export default Queue;

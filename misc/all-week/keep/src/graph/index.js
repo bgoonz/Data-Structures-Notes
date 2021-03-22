@@ -1,5 +1,5 @@
-const LinkedList = require('../linked-list')
-const Queue = require('../queue')
+import LinkedList from '../linked-list';
+import Queue from '../queue';
 
 const COLORS = {
     grey: 'grey',
@@ -25,7 +25,7 @@ class Vertex {
     }
 
     getAdjVertices () {
-        return this.adjVertices.toArray().map(n => n.name)
+        return this.adjVertices.toArray().map(({name}) => name);
     }
 
     hasAdjVertex (name) {
@@ -170,4 +170,4 @@ class Graph {
     }
 }
 
-module.exports = Graph
+export default Graph;

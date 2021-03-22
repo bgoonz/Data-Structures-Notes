@@ -1,17 +1,9 @@
-const util = require("./util");
-const chai = require('chai');
+import util from "./util";
+import chai from 'chai';
 chai.use(require('chai-spies'));
 const { expect, spy } = chai;
 
-const { 
-    lucasNumber,
-    sumArray,
-    reverseString,
-    pow,
-    flatten,
-    fileFinder,
-    pathFinder
-} = require('../lib/problems');
+import {lucasNumber, sumArray, reverseString, pow, flatten, fileFinder, pathFinder} from '../lib/problems';
 
 
 describe('lucasNumber(n)', () => {

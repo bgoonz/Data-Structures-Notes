@@ -8,6 +8,6 @@ const catchStackOverflow = (fn, ...args) => {
     }
 };
 
-module.exports = {
+export default {
     catchStackOverflow
 };

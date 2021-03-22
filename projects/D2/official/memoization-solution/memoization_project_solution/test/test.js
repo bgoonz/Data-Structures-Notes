@@ -1,11 +1,8 @@
-const util = require('./util');
-const chai = require('chai');
+import util from './util';
+import chai from 'chai';
 const { expect } = chai;
 
-const { 
-    lucasNumberMemo,
-    minChange
-} = require('../lib/problems');
+import {lucasNumberMemo, minChange} from '../lib/problems';
 
 describe('lucasNumberMemo(n)', () => {
     it('should calculate the n-th number of the lucas sequence', () => {

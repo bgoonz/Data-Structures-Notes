@@ -182,7 +182,7 @@ function fileFinder(directories, targetFile) {
 // pathFinder(desktop, 'honeybadger.png'));     // => null
 function pathFinder(directories, targetFile) {
   for (let name in directories) {
-    if (name === targetFile) return "/" + targetFile
+    if (name === targetFile) return `/${targetFile}`;
 
     let subdirectory = directories[name]
     let subPath = pathFinder(subdirectory, targetFile)
@@ -194,7 +194,7 @@ function pathFinder(directories, targetFile) {
 }
 
 
-module.exports = {
+export default {
     lucasNumber,
     sumArray,
     reverseString,

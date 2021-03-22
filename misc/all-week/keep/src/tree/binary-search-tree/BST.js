@@ -1,4 +1,4 @@
-const Node = require('../BinaryTreeNode')
+import Node from '../BinaryTreeNode';
 
 const asc = (a, b) => a - b
 
@@ -238,4 +238,4 @@ class BST {
     }
 }
 
-module.exports = BST
+export default BST;

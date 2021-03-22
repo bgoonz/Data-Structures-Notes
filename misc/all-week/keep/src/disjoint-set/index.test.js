@@ -1,4 +1,4 @@
-const DisjointSet = require('.')
+import DisjointSet from '.';
 
 describe('Testing disjoint-set', () => {
     test('initialization', () => {

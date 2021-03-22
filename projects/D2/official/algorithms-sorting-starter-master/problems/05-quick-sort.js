@@ -5,6 +5,6 @@ function quickSort(array) {
 }
 
 
-module.exports = {
+export default {
   quickSort
 };

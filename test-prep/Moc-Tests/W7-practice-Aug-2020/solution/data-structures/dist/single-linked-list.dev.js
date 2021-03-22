@@ -1,22 +1,25 @@
 "use strict";
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+function _defineProperties(target, props) {
+  props.forEach(descriptor => {
+    descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+  });
+}
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 //! Single Linked List
-var Node = function Node(val) {
+const Node = function Node(val) {
   _classCallCheck(this, Node);
 
   this.value = val;
   this.next = null;
 };
 
-var LinkedList =
-/*#__PURE__*/
-function () {
+const LinkedList = /*#__PURE__*/
+(() => {
   function LinkedList() {
     _classCallCheck(this, LinkedList);
 
@@ -28,7 +31,7 @@ function () {
   _createClass(LinkedList, [{
     key: "addToTail",
     value: function addToTail(val) {
-      var newNode = new Node(val);
+      const newNode = new Node(val);
 
       if (!this.head) {
         this.head = newNode;
@@ -44,8 +47,8 @@ function () {
     key: "removeTail",
     value: function removeTail() {
       if (!this.head) return undefined;
-      var current = this.head;
-      var newTail = current;
+      let current = this.head;
+      let newTail = current;
 
       while (current.next) {
         newTail = current;
@@ -66,7 +69,7 @@ function () {
   }, {
     key: "addToHead",
     value: function addToHead(val) {
-      var newNode = new Node(val);
+      const newNode = new Node(val);
 
       if (!this.head) {
         this.head = newNode;
@@ -83,7 +86,7 @@ function () {
     key: "removeHead",
     value: function removeHead() {
       if (!this.head) return undefined;
-      var currentHead = this.head;
+      const currentHead = this.head;
       this.head = currentHead.next;
       this.length--;
 
@@ -96,7 +99,7 @@ function () {
   }, {
     key: "contains",
     value: function contains(target) {
-      var node = this.head;
+      let node = this.head;
 
       while (node) {
         if (node.value === target) return true;
@@ -109,8 +112,8 @@ function () {
     key: "get",
     value: function get(index) {
       if (index < 0 || index >= this.length) return null;
-      var counter = 0;
-      var current = this.head;
+      let counter = 0;
+      let current = this.head;
 
       while (counter !== index) {
         current = current.next;
@@ -122,7 +125,7 @@ function () {
   }, {
     key: "set",
     value: function set(index, val) {
-      var foundNode = this.get(index);
+      const foundNode = this.get(index);
 
       if (foundNode) {
         foundNode.value = val;
@@ -137,9 +140,9 @@ function () {
       if (index < 0 || index > this.length) return false;
       if (index === this.length) return !!this.addToTail(val);
       if (index === 0) return !!this.addToHead(val);
-      var newNode = new Node(val);
-      var prev = this.get(index - 1);
-      var temp = prev.next;
+      const newNode = new Node(val);
+      const prev = this.get(index - 1);
+      const temp = prev.next;
       prev.next = newNode;
       newNode.next = temp;
       this.length++;
@@ -151,8 +154,8 @@ function () {
       if (index < 0 || index >= this.length) return undefined;
       if (index === 0) return this.removeHead();
       if (index === this.length - 1) return this.removeTail();
-      var previousNode = this.get(index - 1);
-      var removed = previousNode.next;
+      const previousNode = this.get(index - 1);
+      const removed = previousNode.next;
       previousNode.next = removed.next;
       this.length--;
       return removed;
@@ -165,7 +168,7 @@ function () {
   }]);
 
   return LinkedList;
-}();
+})();
 
-exports.Node = Node;
-exports.LinkedList = LinkedList;
+export {Node};
+export {LinkedList};

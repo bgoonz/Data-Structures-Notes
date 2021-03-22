@@ -1,3 +1,2 @@
-const Queue = require('./queue')
-
-module.exports = Queue
+import Queue from './queue';
+export default Queue;

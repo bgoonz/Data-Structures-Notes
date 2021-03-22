@@ -1,4 +1,4 @@
-const Graph = require('.')
+import Graph from '.';
 
 describe('test graph DS', () => {
     it('should construct an empty graph', () => {
@@ -24,8 +24,8 @@ describe('test graph DS', () => {
         graph.addEdge('c', 'a')
         graph.addEdge('c', 'b')
 
-        expect(graph.getAdjVertices('a').toArray().map(e => e.name)).toEqual(['b'])
-        expect(graph.getAdjVertices('c').toArray().map(e => e.name)).toEqual(['a', 'b'])
+        expect(graph.getAdjVertices('a').toArray().map(({name}) => name)).toEqual(['b'])
+        expect(graph.getAdjVertices('c').toArray().map(({name}) => name)).toEqual(['a', 'b'])
     })
 
     it('should do bfs', () => {
@@ -47,7 +47,7 @@ describe('test graph DS', () => {
         graph.addEdge('c', 'b')
 
         const output = []
-        graph.bfs('a', vertex => output.push(vertex.name))
+        graph.bfs('a', ({name}) => output.push(name))
         const expectOutput = ['a', 'b', 'c']
 
         expect(output).toEqual(expectOutput)
@@ -72,7 +72,7 @@ describe('test graph DS', () => {
         graph.addEdge('a', 'b')
 
         const output = []
-        graph.dfs('a', vertex => output.push(vertex.name))
+        graph.dfs('a', ({name}) => output.push(name))
         const expectOutput = ['a', 'c', 'b']
 
         expect(output).toEqual(expectOutput)

@@ -8,7 +8,7 @@ function mergeSort(array) {
   // your code here
 }
 
-module.exports = {
+export default {
   merge,
   mergeSort
 };

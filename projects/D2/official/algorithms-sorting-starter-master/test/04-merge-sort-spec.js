@@ -1,5 +1,5 @@
-const { expect } = require('chai');
-const { merge, mergeSort } = require('../problems/04-merge-sort');
+import {expect} from 'chai';
+import {merge, mergeSort} from '../problems/04-merge-sort';
 
 
 describe('merge()', () => {
